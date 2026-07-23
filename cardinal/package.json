@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "package:macos-dmg": "bash scripts/package-macos-dmg.sh",
     "preview": "vite preview",
     "tauri": "tauri",
     "test": "vitest --watch=false",
