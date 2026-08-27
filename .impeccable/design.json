@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-08-22T00:00:00+03:00",
+  "title": "Design System: Cardinal",
+  "extensions": {
+    "colorMeta": {
+      "accent": { "role": "primary", "displayName": "Cardinal Action Blue", "canonical": "oklch(58% 0.19 255)" },
+      "canvas-light": { "role": "neutral", "displayName": "Day Canvas", "canonical": "oklch(98% 0.004 255)" },
+      "surface-light": { "role": "neutral", "displayName": "Day Surface", "canonical": "oklch(100% 0.003 255)" },
+      "canvas-dark": { "role": "neutral", "displayName": "Night Canvas", "canonical": "oklch(20% 0.012 255)" },
+      "surface-dark": { "role": "neutral", "displayName": "Night Surface", "canonical": "oklch(24% 0.014 255)" }
+    },
+    "typographyMeta": {
+      "title": { "displayName": "Title", "purpose": "Panel and settings section titles." },
+      "body": { "displayName": "Body", "purpose": "Results, descriptions, and metadata." },
+      "label": { "displayName": "Label", "purpose": "Controls, chips, and column headings." }
+    },
+    "shadows": [
+      { "name": "popover", "value": "0 10px 30px oklch(20% 0.02 255 / 0.16)", "purpose": "Transient menus and filter popovers." },
+      { "name": "overlay", "value": "0 24px 64px oklch(15% 0.02 255 / 0.24)", "purpose": "Settings and permission sheets." }
+    ],
+    "motion": [
+      { "name": "state-fast", "value": "160ms cubic-bezier(0.16, 1, 0.3, 1)", "purpose": "Hover, focus, and selected state feedback." }
+    ],
+    "breakpoints": [
+      { "name": "compact", "value": "760px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Compact primary action used sparingly.",
+      "html": "<button class=\"ds-btn-primary\">Apply</button>",
+      "css": ".ds-btn-primary { background: oklch(58% 0.19 255); color: oklch(100% 0.003 255); border: 0; border-radius: 9px; padding: 7px 12px; font: 550 13px -apple-system, BlinkMacSystemFont, system-ui, sans-serif; transition: background 160ms cubic-bezier(0.16,1,0.3,1); } .ds-btn-primary:hover { background: oklch(52% 0.18 255); } .ds-btn-primary:focus-visible { outline: 2px solid oklch(58% 0.19 255); outline-offset: 2px; }"
+    },
+    {
+      "name": "Search Field",
+      "kind": "input",
+      "refersTo": "input-search",
+      "description": "Primary plain-language file search input.",
+      "html": "<input class=\"ds-input-search\" placeholder=\"Search files and folders\" />",
+      "css": ".ds-input-search { width: 360px; height: 38px; padding: 0 12px; border: 1px solid oklch(88% 0.012 255); border-radius: 12px; background: oklch(100% 0.003 255); color: oklch(25% 0.012 255); font: 400 13px -apple-system, BlinkMacSystemFont, system-ui, sans-serif; transition: border-color 160ms cubic-bezier(0.16,1,0.3,1), box-shadow 160ms cubic-bezier(0.16,1,0.3,1); } .ds-input-search:focus { outline: none; border-color: oklch(58% 0.19 255); box-shadow: 0 0 0 2px oklch(58% 0.19 255 / 0.18); }"
+    },
+    {
+      "name": "Filter Chip",
+      "kind": "chip",
+      "description": "Visible removable state for an active search constraint.",
+      "html": "<button class=\"ds-filter-chip\">Modified: Today <span aria-hidden=\"true\">×</span></button>",
+      "css": ".ds-filter-chip { border: 1px solid oklch(78% 0.08 255); border-radius: 999px; padding: 5px 9px; background: oklch(94% 0.035 255); color: oklch(38% 0.14 255); font: 550 12px -apple-system, BlinkMacSystemFont, system-ui, sans-serif; } .ds-filter-chip:hover { background: oklch(91% 0.05 255); } .ds-filter-chip:focus-visible { outline: 2px solid oklch(58% 0.19 255); outline-offset: 2px; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Mac File Lens",
+    "overview": "A fast, quiet, trustworthy macOS utility that puts search, sort, filters, and direct file actions within one glance.",
+    "keyCharacteristics": ["Native-feeling", "Dense but readable", "Plain-language first", "Immediate feedback"],
+    "rules": [
+      { "name": "Functional Accent", "body": "Blue indicates action, focus, selection, or active state and is never decorative.", "section": "colors" },
+      { "name": "Flat at Rest", "body": "Persistent surfaces use tonal separation; shadows belong to transient hierarchy.", "section": "elevation" }
+    ],
+    "dos": ["Keep plain text search as the default.", "Make recent-file sorting immediate."],
+    "donts": ["Do not expose query syntax in the standard search field.", "Do not block the interface while sorting a full result set."]
+  }
+}
