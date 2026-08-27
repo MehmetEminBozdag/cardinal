@@ -1,5 +1,6 @@
 mod background;
 mod commands;
+mod duplicate_files;
 mod lifecycle;
 mod quicklook;
 mod search_activity;

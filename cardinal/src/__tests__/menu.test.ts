@@ -64,6 +64,7 @@ describe('application menu', () => {
         'menu.workspace_favorites',
         'menu.workspace_coverage',
         'menu.workspace_operations',
+        'menu.workspace_duplicates',
         'menu.toggle_workspace_toolbar',
         'menu.rescan',
       ]),

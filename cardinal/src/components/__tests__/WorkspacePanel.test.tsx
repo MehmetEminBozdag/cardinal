@@ -18,6 +18,13 @@ const baseProps = {
   onRevealFavorite: vi.fn(),
   onRemoveFavorite: vi.fn(),
   onIncludePath: vi.fn(),
+  duplicates: {
+    state: 'idle' as const,
+    groups: [],
+    scannedFiles: 0,
+    error: null,
+    onScan: vi.fn(),
+  },
   coverage: {
     watchRoot: '/',
     ignorePaths: ['/System', '/tmp/cache'],
@@ -131,5 +138,36 @@ describe('WorkspacePanel', () => {
     expect(onToggleIndexing).toHaveBeenCalledTimes(1);
     expect(onCancelSearch).toHaveBeenCalledTimes(1);
     expect(onCancelSort).toHaveBeenCalledTimes(1);
+  });
+
+  it('shows physical duplicates separately from APFS clones', () => {
+    const onScan = vi.fn();
+    render(
+      <WorkspacePanel
+        {...baseProps}
+        activeSection="duplicates"
+        duplicates={{
+          state: 'ready',
+          scannedFiles: 3,
+          error: null,
+          onScan,
+          groups: [
+            {
+              size: 1024,
+              files: [
+                { path: '/tmp/original', storage: 'apfsClone' },
+                { path: '/tmp/clone', storage: 'apfsClone' },
+                { path: '/tmp/full-copy', storage: 'physicalCopy' },
+              ],
+            },
+          ],
+        }}
+      />,
+    );
+
+    expect(screen.getByText('/tmp/full-copy')).toBeInTheDocument();
+    expect(screen.getAllByText('workspace.duplicates.apfsClone')).toHaveLength(2);
+    fireEvent.click(screen.getByRole('button', { name: 'workspace.duplicates.scan' }));
+    expect(onScan).toHaveBeenCalledTimes(1);
   });
 });
