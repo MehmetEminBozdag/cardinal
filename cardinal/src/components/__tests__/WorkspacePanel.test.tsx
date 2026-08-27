@@ -17,6 +17,7 @@ const baseProps = {
   onOpenFavorite: vi.fn(),
   onRevealFavorite: vi.fn(),
   onRemoveFavorite: vi.fn(),
+  onIncludePath: vi.fn(),
   coverage: {
     watchRoot: '/',
     ignorePaths: ['/System', '/tmp/cache'],
@@ -79,20 +80,26 @@ describe('WorkspacePanel', () => {
   it('explains index coverage and offers settings and rescan actions', () => {
     const onOpenPreferences = vi.fn();
     const onRequestRescan = vi.fn();
+    const onIncludePath = vi.fn();
     render(
       <WorkspacePanel
         {...baseProps}
         activeSection="coverage"
         onOpenPreferences={onOpenPreferences}
+        onIncludePath={onIncludePath}
         operations={{ ...baseProps.operations, onRequestRescan }}
       />,
     );
 
     expect(screen.getByText('/System')).toBeInTheDocument();
     expect(screen.getByText('/Volumes/Work')).toBeInTheDocument();
+    fireEvent.click(
+      screen.getAllByRole('button', { name: 'workspace.coverage.includeInSearch' })[0],
+    );
     fireEvent.click(screen.getByRole('button', { name: 'workspace.coverage.openSettings' }));
     fireEvent.click(screen.getByRole('button', { name: 'workspace.operations.rescan' }));
 
+    expect(onIncludePath).toHaveBeenCalledWith('/System');
     expect(onOpenPreferences).toHaveBeenCalledTimes(1);
     expect(onRequestRescan).toHaveBeenCalledTimes(1);
   });

@@ -40,6 +40,8 @@ Kural: Tam workspace kosusunda tek arama testi duserse once ayni testi `-p searc
 
 ## [2026-08-22] Vitest filtresinde proje yolu tekrarlandi
 
+Tekrar: 2 (2026-08-27, `cardinal/` calisma dizininde filtreye yeniden `cardinal/src/...` verildi.)
+
 Sebep: Calisma dizini `cardinal/` iken test filtresine `cardinal/src/...` verildi.
 
 Cozum: Bu dizinden `npm test -- --run src/hooks/__tests__/useRemoteSort.test.ts` kullan.

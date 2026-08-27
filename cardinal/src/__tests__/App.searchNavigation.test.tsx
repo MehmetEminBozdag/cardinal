@@ -325,6 +325,22 @@ describe('App search result keyboard navigation', () => {
     expect(toolbar?.querySelector('.search-filters')).not.toBeNull();
   });
 
+  it('persists workspace toolbar visibility and responds to the View menu', () => {
+    window.localStorage.setItem('cardinal.workspace.toolbarVisible', 'false');
+    render(<App />);
+
+    expect(document.querySelector('.workspace-toolbar')).toBeNull();
+
+    window.dispatchEvent(
+      new CustomEvent('cardinal:menu-action', {
+        detail: { action: 'toggle-workspace-toolbar' },
+      }),
+    );
+
+    expect(document.querySelector('.workspace-toolbar')).not.toBeNull();
+    expect(window.localStorage.getItem('cardinal.workspace.toolbarVisible')).toBe('true');
+  });
+
   it('selects the first result and blurs the search input when ArrowDown reaches the history tail', () => {
     render(<App />);
 
