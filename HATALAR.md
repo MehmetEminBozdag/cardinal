@@ -1,3 +1,19 @@
+## [2026-08-28] Tauri target dizininde tasima oncesi mutlak yol kaldi
+
+Sebep: Repo `.graphify/repos/...` yolundan `dev/cardinal` yoluna tasindiktan sonra Tauri'nin uretilmis izin dosyalari eski mutlak yolu isaret etmeye devam etti.
+
+Cozum: `cargo clean --manifest-path src-tauri/Cargo.toml` ile yalniz yeniden uretilebilir Rust derleme onbellegi temizlendi ve test yeni konumda bastan derlendi.
+
+Kural: Tauri reposu tasindiktan sonra ilk Rust derlemesinden once eski `target` ciktilarini bayat kopya olarak kabul et ve tam manifest yoluyla `cargo clean` calistir.
+
+## [2026-08-28] Darwin getattrlist C probunda bildirim eksikti
+
+Sebep: Ilk APFS klon probu `<sys/attr.h>` ekledi ancak `getattrlist` bildiriminin bulundugu `<unistd.h>` basligini eklemedi.
+
+Cozum: Proba `<unistd.h>` eklendi; gercek APFS klonu ile tam kopya farkli clone-id ve paylasim bayraklariyla dogrulandi.
+
+Kural: Darwin `getattrlist` problarinda hem `<sys/attr.h>` hem `<unistd.h>` ekle; derleme hatasini ozelligin desteklenmedigi seklinde yorumlama.
+
 ## [2026-08-27] Gitleaks icin Go calistiricisi sistemde yoktu
 
 Sebep: Git gecmisi gizli bilgi taramasi icin `go run ...gitleaks` denendi ancak sistemde `go` komutu kurulu degildi.
@@ -40,7 +56,7 @@ Kural: Tam workspace kosusunda tek arama testi duserse once ayni testi `-p searc
 
 ## [2026-08-22] Vitest filtresinde proje yolu tekrarlandi
 
-Tekrar: 2 (2026-08-27, `cardinal/` calisma dizininde filtreye yeniden `cardinal/src/...` verildi.)
+Tekrar: 3 (2026-08-28, `cardinal/` calisma dizininde kaynak okuma yoluna yeniden `cardinal/src/...` verildi.)
 
 Sebep: Calisma dizini `cardinal/` iken test filtresine `cardinal/src/...` verildi.
 

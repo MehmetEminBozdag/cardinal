@@ -139,8 +139,22 @@
     "copy": "Copy",
     "paste": "Paste",
     "selectAll": "Select All",
+    "search": "Search",
+    "focusSearch": "Focus Search",
+    "showNewest": "Show Newest Files",
+    "savedSearches": "Saved Searches",
+    "favorites": "Favorites",
+    "coverage": "Why Wasn't It Found?",
+    "operations": "Operations",
+    "duplicates": "Duplicate Files",
     "view": "View",
+    "showFiles": "Show Files",
+    "showEvents": "Show Events",
+    "showWorkspaceToolbar": "Show Workspace Tools",
     "fullscreen": "Toggle Fullscreen",
+    "indexing": "Index",
+    "rescan": "Rescan Files",
+    "searchSettings": "Search and Indexing Settings",
     "window": "Window",
     "minimize": "Minimize",
     "maximize": "Zoom",
@@ -222,7 +236,8 @@
       "saved": "Saved Searches",
       "favorites": "Favorites",
       "coverage": "Why Wasn't It Found?",
-      "operations": "Operations"
+      "operations": "Operations",
+      "duplicates": "Duplicate Files"
     },
     "saved": {
       "nameLabel": "Search name",
@@ -249,7 +264,8 @@
       "allUnderRoot": "All accessible paths under the root are included.",
       "directoryScope": "Active folder scope",
       "explanation": "If a file is missing, check permissions, the monitor root, excluded paths, and the active folder scope.",
-      "openSettings": "Open indexing settings"
+      "openSettings": "Open indexing settings",
+      "includeInSearch": "Include in search"
     },
     "operations": {
       "indexing": "File indexing",
@@ -277,6 +293,22 @@
       "cancelSort": "Cancel sorting",
       "rescan": "Rescan",
       "idle": "No long-running operations."
+    },
+    "duplicates": {
+      "explanation": "Analyze the current file results by size and content. APFS clones, hard links, and physical copies are identified separately when macOS exposes reliable clone mapping.",
+      "scan": "Analyze current results",
+      "scanning": "Analyzing duplicates…",
+      "scanned": "{{count}} files analyzed",
+      "empty": "No duplicate content was found in the current results.",
+      "groupSize": "Each file: {{size}}",
+      "apfsClone": "APFS clone",
+      "physicalCopy": "Physical copy",
+      "hardLink": "Hard link",
+      "unknown": "Storage unknown",
+      "tooMany": "Narrow the current results to 20,000 files or fewer before analyzing duplicates.",
+      "tooLarge": "The current results exceed the safe 50 GB duplicate-analysis limit. Narrow the results and try again.",
+      "incomplete": "{{count}} files were skipped because they were unavailable or the safe read limit was reached. Results may be incomplete.",
+      "failed": "Duplicate analysis could not be completed. Try narrowing the current results and run it again."
     }
   }
 }

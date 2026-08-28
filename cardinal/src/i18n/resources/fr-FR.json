@@ -7,10 +7,33 @@
     },
     "options": {
       "caseSensitive": "Activer la correspondance sensible à la casse",
-      "directoryScope": "Afficher la portée du dossier"
+      "directoryScope": "Afficher la portée du dossier",
+      "newest": "Plus récent"
     },
     "aria": {
       "searchInput": "Entrée de recherche"
+    },
+    "filters": {
+      "label": "Filtres",
+      "type": "Type",
+      "anyType": "Tout type",
+      "folders": "Dossiers",
+      "pictures": "Photos",
+      "videos": "Vidéos",
+      "audio": "Audio",
+      "documents": "Documents",
+      "archives": "Archives",
+      "code": "Code",
+      "apps": "Demandes",
+      "modified": "Modifié",
+      "anyTime": "À tout moment",
+      "today": "Aujourd'hui",
+      "pastWeek": "Semaine passée",
+      "pastMonth": "Mois précédent",
+      "pastYear": "Année précédente",
+      "size": "Taille",
+      "anySize": "Toute taille",
+      "clear": "Effacer"
     }
   },
   "stateDisplay": {
@@ -52,7 +75,12 @@
     "copyFilenames": "Copier les noms de fichier",
     "copyPath": "Copier le chemin",
     "copyPaths": "Copier les chemins",
-    "resetColumnWidths": "Réinitialiser la largeur des colonnes"
+    "resetColumnWidths": "Réinitialiser la largeur des colonnes",
+    "moveToTrash_one": "Aller à la corbeille...",
+    "moveToTrash_other": "Déplacer {{count}} éléments dans la corbeille...",
+    "confirmTrash_one": "Déplacer l'élément sélectionné dans la corbeille ?",
+    "confirmTrash_other": "Déplacer {{count}} éléments sélectionnés dans la corbeille?",
+    "trashFailed": "L'article n'a pas pu être déplacé à la corbeille."
   },
   "statusBar": {
     "tabs": {
@@ -118,7 +146,21 @@
     "maximize": "Zoom",
     "closeWindow": "Fermer la fenêtre",
     "help": "Aide",
-    "getUpdates": "Obtenir les mises à jour"
+    "getUpdates": "Obtenir les mises à jour",
+    "search": "Recherche",
+    "focusSearch": "Activer la recherche",
+    "showNewest": "Afficher les fichiers récents",
+    "savedSearches": "Recherches enregistrées",
+    "favorites": "Favoris",
+    "coverage": "Pourquoi est-il introuvable ?",
+    "operations": "Opérations",
+    "duplicates": "Fichiers en double",
+    "showFiles": "Afficher les fichiers",
+    "showEvents": "Afficher les événements",
+    "showWorkspaceToolbar": "Afficher les outils de l’espace de travail",
+    "indexing": "Index",
+    "rescan": "Réindexer les fichiers",
+    "searchSettings": "Réglages de recherche et d’indexation"
   },
   "preferences": {
     "title": "Préférences",
@@ -171,13 +213,102 @@
     "help": "Un chemin par ligne ; les chemins ignorés sont exclus de l'indexation.",
     "errors": {
       "absolute": "Chaque chemin doit commencer par '/' ou '~'."
-    }
+    },
+    "listLabel": "Dossiers ignorés",
+    "addLabel": "Chemin du dossier à ignorer",
+    "placeholder": "/path/to/folder",
+    "add": "Ajouter",
+    "remove": "Supprimer {{path}}",
+    "empty": "Aucun dossier supplémentaire n'est ignoré."
   },
   "includePaths": {
     "label": "Chemins inclus",
     "help": "Un chemin par ligne ; les chemins inclus restent indexés même si un parent est ignoré.",
     "errors": {
       "absolute": "Chaque chemin doit commencer par '/' ou '~'."
+    }
+  },
+  "workspace": {
+    "sections": {
+      "duplicates": "Fichiers en double",
+      "saved": "Recherches sauvegardées",
+      "favorites": "Favoris",
+      "coverage": "Pourquoi n'a-t-il pas été trouvé ?",
+      "operations": "Opérations"
+    },
+    "coverage": {
+      "includeInSearch": "Inclure dans la recherche",
+      "openSettings": "Ouvrir les réglages de recherche et d’indexation",
+      "permission": "Accès au disque complet",
+      "granted": "Activé",
+      "denied": "Handicapé",
+      "state": "État index",
+      "indexed": "Postes indexés",
+      "root": "Surveiller la racine",
+      "excluded": "Voies exclues",
+      "included": "Explicitement inclus des chemins",
+      "none": "Aucun chemin n'est exclu.",
+      "allUnderRoot": "Tous les chemins accessibles sous la racine sont inclus.",
+      "directoryScope": "Portée active du dossier",
+      "explanation": "Si un fichier manque, vérifiez les autorisations, la racine du moniteur, les chemins exclus et la portée du dossier actif."
+    },
+    "duplicates": {
+      "explanation": "Analyse les résultats actuels selon leur taille et leur contenu. Les clones APFS, liens physiques et copies complètes sont distingués lorsque macOS fournit une cartographie fiable.",
+      "scan": "Analyser les résultats actuels",
+      "scanning": "Analyse des doublons…",
+      "scanned": "{{count}} fichiers analysés",
+      "empty": "Aucun contenu en double dans les résultats actuels.",
+      "groupSize": "Chaque dossier : {{size}}",
+      "apfsClone": "Clone APFS",
+      "physicalCopy": "Copie complète",
+      "hardLink": "Lien physique",
+      "unknown": "Stockage inconnu",
+      "tooMany": "Limitez les résultats actuels à 20 000 fichiers ou moins avant d’analyser les doublons.",
+      "tooLarge": "Les résultats actuels dépassent la limite d’analyse sûre de 50 Go. Réduisez les résultats et réessayez.",
+      "incomplete": "{{count}} fichiers ont été ignorés car ils étaient indisponibles ou la limite de lecture sûre a été atteinte. Les résultats peuvent être incomplets.",
+      "failed": "L'analyse en double n'a pas pu être effectuée. Essayez de réduire les résultats actuels et lancez-les à nouveau."
+    },
+    "toolbarLabel": "Outils d'espace de travail",
+    "close": "Fermer le panneau",
+    "remove": "Supprimer",
+    "saved": {
+      "nameLabel": "Nom de la recherche",
+      "saveCurrent": "Enregistrer la recherche actuelle",
+      "empty": "Pas encore de recherche enregistrée.",
+      "allFiles": "Tous les fichiers"
+    },
+    "favorites": {
+      "addSelection": "Ajouter une sélection aux favoris",
+      "empty": "Pas encore de fichiers ou dossiers préférés.",
+      "open": "Ouvrir le favori",
+      "reveal": "Afficher dans le Finder"
+    },
+    "operations": {
+      "indexing": "Indexation des fichiers",
+      "search": "Rechercher",
+      "sorting": "Tri",
+      "activity": "Activité index",
+      "activityLevels": {
+        "idle": "Idée",
+        "low": "Faible",
+        "medium": "Moyenne",
+        "high": "Élevé"
+      },
+      "indexedCount": "{{count}} postes indexés",
+      "trash": "Corbeille",
+      "fileStates": {
+        "running": "Déplacement de {{count}} articles",
+        "completed": "Déplacé {{count}} articles",
+        "failed": "Impossible de déplacer {{count}} articles"
+      },
+      "running": "Courir",
+      "paused": "En pause",
+      "pauseIndexing": "Suspendre l’indexation",
+      "resumeIndexing": "Reprendre l'indexation",
+      "cancelSearch": "Annuler la recherche",
+      "cancelSort": "Annuler le tri",
+      "rescan": "Réscan",
+      "idle": "Pas d'opérations de longue durée."
     }
   }
 }

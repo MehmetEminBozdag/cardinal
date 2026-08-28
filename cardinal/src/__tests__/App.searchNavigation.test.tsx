@@ -9,6 +9,8 @@ const mocks = vi.hoisted(() => ({
   navigateSearchHistory: vi.fn(),
   selectSingleRow: vi.fn(),
   applySearchPreset: vi.fn(),
+  showNewest: vi.fn(),
+  handleWatchConfigChange: vi.fn(),
 }));
 
 vi.mock('react-i18next', () => ({
@@ -193,6 +195,8 @@ vi.mock('../hooks/useRemoteSort', () => ({
     sortDisabledTooltip: null,
     sortButtonsDisabled: false,
     handleSortToggle: vi.fn(),
+    showNewest: mocks.showNewest,
+    cancelSort: vi.fn(),
   }),
 }));
 
@@ -244,8 +248,10 @@ vi.mock('../hooks/useAppPreferences', () => ({
     defaultWatchRoot: '/',
     ignorePaths: ['/Volumes'],
     defaultIgnorePaths: ['/Volumes'],
+    includePaths: [],
+    defaultIncludePaths: [],
     preferencesResetToken: 0,
-    handleWatchConfigChange: vi.fn(),
+    handleWatchConfigChange: mocks.handleWatchConfigChange,
     handleResetPreferences: vi.fn(),
   }),
 }));
@@ -331,14 +337,45 @@ describe('App search result keyboard navigation', () => {
 
     expect(document.querySelector('.workspace-toolbar')).toBeNull();
 
-    window.dispatchEvent(
-      new CustomEvent('cardinal:menu-action', {
-        detail: { action: 'toggle-workspace-toolbar' },
-      }),
-    );
+    act(() => {
+      window.dispatchEvent(
+        new CustomEvent('cardinal:menu-action', {
+          detail: { action: 'toggle-workspace-toolbar' },
+        }),
+      );
+    });
 
     expect(document.querySelector('.workspace-toolbar')).not.toBeNull();
     expect(window.localStorage.getItem('cardinal.workspace.toolbarVisible')).toBe('true');
+  });
+
+  it('switches to files before showing newest results from the menu', () => {
+    render(<App />);
+    fireEvent.click(screen.getByRole('button', { name: 'events-tab' }));
+
+    act(() => {
+      window.dispatchEvent(
+        new CustomEvent('cardinal:menu-action', { detail: { action: 'show-newest' } }),
+      );
+    });
+
+    expect(screen.getByRole('button', { name: 'files-tab' })).toHaveAttribute(
+      'aria-pressed',
+      'true',
+    );
+    expect(mocks.showNewest).toHaveBeenCalledTimes(1);
+  });
+
+  it('removes an exact exclusion when including it in search', () => {
+    render(<App />);
+    fireEvent.click(screen.getByRole('button', { name: 'workspace.sections.coverage' }));
+    fireEvent.click(screen.getByRole('button', { name: 'workspace.coverage.includeInSearch' }));
+
+    expect(mocks.handleWatchConfigChange).toHaveBeenCalledWith({
+      watchRoot: '/',
+      ignorePaths: [],
+      includePaths: ['/Volumes'],
+    });
   });
 
   it('selects the first result and blurs the search input when ArrowDown reaches the history tail', () => {

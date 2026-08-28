@@ -139,8 +139,22 @@
     "copy": "Kopyala",
     "paste": "Yapıştır",
     "selectAll": "Tümünü seç",
+    "search": "Arama",
+    "focusSearch": "Aramaya odaklan",
+    "showNewest": "En yeni dosyaları göster",
+    "savedSearches": "Kayıtlı aramalar",
+    "favorites": "Favoriler",
+    "coverage": "Neden bulunamadı?",
+    "operations": "İşlemler",
+    "duplicates": "Kopya dosyalar",
     "view": "Görünüm",
+    "showFiles": "Dosyaları göster",
+    "showEvents": "Olayları göster",
+    "showWorkspaceToolbar": "Çalışma araçlarını göster",
     "fullscreen": "Tam ekranı değiştir",
+    "indexing": "İndeks",
+    "rescan": "Dosyaları yeniden tara",
+    "searchSettings": "Arama ve indeksleme ayarları",
     "window": "Pencere",
     "minimize": "Simge durumuna küçült",
     "maximize": "Yakınlaştır",
@@ -222,7 +236,8 @@
       "saved": "Kayıtlı Aramalar",
       "favorites": "Favoriler",
       "coverage": "Neden Bulunamadı?",
-      "operations": "İşlemler"
+      "operations": "İşlemler",
+      "duplicates": "Kopya Dosyalar"
     },
     "saved": {
       "nameLabel": "Arama adı",
@@ -249,7 +264,8 @@
       "allUnderRoot": "Kök altındaki tüm erişilebilir yollar dahil.",
       "directoryScope": "Etkin klasör kapsamı",
       "explanation": "Bir dosya görünmüyorsa izinleri, tarama kökünü, hariç tutulan yolları ve etkin klasör kapsamını kontrol edin.",
-      "openSettings": "Tarama ayarlarını aç"
+      "openSettings": "Arama ve indeksleme ayarlarını aç",
+      "includeInSearch": "Aramaya dahil et"
     },
     "operations": {
       "indexing": "Dosya indeksleme",
@@ -277,6 +293,22 @@
       "cancelSort": "Sıralamayı iptal et",
       "rescan": "Yeniden tara",
       "idle": "Bekleyen uzun işlem yok."
+    },
+    "duplicates": {
+      "explanation": "Geçerli dosya sonuçlarını boyut ve içeriğe göre inceleyin. macOS güvenilir klon haritası sunduğunda APFS klonları, sabit bağlantılar ve fiziksel kopyalar ayrı gösterilir.",
+      "scan": "Geçerli sonuçları incele",
+      "scanning": "Kopyalar inceleniyor…",
+      "scanned": "{{count}} dosya incelendi",
+      "empty": "Geçerli sonuçlarda aynı içeriğe sahip dosya bulunamadı.",
+      "groupSize": "Her dosya: {{size}}",
+      "apfsClone": "APFS klonu",
+      "physicalCopy": "Fiziksel kopya",
+      "hardLink": "Sabit bağlantı",
+      "unknown": "Depolama bilinmiyor",
+      "tooMany": "Kopyaları analiz etmeden önce mevcut sonuçları 20.000 veya daha az dosyayla daraltın.",
+      "tooLarge": "Mevcut sonuçlar güvenli 50 GB kopya analizi sınırını aşıyor. Sonuçları daraltıp yeniden deneyin.",
+      "incomplete": "{{count}} dosya kullanılamadığı veya güvenli okuma sınırına ulaşıldığı için atlandı. Sonuçlar eksik olabilir.",
+      "failed": "Kopya analizi tamamlanamadı. Mevcut sonuçları daraltıp yeniden deneyin."
     }
   }
 }

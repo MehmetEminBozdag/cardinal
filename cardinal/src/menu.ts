@@ -1,9 +1,11 @@
 import { getName } from '@tauri-apps/api/app';
 import { invoke } from '@tauri-apps/api/core';
-import { Menu, MenuItem, PredefinedMenuItem, Submenu } from '@tauri-apps/api/menu';
+import { CheckMenuItem, Menu, MenuItem, PredefinedMenuItem, Submenu } from '@tauri-apps/api/menu';
 import { openUrl } from '@tauri-apps/plugin-opener';
 import i18n from './i18n/config';
 import { openPreferences } from './utils/openPreferences';
+import { dispatchAppMenuAction } from './appMenuActions';
+import { WORKSPACE_TOOLBAR_VISIBILITY_KEY } from './hooks/useWorkspaceToolbarVisibility';
 
 const HELP_UPDATES_URL = 'https://github.com/cardisoft/cardinal/releases';
 
@@ -69,10 +71,67 @@ async function buildAppMenu(): Promise<void> {
     ],
   });
 
+  const searchSubmenu = await Submenu.new({
+    id: 'menu.search',
+    text: i18n.t('menu.search'),
+    items: [
+      await actionItem('menu.focus_search', 'menu.focusSearch', 'CmdOrCtrl+F', 'focus-search'),
+      await actionItem('menu.show_newest', 'menu.showNewest', 'CmdOrCtrl+Shift+N', 'show-newest'),
+      await PredefinedMenuItem.new({ item: 'Separator' }),
+      await actionItem('menu.workspace_saved', 'menu.savedSearches', undefined, 'workspace-saved'),
+      await actionItem(
+        'menu.workspace_favorites',
+        'menu.favorites',
+        undefined,
+        'workspace-favorites',
+      ),
+      await actionItem('menu.workspace_coverage', 'menu.coverage', undefined, 'workspace-coverage'),
+      await actionItem(
+        'menu.workspace_operations',
+        'menu.operations',
+        undefined,
+        'workspace-operations',
+      ),
+      await actionItem(
+        'menu.workspace_duplicates',
+        'menu.duplicates',
+        undefined,
+        'workspace-duplicates',
+      ),
+    ],
+  });
+
+  const toolbarVisible = readWorkspaceToolbarVisibility();
+  const workspaceToolbarItem = await CheckMenuItem.new({
+    id: 'menu.toggle_workspace_toolbar',
+    text: i18n.t('menu.showWorkspaceToolbar'),
+    checked: toolbarVisible,
+    action: () => dispatchAppMenuAction('toggle-workspace-toolbar'),
+  });
+
   const viewSubmenu = await Submenu.new({
     id: 'menu.view',
     text: i18n.t('menu.view'),
-    items: [await PredefinedMenuItem.new({ item: 'Fullscreen', text: i18n.t('menu.fullscreen') })],
+    items: [
+      await actionItem('menu.show_files', 'menu.showFiles', 'CmdOrCtrl+1', 'show-files'),
+      await actionItem('menu.show_events', 'menu.showEvents', 'CmdOrCtrl+2', 'show-events'),
+      workspaceToolbarItem,
+      await PredefinedMenuItem.new({ item: 'Separator' }),
+      await PredefinedMenuItem.new({ item: 'Fullscreen', text: i18n.t('menu.fullscreen') }),
+    ],
+  });
+
+  const indexingSubmenu = await Submenu.new({
+    id: 'menu.indexing',
+    text: i18n.t('menu.indexing'),
+    items: [
+      await actionItem('menu.rescan', 'menu.rescan', 'CmdOrCtrl+Shift+R', 'rescan'),
+      await MenuItem.new({
+        id: 'menu.indexing_settings',
+        text: i18n.t('menu.searchSettings'),
+        action: openPreferences,
+      }),
+    ],
   });
 
   const windowSubmenu = await Submenu.new({
@@ -100,9 +159,39 @@ async function buildAppMenu(): Promise<void> {
   await helpSubmenu.setAsHelpMenuForNSApp().catch(() => {});
 
   const menu = await Menu.new({
-    items: [appSubmenu, editSubmenu, viewSubmenu, windowSubmenu, helpSubmenu],
+    items: [
+      appSubmenu,
+      editSubmenu,
+      searchSubmenu,
+      viewSubmenu,
+      indexingSubmenu,
+      windowSubmenu,
+      helpSubmenu,
+    ],
   });
   await menu.setAsAppMenu();
+}
+
+async function actionItem(
+  id: string,
+  translationKey: string,
+  accelerator: string | undefined,
+  action: Parameters<typeof dispatchAppMenuAction>[0],
+) {
+  return MenuItem.new({
+    id,
+    text: i18n.t(translationKey),
+    ...(accelerator ? { accelerator } : {}),
+    action: () => dispatchAppMenuAction(action),
+  });
+}
+
+function readWorkspaceToolbarVisibility(): boolean {
+  try {
+    return window.localStorage.getItem(WORKSPACE_TOOLBAR_VISIBILITY_KEY) !== 'false';
+  } catch {
+    return true;
+  }
 }
 
 async function openUpdatesPage(): Promise<void> {

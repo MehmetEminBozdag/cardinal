@@ -38,6 +38,9 @@ import { WorkspacePanel, WorkspaceToolbar } from './components/WorkspacePanel';
 import type { WorkspaceSection } from './components/WorkspacePanel';
 import { openPreferences } from './utils/openPreferences';
 import { invoke } from '@tauri-apps/api/core';
+import { subscribeToAppMenuActions } from './appMenuActions';
+import { useWorkspaceToolbarVisibility } from './hooks/useWorkspaceToolbarVisibility';
+import { useDuplicateFiles } from './hooks/useDuplicateFiles';
 
 function App() {
   const {
@@ -152,7 +155,9 @@ function App() {
     eventFilterQuery,
   });
   const [workspaceSection, setWorkspaceSection] = useState<WorkspaceSection | null>(null);
+  const workspaceToolbar = useWorkspaceToolbarVisibility();
   const { fileOperations, updateFileOperation } = useFileOperationLog();
+  const duplicateFiles = useDuplicateFiles(displayedResults, displayedResultsVersion);
   const { savedSearches, favorites, saveSearch, removeSavedSearch, addFavorites, removeFavorite } =
     useWorkspaceCollections();
 
@@ -395,6 +400,36 @@ function App() {
     setWorkspaceSection((current) => (current === section ? null : section));
   }, []);
 
+  const handleIncludePath = useCallback(
+    (path: string) => {
+      if (includePaths.includes(path)) return;
+      handleWatchConfigChange({
+        watchRoot: watchRoot ?? defaultWatchRoot,
+        ignorePaths: ignorePaths.filter((ignoredPath) => ignoredPath !== path),
+        includePaths: [...includePaths, path],
+      });
+    },
+    [defaultWatchRoot, handleWatchConfigChange, ignorePaths, includePaths, watchRoot],
+  );
+
+  useEffect(
+    () =>
+      subscribeToAppMenuActions((action) => {
+        if (action === 'focus-search') focusAndSelectSearchInput();
+        else if (action === 'show-newest') {
+          setActiveTab('files');
+          showNewest();
+        } else if (action === 'show-files') setActiveTab('files');
+        else if (action === 'show-events') setActiveTab('events');
+        else if (action === 'toggle-workspace-toolbar') workspaceToolbar.toggle();
+        else if (action === 'rescan') void requestRescan();
+        else if (action.startsWith('workspace-')) {
+          setWorkspaceSection(action.slice('workspace-'.length) as WorkspaceSection);
+        }
+      }),
+    [focusAndSelectSearchInput, requestRescan, setActiveTab, showNewest, workspaceToolbar.toggle],
+  );
+
   const handleSaveCurrentSearch = useCallback(
     (name: string) => {
       saveSearch({ name, ...searchParams });
@@ -450,7 +485,9 @@ function App() {
               onChange={(filterQuery) => queueFilterSearch(filterQuery, { immediate: true })}
             />
           </div>
-          <WorkspaceToolbar activeSection={workspaceSection} onSelect={toggleWorkspaceSection} />
+          {workspaceToolbar.visible ? (
+            <WorkspaceToolbar activeSection={workspaceSection} onSelect={toggleWorkspaceSection} />
+          ) : null}
         </div>
         <div className={`content-workspace${workspaceSection ? ' has-panel' : ''}`}>
           <div className={resultsContainerClassName} style={containerStyle}>
@@ -506,6 +543,16 @@ function App() {
               onOpenFavorite={openResultPath}
               onRevealFavorite={(path) => void invoke('open_in_finder', { path })}
               onRemoveFavorite={removeFavorite}
+              onIncludePath={handleIncludePath}
+              duplicates={{
+                state: duplicateFiles.state,
+                groups: duplicateFiles.groups,
+                scannedFiles: duplicateFiles.scannedFiles,
+                skippedFiles: duplicateFiles.skippedFiles,
+                limited: duplicateFiles.limited,
+                error: duplicateFiles.error,
+                onScan: () => void duplicateFiles.scan(),
+              }}
               coverage={{
                 watchRoot: watchRoot ?? defaultWatchRoot,
                 ignorePaths,

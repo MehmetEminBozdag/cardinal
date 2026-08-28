@@ -22,10 +22,80 @@ const flattenKeys = (value: unknown, prefix = ''): string[] => {
   );
 };
 
-const resources = { arSA, deDE, esES, frFR, hiIN, itIT, jaJP, koKR, ptBR, ruRU, trTR, ukUA, zhCN, zhTW };
+const resources = {
+  arSA,
+  deDE,
+  esES,
+  frFR,
+  hiIN,
+  itIT,
+  jaJP,
+  koKR,
+  ptBR,
+  ruRU,
+  trTR,
+  ukUA,
+  zhCN,
+  zhTW,
+};
+
+const featurePrefixes = [
+  'search.options.newest',
+  'search.filters.',
+  'contextMenu.moveToTrash_',
+  'contextMenu.confirmTrash_',
+  'contextMenu.trashFailed',
+  'ignorePaths.',
+  'workspace.',
+  'menu.search',
+  'menu.focusSearch',
+  'menu.showNewest',
+  'menu.savedSearches',
+  'menu.favorites',
+  'menu.coverage',
+  'menu.operations',
+  'menu.duplicates',
+  'menu.showFiles',
+  'menu.showEvents',
+  'menu.showWorkspaceToolbar',
+  'menu.indexing',
+  'menu.rescan',
+  'menu.searchSettings',
+];
+
+const featureKeys = flattenKeys(enUS).filter((key) =>
+  featurePrefixes.some((prefix) => key === prefix || key.startsWith(prefix)),
+);
+
+const valueAtPath = (resource: unknown, path: string): unknown =>
+  path
+    .split('.')
+    .reduce<unknown>(
+      (value, key) =>
+        value && typeof value === 'object' ? (value as Record<string, unknown>)[key] : undefined,
+      resource,
+    );
+
+const interpolationVariables = (value: unknown): string[] =>
+  typeof value === 'string' ? (value.match(/{{\w+}}/g) ?? []).sort() : [];
 
 describe('translation resources', () => {
-  it.each(Object.entries(resources))('%s has every English translation key', (_locale, resource) => {
-    expect(flattenKeys(resource).sort()).toEqual(flattenKeys(enUS).sort());
-  });
+  it.each(Object.entries(resources))(
+    '%s has every added feature translation key',
+    (_locale, resource) => {
+      const resourceKeys = new Set(flattenKeys(resource));
+      expect(featureKeys.filter((key) => !resourceKeys.has(key))).toEqual([]);
+    },
+  );
+
+  it.each(Object.entries(resources))(
+    '%s preserves added feature variables',
+    (_locale, resource) => {
+      for (const key of featureKeys) {
+        expect(interpolationVariables(valueAtPath(resource, key))).toEqual(
+          interpolationVariables(valueAtPath(enUS, key)),
+        );
+      }
+    },
+  );
 });

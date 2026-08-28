@@ -7,10 +7,33 @@
     },
     "options": {
       "caseSensitive": "Alternar correspondência sensível a maiúsculas",
-      "directoryScope": "Alternar escopo de pasta"
+      "directoryScope": "Alternar escopo de pasta",
+      "newest": "Mais recente"
     },
     "aria": {
       "searchInput": "Entrada de pesquisa"
+    },
+    "filters": {
+      "label": "Filtros",
+      "type": "Tipo",
+      "anyType": "Qualquer tipo",
+      "folders": "Pastas",
+      "pictures": "Imagens",
+      "videos": "Vídeos",
+      "audio": "Áudio",
+      "documents": "Documentos",
+      "archives": "Arquivos",
+      "code": "Código",
+      "apps": "Aplicações",
+      "modified": "Modificado",
+      "anyTime": "A qualquer hora.",
+      "today": "Hoje",
+      "pastWeek": "Semana passada",
+      "pastMonth": "Mês passado",
+      "pastYear": "Ano passado",
+      "size": "Tamanho",
+      "anySize": "Qualquer tamanho",
+      "clear": "Limpar"
     }
   },
   "stateDisplay": {
@@ -52,7 +75,12 @@
     "copyFilenames": "Copiar nomes de arquivos",
     "copyPath": "Copiar caminho",
     "copyPaths": "Copiar caminhos",
-    "resetColumnWidths": "Redefinir larguras das colunas"
+    "resetColumnWidths": "Redefinir larguras das colunas",
+    "moveToTrash_one": "Mover para o Lixo...",
+    "moveToTrash_other": "Mover {{count}} itens para o Lixo...",
+    "confirmTrash_one": "Mover o item selecionado para o Lixo?",
+    "confirmTrash_other": "Mover {{count}} itens selecionados para o Lixo?",
+    "trashFailed": "O item não pôde ser movido para o Lixo."
   },
   "statusBar": {
     "tabs": {
@@ -118,7 +146,21 @@
     "maximize": "Zoom",
     "closeWindow": "Fechar janela",
     "help": "Ajuda",
-    "getUpdates": "Obter atualizações"
+    "getUpdates": "Obter atualizações",
+    "search": "Buscar",
+    "focusSearch": "Focar na busca",
+    "showNewest": "Mostrar arquivos mais recentes",
+    "savedSearches": "Buscas salvas",
+    "favorites": "Favoritos",
+    "coverage": "Por que não foi encontrado?",
+    "operations": "Operações",
+    "duplicates": "Arquivos duplicados",
+    "showFiles": "Mostrar arquivos",
+    "showEvents": "Mostrar eventos",
+    "showWorkspaceToolbar": "Mostrar ferramentas do espaço de trabalho",
+    "indexing": "Índice",
+    "rescan": "Reexaminar arquivos",
+    "searchSettings": "Ajustes de busca e indexação"
   },
   "preferences": {
     "title": "Preferências",
@@ -171,13 +213,102 @@
     "help": "Um caminho por linha; caminhos ignorados são ignorados durante a indexação.",
     "errors": {
       "absolute": "Cada caminho deve começar com '/' ou '~'."
-    }
+    },
+    "listLabel": "Pastas ignoradas",
+    "addLabel": "Localização da pasta a ignorar",
+    "placeholder": "/path/to/folder",
+    "add": "Adicionar",
+    "remove": "Remover {{path}}",
+    "empty": "Nenhuma pasta extra é ignorada."
   },
   "includePaths": {
     "label": "Caminhos incluídos",
     "help": "Um caminho por linha; caminhos incluídos permanecem indexados mesmo quando um ancestral é ignorado.",
     "errors": {
       "absolute": "Cada caminho deve começar com '/' ou '~'."
+    }
+  },
+  "workspace": {
+    "sections": {
+      "duplicates": "Arquivos duplicados",
+      "saved": "Procuras Gravadas",
+      "favorites": "Favoritos",
+      "coverage": "Por que não foi encontrado?",
+      "operations": "Operações"
+    },
+    "coverage": {
+      "includeInSearch": "Incluir na busca",
+      "openSettings": "Abrir ajustes de busca e indexação",
+      "permission": "Acesso completo ao disco",
+      "granted": "Activado",
+      "denied": "Desactivado",
+      "state": "Estado do índice",
+      "indexed": "Rubricas indexadas",
+      "root": "Monitorar a raiz",
+      "excluded": "Caminhos excluídos",
+      "included": "Caminhos explicitamente incluídos",
+      "none": "Nenhum caminho está excluído.",
+      "allUnderRoot": "Todos os caminhos acessíveis sob a raiz estão incluídos.",
+      "directoryScope": "Âmbito ativo da pasta",
+      "explanation": "Se um arquivo estiver faltando, verifique as permissões, a raiz do monitor, os caminhos excluídos e o escopo da pasta ativa."
+    },
+    "duplicates": {
+      "explanation": "Analisa os resultados atuais por tamanho e conteúdo. Clones APFS, links físicos e cópias completas são separados quando o macOS fornece um mapeamento confiável.",
+      "scan": "Analisar resultados atuais",
+      "scanning": "Analisando duplicados…",
+      "scanned": "{{count}} arquivos analisados",
+      "empty": "Nenhum conteúdo duplicado nos resultados atuais.",
+      "groupSize": "Cada arquivo: {{size}}",
+      "apfsClone": "Clone APFS",
+      "physicalCopy": "Cópia completa",
+      "hardLink": "Link físico",
+      "unknown": "Armazenamento desconhecido",
+      "tooMany": "Limite os resultados atuais a 20.000 arquivos ou menos antes de analisar duplicatas.",
+      "tooLarge": "Os resultados atuais excedem o limite seguro de análise de 50 GB. Reduza os resultados e tente novamente.",
+      "incomplete": "{{count}} arquivos foram ignorados por estarem indisponíveis ou porque o limite seguro de leitura foi atingido. Os resultados podem estar incompletos.",
+      "failed": "A análise duplicada não pôde ser concluída. Tente reduzir os resultados atuais e executá-los novamente."
+    },
+    "toolbarLabel": "Ferramentas de espaço de trabalho",
+    "close": "Fechar painel",
+    "remove": "Remover",
+    "saved": {
+      "nameLabel": "Nome da pesquisa",
+      "saveCurrent": "Gravar a pesquisa actual",
+      "empty": "Nenhuma pesquisa salva ainda.",
+      "allFiles": "Todos os arquivos"
+    },
+    "favorites": {
+      "addSelection": "Adicionar seleção aos favoritos",
+      "empty": "Ainda não existem ficheiros ou pastas favoritos.",
+      "open": "Abrir favorito",
+      "reveal": "Mostrar no Finder"
+    },
+    "operations": {
+      "indexing": "Indexação de arquivos",
+      "search": "Procurar",
+      "sorting": "Ordenação",
+      "activity": "Actividade do índice",
+      "activityLevels": {
+        "idle": "Inativa",
+        "low": "Baixo",
+        "medium": "Médio",
+        "high": "Alta"
+      },
+      "indexedCount": "{{count}} itens indexados",
+      "trash": "Lixo",
+      "fileStates": {
+        "running": "Mover {{count}} itens",
+        "completed": "Mover {{count}} itens",
+        "failed": "Falha ao mover {{count}} itens"
+      },
+      "running": "Em execução",
+      "paused": "Pausa",
+      "pauseIndexing": "Pausar a indexação",
+      "resumeIndexing": "Continuar a indexação",
+      "cancelSearch": "Cancelar a pesquisa",
+      "cancelSort": "Cancelar ordenação",
+      "rescan": "Pesquisar novamente",
+      "idle": "Nada de operações longas."
     }
   }
 }

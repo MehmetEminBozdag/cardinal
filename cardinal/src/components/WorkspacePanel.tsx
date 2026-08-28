@@ -4,8 +4,9 @@ import type { FavoritePath, SavedSearch } from '../hooks/useWorkspaceCollections
 import { useTranslation } from 'react-i18next';
 import { splitPath } from '../utils/path';
 import type { FileOperationUpdate } from '../hooks/useContextMenu';
+import type { DuplicateGroup, DuplicateScanError } from '../hooks/useDuplicateFiles';
 
-export type WorkspaceSection = 'saved' | 'favorites' | 'coverage' | 'operations';
+export type WorkspaceSection = 'saved' | 'favorites' | 'coverage' | 'operations' | 'duplicates';
 
 type CoverageInfo = {
   watchRoot: string;
@@ -45,12 +46,28 @@ type WorkspacePanelProps = {
   onOpenFavorite: (path: string) => void;
   onRevealFavorite: (path: string) => void;
   onRemoveFavorite: (path: string) => void;
+  onIncludePath: (path: string) => void;
   coverage: CoverageInfo;
   operations: OperationInfo;
   onOpenPreferences: () => void;
+  duplicates: {
+    state: 'idle' | 'scanning' | 'ready' | 'error';
+    groups: DuplicateGroup[];
+    scannedFiles: number;
+    skippedFiles: number;
+    limited: boolean;
+    error: DuplicateScanError | null;
+    onScan: () => void;
+  };
 };
 
-const SECTION_KEYS: WorkspaceSection[] = ['saved', 'favorites', 'coverage', 'operations'];
+const SECTION_KEYS: WorkspaceSection[] = [
+  'saved',
+  'favorites',
+  'coverage',
+  'operations',
+  'duplicates',
+];
 
 export function WorkspaceToolbar({
   activeSection,
@@ -77,7 +94,9 @@ export function WorkspaceToolbar({
                 ? '★'
                 : section === 'coverage'
                   ? '?'
-                  : '◷'}
+                  : section === 'operations'
+                    ? '◷'
+                    : '≋'}
           </span>
           {t(`workspace.sections.${section}`)}
         </button>
@@ -222,6 +241,8 @@ export function WorkspacePanel(props: WorkspacePanelProps): React.JSX.Element {
               title={t('workspace.coverage.excluded')}
               paths={coverage.ignorePaths}
               empty={t('workspace.coverage.none')}
+              actionLabel={t('workspace.coverage.includeInSearch')}
+              onAction={props.onIncludePath}
             />
             <PathGroup
               title={t('workspace.coverage.included')}
@@ -306,9 +327,75 @@ export function WorkspacePanel(props: WorkspacePanelProps): React.JSX.Element {
             </button>
           </div>
         ) : null}
+
+        {activeSection === 'duplicates' ? (
+          <div className="duplicate-details">
+            <p className="workspace-note">{t('workspace.duplicates.explanation')}</p>
+            <button
+              type="button"
+              className="workspace-primary-action"
+              onClick={props.duplicates.onScan}
+              disabled={props.duplicates.state === 'scanning'}
+            >
+              {props.duplicates.state === 'scanning'
+                ? t('workspace.duplicates.scanning')
+                : t('workspace.duplicates.scan')}
+            </button>
+            {props.duplicates.error ? (
+              <p className="workspace-error" role="alert">
+                {t(`workspace.duplicates.${props.duplicates.error}`)}
+              </p>
+            ) : null}
+            {props.duplicates.state === 'ready' ? (
+              <>
+                <p className="workspace-note">
+                  {t('workspace.duplicates.scanned', { count: props.duplicates.scannedFiles })}
+                </p>
+                {props.duplicates.skippedFiles > 0 || props.duplicates.limited ? (
+                  <p className="workspace-warning" role="status">
+                    {t('workspace.duplicates.incomplete', {
+                      count: props.duplicates.skippedFiles,
+                    })}
+                  </p>
+                ) : null}
+              </>
+            ) : null}
+            <WorkspaceEmpty
+              visible={props.duplicates.state === 'ready' && props.duplicates.groups.length === 0}
+              text={t('workspace.duplicates.empty')}
+            />
+            <div className="duplicate-groups">
+              {props.duplicates.groups.map((group, groupIndex) => (
+                <section key={`${group.size}-${groupIndex}`} className="duplicate-group">
+                  <h3>{t('workspace.duplicates.groupSize', { size: formatBytes(group.size) })}</h3>
+                  <ul>
+                    {group.files.map((file) => (
+                      <li key={file.path}>
+                        <span title={file.path}>{file.path}</span>
+                        <strong>{t(`workspace.duplicates.${file.storage}`)}</strong>
+                      </li>
+                    ))}
+                  </ul>
+                </section>
+              ))}
+            </div>
+          </div>
+        ) : null}
       </div>
     </aside>
   );
+}
+
+function formatBytes(bytes: number): string {
+  if (bytes < 1024) return `${bytes} B`;
+  const units = ['KB', 'MB', 'GB', 'TB'];
+  let value = bytes / 1024;
+  let unit = units[0];
+  for (let index = 1; index < units.length && value >= 1024; index += 1) {
+    value /= 1024;
+    unit = units[index];
+  }
+  return `${value.toFixed(value >= 10 ? 0 : 1)} ${unit}`;
 }
 
 function WorkspaceEmpty({ visible, text }: { visible: boolean; text: string }) {
@@ -324,7 +411,19 @@ function CoverageRow({ label, value }: { label: string; value: string }) {
   );
 }
 
-function PathGroup({ title, paths, empty }: { title: string; paths: string[]; empty: string }) {
+function PathGroup({
+  title,
+  paths,
+  empty,
+  actionLabel,
+  onAction,
+}: {
+  title: string;
+  paths: string[];
+  empty: string;
+  actionLabel?: string;
+  onAction?: (path: string) => void;
+}) {
   return (
     <section className="coverage-paths">
       <h3>{title}</h3>
@@ -332,7 +431,12 @@ function PathGroup({ title, paths, empty }: { title: string; paths: string[]; em
         <ul>
           {paths.map((path) => (
             <li key={path} title={path}>
-              {path}
+              <span>{path}</span>
+              {actionLabel && onAction ? (
+                <button type="button" aria-label={actionLabel} onClick={() => onAction(path)}>
+                  {actionLabel}
+                </button>
+              ) : null}
             </li>
           ))}
         </ul>

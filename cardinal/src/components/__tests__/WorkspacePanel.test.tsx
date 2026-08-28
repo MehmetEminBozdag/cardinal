@@ -22,6 +22,8 @@ const baseProps = {
     state: 'idle' as const,
     groups: [],
     scannedFiles: 0,
+    skippedFiles: 0,
+    limited: false,
     error: null,
     onScan: vi.fn(),
   },
@@ -149,6 +151,8 @@ describe('WorkspacePanel', () => {
         duplicates={{
           state: 'ready',
           scannedFiles: 3,
+          skippedFiles: 1,
+          limited: true,
           error: null,
           onScan,
           groups: [
@@ -167,6 +171,7 @@ describe('WorkspacePanel', () => {
 
     expect(screen.getByText('/tmp/full-copy')).toBeInTheDocument();
     expect(screen.getAllByText('workspace.duplicates.apfsClone')).toHaveLength(2);
+    expect(screen.getByText('workspace.duplicates.incomplete')).toBeInTheDocument();
     fireEvent.click(screen.getByRole('button', { name: 'workspace.duplicates.scan' }));
     expect(onScan).toHaveBeenCalledTimes(1);
   });

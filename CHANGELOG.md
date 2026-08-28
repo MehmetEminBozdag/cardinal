@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.1.24 — 2026-08-28
+- Move advanced search controls into the interface, including newest-first sorting, folders as a type, date/size/extension filters, and one-click inclusion of excluded paths.
+- Add a hideable workspace toolbar and expanded Search, View, and Index menus for saved searches, favorites, coverage, operations, and duplicate analysis.
+- Add on-demand duplicate analysis for the current results, distinguishing APFS clones, hard links, and physical copies when macOS reports reliable clone mapping.
+- Improve large-result ordering, background CPU control, Cmd+Q shutdown responsiveness, and direct Move to Trash workflows.
+- Localize the added features and publish release notes for all 15 supported locales.
+
 ## 0.1.23 — 2026-03-25
 - Reduce power consumption by expanding the default ignored paths to cover more macOS cache, log, metadata, and runtime directories.
 - Further reduce background work by making the filesystem event watcher honor ignored paths.

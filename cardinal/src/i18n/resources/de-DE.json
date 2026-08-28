@@ -7,10 +7,33 @@
     },
     "options": {
       "caseSensitive": "Groß-/Kleinschreibung beachten",
-      "directoryScope": "Ordnerbereich umschalten"
+      "directoryScope": "Ordnerbereich umschalten",
+      "newest": "Neueste zuerst"
     },
     "aria": {
       "searchInput": "Sucheingabe"
+    },
+    "filters": {
+      "label": "Filter",
+      "type": "Typ",
+      "anyType": "Jeder Typ",
+      "folders": "Ordner",
+      "pictures": "Bilder",
+      "videos": "Videos",
+      "audio": "Audio",
+      "documents": "Dokumente",
+      "archives": "Archive",
+      "code": "Code",
+      "apps": "Apps",
+      "modified": "Geändert",
+      "anyTime": "Jederzeit",
+      "today": "Heute",
+      "pastWeek": "Letzte Woche",
+      "pastMonth": "Letzter Monat",
+      "pastYear": "Vergangenes Jahr",
+      "size": "Größe",
+      "anySize": "Jede Größe",
+      "clear": "Zurücksetzen"
     }
   },
   "stateDisplay": {
@@ -52,7 +75,12 @@
     "copyFilenames": "Dateinamen kopieren",
     "copyPath": "Pfad kopieren",
     "copyPaths": "Pfade kopieren",
-    "resetColumnWidths": "Spaltenbreiten zurücksetzen"
+    "resetColumnWidths": "Spaltenbreiten zurücksetzen",
+    "moveToTrash_one": "Umzug nach Trash...",
+    "moveToTrash_other": "Bewegen Sie {{count}} Artikel in den Papierkorb...",
+    "confirmTrash_one": "Verschieben Sie den ausgewählten Artikel in den Papierkorb?",
+    "confirmTrash_other": "Bewegen Sie {{count}} ausgewählte Artikel in den Papierkorb?",
+    "trashFailed": "Der Artikel konnte nicht in den Papierkorb verschoben werden."
   },
   "statusBar": {
     "tabs": {
@@ -118,7 +146,21 @@
     "maximize": "Zoomen",
     "closeWindow": "Fenster schließen",
     "help": "Hilfe",
-    "getUpdates": "Updates abrufen"
+    "getUpdates": "Updates abrufen",
+    "search": "Suche",
+    "focusSearch": "Suche fokussieren",
+    "showNewest": "Neueste Dateien anzeigen",
+    "savedSearches": "Gespeicherte Suchen",
+    "favorites": "Favoriten",
+    "coverage": "Warum wurde es nicht gefunden?",
+    "operations": "Vorgänge",
+    "duplicates": "Doppelte Dateien",
+    "showFiles": "Dateien anzeigen",
+    "showEvents": "Ereignisse anzeigen",
+    "showWorkspaceToolbar": "Arbeitsbereich-Werkzeuge anzeigen",
+    "indexing": "Index",
+    "rescan": "Dateien neu einlesen",
+    "searchSettings": "Such- und Indexeinstellungen"
   },
   "preferences": {
     "title": "Einstellungen",
@@ -171,13 +213,102 @@
     "help": "Ein Pfad pro Zeile; ignorierte Pfade werden bei der Indexierung übersprungen.",
     "errors": {
       "absolute": "Jeder Pfad muss mit '/' oder '~' beginnen."
-    }
+    },
+    "listLabel": "Ignorierte Ordner",
+    "addLabel": "Zu ignorierender Ordnerpfad",
+    "placeholder": "/path/to/folder",
+    "add": "Hinzufügen",
+    "remove": "Entfernen {{path}}",
+    "empty": "Es werden keine zusätzlichen Ordner ignoriert."
   },
   "includePaths": {
     "label": "Pfade einschließen",
     "help": "Ein Pfad pro Zeile; eingeschlossene Pfade bleiben indexiert, auch wenn ein übergeordneter Pfad ignoriert wird.",
     "errors": {
       "absolute": "Jeder Pfad muss mit '/' oder '~' beginnen."
+    }
+  },
+  "workspace": {
+    "sections": {
+      "duplicates": "Doppelte Dateien",
+      "saved": "Gespeicherte Suchen",
+      "favorites": "Favoriten",
+      "coverage": "Warum wurde es nicht gefunden?",
+      "operations": "Vorgänge"
+    },
+    "coverage": {
+      "includeInSearch": "In die Suche aufnehmen",
+      "openSettings": "Such- und Indexeinstellungen öffnen",
+      "permission": "Vollständiger Festplattenzugriff",
+      "granted": "Aktiviert",
+      "denied": "Deaktiviert",
+      "state": "Indexstatus",
+      "indexed": "Indexierte Elemente",
+      "root": "Überwachungsordner",
+      "excluded": "Ausgeschlossene Pfade",
+      "included": "Ausdrücklich eingeschlossene Pfade",
+      "none": "Keine Pfade sind ausgeschlossen.",
+      "allUnderRoot": "Alle zugänglichen Pfade unter der Wurzel sind enthalten.",
+      "directoryScope": "Aktiver Ordnerumfang",
+      "explanation": "Wenn eine Datei fehlt, überprüfen Sie die Berechtigungen, die Monitorwurzel, ausgeschlossene Pfade und den aktiven Ordnerumfang."
+    },
+    "duplicates": {
+      "explanation": "Analysiert die aktuellen Dateiergebnisse nach Größe und Inhalt. APFS-Klone, Hardlinks und physische Kopien werden getrennt angezeigt, wenn macOS eine zuverlässige Klonzuordnung bereitstellt.",
+      "scan": "Aktuelle Ergebnisse analysieren",
+      "scanning": "Duplikate werden analysiert…",
+      "scanned": "{{count}} Dateien analysiert",
+      "empty": "In den aktuellen Ergebnissen wurden keine doppelten Inhalte gefunden.",
+      "groupSize": "Jede Datei: {{size}}",
+      "apfsClone": "APFS-Klon",
+      "physicalCopy": "Physische Kopie",
+      "hardLink": "Hardlink",
+      "unknown": "Speicherung unbekannt",
+      "tooMany": "Grenzen Sie die aktuellen Ergebnisse vor der Duplikatanalyse auf höchstens 20.000 Dateien ein.",
+      "tooLarge": "Die aktuellen Ergebnisse überschreiten die sichere Analysegrenze von 50 GB. Grenzen Sie die Ergebnisse ein und versuchen Sie es erneut.",
+      "incomplete": "{{count}} Dateien wurden übersprungen, weil sie nicht verfügbar waren oder die sichere Lesegrenze erreicht wurde. Die Ergebnisse können unvollständig sein.",
+      "failed": "Die Duplikatanalyse konnte nicht abgeschlossen werden. Grenzen Sie die aktuellen Ergebnisse ein und versuchen Sie es erneut."
+    },
+    "toolbarLabel": "Arbeitsbereich-Werkzeuge",
+    "close": "Bereich schließen",
+    "remove": "Entfernen",
+    "saved": {
+      "nameLabel": "Suchname",
+      "saveCurrent": "Aktuelle Suche speichern",
+      "empty": "Noch keine gespeicherten Suchen.",
+      "allFiles": "Alle Dateien"
+    },
+    "favorites": {
+      "addSelection": "Auswahl zu Favoriten hinzufügen",
+      "empty": "Noch keine Lieblingsdateien oder -ordner.",
+      "open": "Favorit öffnen",
+      "reveal": "Im Finder anzeigen"
+    },
+    "operations": {
+      "indexing": "Dateiindexierung",
+      "search": "Suche",
+      "sorting": "Sortierung",
+      "activity": "Indexaktivität",
+      "activityLevels": {
+        "idle": "Leerlauf",
+        "low": "niedrig",
+        "medium": "Mittel",
+        "high": "hoch"
+      },
+      "indexedCount": "{{count}} indexierte Posten",
+      "trash": "In den Papierkorb verschieben",
+      "fileStates": {
+        "running": "{{count}} Elemente werden verschoben",
+        "completed": "{{count}} Elemente verschoben",
+        "failed": "{{count}} Elemente konnten nicht verschoben werden"
+      },
+      "running": "Wird ausgeführt",
+      "paused": "Angehalten",
+      "pauseIndexing": "Indexierung pausieren",
+      "resumeIndexing": "Indexierung fortsetzen",
+      "cancelSearch": "Suche abbrechen",
+      "cancelSort": "Sortierung abbrechen",
+      "rescan": "Erneut scannen",
+      "idle": "Keine langfristigen Operationen."
     }
   }
 }

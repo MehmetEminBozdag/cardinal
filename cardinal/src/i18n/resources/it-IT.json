@@ -7,10 +7,33 @@
     },
     "options": {
       "caseSensitive": "Attiva/disattiva distinzione tra maiuscole e minuscole",
-      "directoryScope": "Mostra ambito cartella"
+      "directoryScope": "Mostra ambito cartella",
+      "newest": "Più recenti"
     },
     "aria": {
       "searchInput": "Input di ricerca"
+    },
+    "filters": {
+      "label": "Filtri",
+      "type": "Tipo",
+      "anyType": "Qualsiasi tipo",
+      "folders": "Cartelle",
+      "pictures": "Fotografie",
+      "videos": "Video",
+      "audio": "Audio",
+      "documents": "Documenti",
+      "archives": "Archivio",
+      "code": "Codice",
+      "apps": "Applicazioni",
+      "modified": "Modificato",
+      "anyTime": "Ogni volta",
+      "today": "Oggi",
+      "pastWeek": "Settimana passata",
+      "pastMonth": "Passato mese",
+      "pastYear": "Anno passato",
+      "size": "Dimensione",
+      "anySize": "Qualsiasi dimensione",
+      "clear": "Reimposta"
     }
   },
   "stateDisplay": {
@@ -52,7 +75,12 @@
     "copyFilenames": "Copia nomi file",
     "copyPath": "Copia percorso",
     "copyPaths": "Copia percorsi",
-    "resetColumnWidths": "Reimposta larghezze colonne"
+    "resetColumnWidths": "Reimposta larghezze colonne",
+    "moveToTrash_one": "Muovetevi nel cestino...",
+    "moveToTrash_other": "Spostare {{count}} Articoli per...",
+    "confirmTrash_one": "Spostare l'elemento selezionato per Cestino?",
+    "confirmTrash_other": "Spostare {{count}} elementi selezionati per Cestino?",
+    "trashFailed": "L'articolo non potrebbe essere spostato in cestino."
   },
   "statusBar": {
     "tabs": {
@@ -118,7 +146,21 @@
     "maximize": "Zoom",
     "closeWindow": "Chiudi finestra",
     "help": "Aiuto",
-    "getUpdates": "Ricevi aggiornamenti"
+    "getUpdates": "Ricevi aggiornamenti",
+    "search": "Cerca",
+    "focusSearch": "Attiva la ricerca",
+    "showNewest": "Mostra i file più recenti",
+    "savedSearches": "Ricerche salvate",
+    "favorites": "Preferiti",
+    "coverage": "Perché non è stato trovato?",
+    "operations": "Operazioni",
+    "duplicates": "File duplicati",
+    "showFiles": "Mostra file",
+    "showEvents": "Mostra eventi",
+    "showWorkspaceToolbar": "Mostra strumenti area di lavoro",
+    "indexing": "Indice",
+    "rescan": "Scansiona di nuovo i file",
+    "searchSettings": "Impostazioni di ricerca e indicizzazione"
   },
   "preferences": {
     "title": "Preferenze",
@@ -171,13 +213,102 @@
     "help": "Un percorso per riga; i percorsi ignorati vengono saltati durante l'indicizzazione.",
     "errors": {
       "absolute": "Ogni percorso deve iniziare con '/' o '~'."
-    }
+    },
+    "listLabel": "Cartelle ignorate",
+    "addLabel": "Percorso della cartella da ignorare",
+    "placeholder": "/path/to/folder",
+    "add": "Aggiungi",
+    "remove": "Rimuovi {{path}}",
+    "empty": "Nessuna cartella in più viene ignorata."
   },
   "includePaths": {
     "label": "Percorsi inclusi",
     "help": "Un percorso per riga; i percorsi inclusi restano indicizzati anche se un livello superiore è ignorato.",
     "errors": {
       "absolute": "Ogni percorso deve iniziare con '/' o '~'."
+    }
+  },
+  "workspace": {
+    "sections": {
+      "duplicates": "File duplicati",
+      "saved": "Ricerche salvate",
+      "favorites": "Preferiti",
+      "coverage": "Perche' non e' stato trovato?",
+      "operations": "Operazioni"
+    },
+    "coverage": {
+      "includeInSearch": "Includi nella ricerca",
+      "openSettings": "Apri impostazioni di ricerca e indicizzazione",
+      "permission": "Accesso a disco completo",
+      "granted": "Abilitato",
+      "denied": "Disabili",
+      "state": "Stato indice",
+      "indexed": "Articoli indicizzati",
+      "root": "Monitorare la radice",
+      "excluded": "Percorsi esclusi",
+      "included": "Percorsi espliciti inclusi",
+      "none": "Non sono esclusi i percorsi.",
+      "allUnderRoot": "Tutti i percorsi accessibili sotto la radice sono inclusi.",
+      "directoryScope": "Campo di applicazione della cartella attiva",
+      "explanation": "Se manca un file, controlla le autorizzazioni, la radice del monitor, i percorsi esclusi e l'ambito della cartella attiva."
+    },
+    "duplicates": {
+      "explanation": "Analizza i risultati correnti per dimensione e contenuto. I cloni APFS, i collegamenti fisici e le copie complete vengono distinti quando macOS fornisce una mappatura affidabile.",
+      "scan": "Analizza i risultati correnti",
+      "scanning": "Analisi dei duplicati…",
+      "scanned": "{{count}} file analizzati",
+      "empty": "Nessun contenuto duplicato nei risultati correnti.",
+      "groupSize": "Ogni file: {{size}}",
+      "apfsClone": "Clone APFS",
+      "physicalCopy": "Copia completa",
+      "hardLink": "Collegamento fisico",
+      "unknown": "Archiviazione sconosciuta",
+      "tooMany": "Limita i risultati attuali a 20.000 file o meno prima di analizzare i duplicati.",
+      "tooLarge": "I risultati attuali superano il limite di analisi sicuro di 50 GB. Restringi i risultati e riprova.",
+      "incomplete": "{{count}} file sono stati ignorati perché non disponibili o perché è stato raggiunto il limite di lettura sicuro. I risultati potrebbero essere incompleti.",
+      "failed": "L'analisi duplicata non potrebbe essere completata. Prova a restringere i risultati attuali e riprova."
+    },
+    "toolbarLabel": "Strumenti per lo spazio di lavoro",
+    "close": "Chiudi pannello",
+    "remove": "Rimuovi",
+    "saved": {
+      "nameLabel": "Nome della ricerca",
+      "saveCurrent": "Salva la ricerca corrente",
+      "empty": "Ancora nessuna ricerca salvata.",
+      "allFiles": "Tutti i file"
+    },
+    "favorites": {
+      "addSelection": "Aggiungi selezione ai preferiti",
+      "empty": "Nessun file preferito o cartelle ancora.",
+      "open": "Apri preferiti",
+      "reveal": "Mostra nel Finder"
+    },
+    "operations": {
+      "indexing": "Indicizzazione dei file",
+      "search": "Ricerca",
+      "sorting": "Ordinazione",
+      "activity": "Attività indice",
+      "activityLevels": {
+        "idle": "Inattiva",
+        "low": "Basso",
+        "medium": "Media",
+        "high": "Alto"
+      },
+      "indexedCount": "{{count}} articoli indicizzati",
+      "trash": "Trattamenti",
+      "fileStates": {
+        "running": "Spostare {{count}} articoli",
+        "completed": "Spostato {{count}} articoli",
+        "failed": "Non spostato {{count}} articoli"
+      },
+      "running": "Correre",
+      "paused": "In pausa",
+      "pauseIndexing": "Sospendi indicizzazione",
+      "resumeIndexing": "Riprendi l'indicizzazione",
+      "cancelSearch": "Annulla ricerca",
+      "cancelSort": "Annulla ordinamento",
+      "rescan": "Ripeti scansione",
+      "idle": "Nessuna operazione di lunga durata."
     }
   }
 }
