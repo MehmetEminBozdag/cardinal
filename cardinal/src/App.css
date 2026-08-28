@@ -677,6 +677,31 @@ button:active:not(:disabled) {
   margin-bottom: 8px;
 }
 
+.coverage-paths li {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.coverage-paths li > span {
+  min-width: 0;
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.coverage-paths li > button {
+  flex: none;
+  min-height: 24px;
+  padding: 2px 6px;
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-size: 10px;
+}
+
 .workspace-list {
   list-style: none;
   margin-top: 9px;
