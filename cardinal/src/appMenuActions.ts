@@ -9,6 +9,7 @@ export type AppMenuAction =
   | 'workspace-favorites'
   | 'workspace-coverage'
   | 'workspace-operations'
+  | 'workspace-duplicates'
   | 'toggle-workspace-toolbar'
   | 'rescan';
 

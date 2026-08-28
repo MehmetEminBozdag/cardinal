@@ -159,7 +159,8 @@
     "maximize": "Zoomen",
     "closeWindow": "Fenster schließen",
     "help": "Hilfe",
-    "getUpdates": "Updates abrufen"
+    "getUpdates": "Updates abrufen",
+    "duplicates": "Doppelte Dateien"
   },
   "preferences": {
     "title": "Einstellungen",
@@ -235,7 +236,8 @@
       "saved": "Gespeicherte Suchen",
       "favorites": "Favoriten",
       "coverage": "Warum wurde es nicht gefunden?",
-      "operations": "Vorgänge"
+      "operations": "Vorgänge",
+      "duplicates": "Doppelte Dateien"
     },
     "saved": {
       "nameLabel": "Suchname",
@@ -291,6 +293,22 @@
       "cancelSort": "Sortierung abbrechen",
       "rescan": "Erneut scannen",
       "idle": "Keine langfristigen Operationen."
+    },
+    "duplicates": {
+      "explanation": "Analysiert die aktuellen Dateiergebnisse nach Größe und Inhalt. APFS-Klone, Hardlinks und physische Kopien werden getrennt angezeigt, wenn macOS eine zuverlässige Klonzuordnung bereitstellt.",
+      "scan": "Aktuelle Ergebnisse analysieren",
+      "scanning": "Duplikate werden analysiert…",
+      "scanned": "{{count}} Dateien analysiert",
+      "empty": "In den aktuellen Ergebnissen wurden keine doppelten Inhalte gefunden.",
+      "groupSize": "Jede Datei: {{size}}",
+      "apfsClone": "APFS-Klon",
+      "physicalCopy": "Physische Kopie",
+      "hardLink": "Hardlink",
+      "unknown": "Speicherung unbekannt",
+      "tooMany": "Grenzen Sie die aktuellen Ergebnisse vor der Duplikatanalyse auf höchstens 20.000 Dateien ein.",
+      "tooLarge": "Die aktuellen Ergebnisse überschreiten die sichere Analysegrenze von 50 GB. Grenzen Sie die Ergebnisse ein und versuchen Sie es erneut.",
+      "incomplete": "{{count}} Dateien wurden übersprungen, weil sie nicht verfügbar waren oder die sichere Lesegrenze erreicht wurde. Die Ergebnisse können unvollständig sein.",
+      "failed": "Die Duplikatanalyse konnte nicht abgeschlossen werden. Grenzen Sie die aktuellen Ergebnisse ein und versuchen Sie es erneut."
     }
   }
 }

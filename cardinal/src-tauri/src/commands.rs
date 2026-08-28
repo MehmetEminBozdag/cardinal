@@ -1,5 +1,10 @@
 use crate::{
     DEFAULT_SYSTEM_IGNORE_PATH, LOGIC_START, LogicStartConfig,
+    duplicate_files::{
+        DuplicateInput, DuplicateScanResponse, MAX_DUPLICATE_CANDIDATES,
+        MAX_DUPLICATE_LOGICAL_BYTES, begin_duplicate_scan, cancel_duplicate_scan as cancel_scan,
+        scan_duplicates,
+    },
     lifecycle::load_app_state,
     quicklook::{
         QuickLookItemInput, close_preview_panel, toggle_preview_panel, update_preview_panel,
@@ -12,6 +17,7 @@ use anyhow::{Result, anyhow};
 use base64::{Engine as _, engine::general_purpose};
 use camino::{Utf8Path as Path, Utf8PathBuf as PathBuf};
 use crossbeam_channel::{Sender, TrySendError, bounded};
+use fswalk::NodeFileType;
 use objc2::{
     rc::{Retained, autoreleasepool},
     runtime::ProtocolObject,
@@ -458,6 +464,51 @@ pub fn get_nodes_info(
             }
         })
         .collect()
+}
+
+#[tauri::command(async)]
+pub async fn find_duplicates(
+    results: Vec<SlabIndex>,
+    state: State<'_, SearchState>,
+) -> Result<DuplicateScanResponse, String> {
+    if results.len() > MAX_DUPLICATE_CANDIDATES {
+        return Err(format!(
+            "Too many results to analyze safely. Narrow the search to {MAX_DUPLICATE_CANDIDATES} files or fewer."
+        ));
+    }
+
+    let inputs: Vec<_> = state
+        .request_nodes(results)
+        .into_iter()
+        .filter_map(|SearchResultNode { path, metadata }| {
+            let metadata = metadata.as_ref()?;
+            (metadata.r#type() == NodeFileType::File && metadata.size() > 0).then(|| {
+                DuplicateInput {
+                    path: path.to_string_lossy().into_owned(),
+                    size: metadata.size() as u64,
+                }
+            })
+        })
+        .collect();
+
+    let logical_bytes = inputs
+        .iter()
+        .try_fold(0_u64, |total, input| total.checked_add(input.size))
+        .unwrap_or(u64::MAX);
+    if logical_bytes > MAX_DUPLICATE_LOGICAL_BYTES {
+        return Err("duplicate_input_too_large".to_owned());
+    }
+
+    let generation = begin_duplicate_scan();
+
+    tauri::async_runtime::spawn_blocking(move || scan_duplicates(inputs, generation))
+        .await
+        .map_err(|error| format!("Duplicate analysis failed: {error}"))
+}
+
+#[tauri::command]
+pub fn cancel_duplicate_scan() {
+    cancel_scan();
 }
 
 #[tauri::command(async)]

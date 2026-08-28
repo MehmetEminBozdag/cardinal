@@ -158,7 +158,8 @@
     "maximize": "缩放窗口",
     "closeWindow": "关闭窗口",
     "help": "帮助",
-    "getUpdates": "获取更新"
+    "getUpdates": "获取更新",
+    "duplicates": "重复文件"
   },
   "preferences": {
     "title": "偏好设置",
@@ -234,7 +235,8 @@
       "saved": "已保存的搜索",
       "favorites": "收藏夹",
       "coverage": "为什么它没有找到?",
-      "operations": "业务"
+      "operations": "业务",
+      "duplicates": "重复文件"
     },
     "saved": {
       "nameLabel": "搜索名称",
@@ -290,6 +292,22 @@
       "cancelSort": "取消排序",
       "rescan": "重新扫描",
       "idle": "没有长期运营."
+    },
+    "duplicates": {
+      "explanation": "按大小和内容分析当前结果。macOS 提供可靠的克隆映射时，会分别标识 APFS 克隆、硬链接和完整副本。",
+      "scan": "分析当前结果",
+      "scanning": "正在分析重复文件…",
+      "scanned": "分析的{{count}}份文件",
+      "empty": "当前结果中没有相同内容。",
+      "groupSize": "每个文件: {{size}}",
+      "apfsClone": "APFS 克隆",
+      "physicalCopy": "完整副本",
+      "hardLink": "硬链接",
+      "unknown": "存储方式未知",
+      "tooMany": "分析重复文件前，请将当前结果缩小到20,000个文件以内。",
+      "tooLarge": "当前结果超过安全的50 GB分析上限。请缩小结果后重试。",
+      "incomplete": "有{{count}}个文件因不可用或达到安全读取上限而被跳过，结果可能不完整。",
+      "failed": "复制分析无法完成。 尝试缩小当前结果并再次运行 。"
     }
   }
 }

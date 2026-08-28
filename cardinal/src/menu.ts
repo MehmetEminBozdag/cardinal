@@ -92,6 +92,12 @@ async function buildAppMenu(): Promise<void> {
         undefined,
         'workspace-operations',
       ),
+      await actionItem(
+        'menu.workspace_duplicates',
+        'menu.duplicates',
+        undefined,
+        'workspace-duplicates',
+      ),
     ],
   });
 
