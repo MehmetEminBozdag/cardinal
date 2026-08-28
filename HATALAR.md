@@ -109,3 +109,7 @@ Kural: Graphify Python API çağrılarında sistem `python3` varsayma; skill'in 
 Sebep: Node v26'nın deneysel global Web Storage uygulaması, Vitest/jsdom içindeki `window.localStorage` yerine dosya yolu verilmemiş bir depolama nesnesi sundu.
 Çözüm: Testleri `NODE_OPTIONS=--no-experimental-webstorage` ile çalıştırarak jsdom'un kendi localStorage uygulamasını kullandım.
 Kural: Node 26 üzerinde jsdom tabanlı Cardinal testlerinde bu ortam seçeneğini kullan; uygulama hatası sanıp test kodunu değiştirme.
+## [2026-08-28] Birden fazla remote tek git fetch komutunda ref gibi yorumlandi
+Sebep: `git fetch --prune upstream origin` komutunda `origin`, ikinci remote yerine `upstream` uzerindeki ref adi olarak yorumlandi.
+Cozum: Her remote ayri `git fetch --prune <remote>` komutuyla guncellendi.
+Kural: Birden fazla Git remote guncellenecekse remote basina ayri fetch calistir.
