@@ -40,6 +40,7 @@ import { openPreferences } from './utils/openPreferences';
 import { invoke } from '@tauri-apps/api/core';
 import { subscribeToAppMenuActions } from './appMenuActions';
 import { useWorkspaceToolbarVisibility } from './hooks/useWorkspaceToolbarVisibility';
+import { useDuplicateFiles } from './hooks/useDuplicateFiles';
 
 function App() {
   const {
@@ -156,6 +157,7 @@ function App() {
   const [workspaceSection, setWorkspaceSection] = useState<WorkspaceSection | null>(null);
   const workspaceToolbar = useWorkspaceToolbarVisibility();
   const { fileOperations, updateFileOperation } = useFileOperationLog();
+  const duplicateFiles = useDuplicateFiles(displayedResults, displayedResultsVersion);
   const { savedSearches, favorites, saveSearch, removeSavedSearch, addFavorites, removeFavorite } =
     useWorkspaceCollections();
 
@@ -542,6 +544,15 @@ function App() {
               onRevealFavorite={(path) => void invoke('open_in_finder', { path })}
               onRemoveFavorite={removeFavorite}
               onIncludePath={handleIncludePath}
+              duplicates={{
+                state: duplicateFiles.state,
+                groups: duplicateFiles.groups,
+                scannedFiles: duplicateFiles.scannedFiles,
+                skippedFiles: duplicateFiles.skippedFiles,
+                limited: duplicateFiles.limited,
+                error: duplicateFiles.error,
+                onScan: () => void duplicateFiles.scan(),
+              }}
               coverage={{
                 watchRoot: watchRoot ?? defaultWatchRoot,
                 ignorePaths,

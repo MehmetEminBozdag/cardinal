@@ -159,7 +159,8 @@
     "maximize": "Zoom",
     "closeWindow": "Fermer la fenêtre",
     "help": "Aide",
-    "getUpdates": "Obtenir les mises à jour"
+    "getUpdates": "Obtenir les mises à jour",
+    "duplicates": "Fichiers en double"
   },
   "preferences": {
     "title": "Préférences",
@@ -235,7 +236,8 @@
       "saved": "Recherches sauvegardées",
       "favorites": "Favoris",
       "coverage": "Pourquoi n'a-t-il pas été trouvé ?",
-      "operations": "Opérations"
+      "operations": "Opérations",
+      "duplicates": "Fichiers en double"
     },
     "saved": {
       "nameLabel": "Nom de la recherche",
@@ -291,6 +293,22 @@
       "cancelSort": "Annuler le tri",
       "rescan": "Réscan",
       "idle": "Pas d'opérations de longue durée."
+    },
+    "duplicates": {
+      "explanation": "Analyse les résultats actuels selon leur taille et leur contenu. Les clones APFS, liens physiques et copies complètes sont distingués lorsque macOS fournit une cartographie fiable.",
+      "scan": "Analyser les résultats actuels",
+      "scanning": "Analyse des doublons…",
+      "scanned": "{{count}} fichiers analysés",
+      "empty": "Aucun contenu en double dans les résultats actuels.",
+      "groupSize": "Chaque dossier : {{size}}",
+      "apfsClone": "Clone APFS",
+      "physicalCopy": "Copie complète",
+      "hardLink": "Lien physique",
+      "unknown": "Stockage inconnu",
+      "tooMany": "Limitez les résultats actuels à 20 000 fichiers ou moins avant d’analyser les doublons.",
+      "tooLarge": "Les résultats actuels dépassent la limite d’analyse sûre de 50 Go. Réduisez les résultats et réessayez.",
+      "incomplete": "{{count}} fichiers ont été ignorés car ils étaient indisponibles ou la limite de lecture sûre a été atteinte. Les résultats peuvent être incomplets.",
+      "failed": "L'analyse en double n'a pas pu être effectuée. Essayez de réduire les résultats actuels et lancez-les à nouveau."
     }
   }
 }

@@ -41,6 +41,7 @@ tauri-plugin-window-state = "2"
 once_cell = { version = "1.20", features = ["parking_lot"] }
 trash = "5.2.6"
 same-file = "1.0.6"
+sha2 = "0.10"
 
 cardinal-sdk.path = "../../cardinal-sdk"
 search-cache.path = "../../search-cache"

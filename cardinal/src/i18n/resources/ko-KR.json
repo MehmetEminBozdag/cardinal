@@ -159,7 +159,8 @@
     "maximize": "줌",
     "closeWindow": "윈도우 닫기",
     "help": "도움말",
-    "getUpdates": "업데이트 받기"
+    "getUpdates": "업데이트 받기",
+    "duplicates": "중복 파일"
   },
   "preferences": {
     "title": "환경설정",
@@ -235,7 +236,8 @@
       "saved": "비밀번호",
       "favorites": "이름 *",
       "coverage": "왜 발견되지 않았습니까?",
-      "operations": "영업 시간"
+      "operations": "영업 시간",
+      "duplicates": "중복 파일"
     },
     "saved": {
       "nameLabel": "이름 *",
@@ -291,6 +293,22 @@
       "cancelSort": "정렬 취소",
       "rescan": "사이트맵",
       "idle": "긴 가동 없음."
+    },
+    "duplicates": {
+      "explanation": "현재 결과를 크기와 내용으로 분석합니다. macOS가 신뢰할 수 있는 클론 정보를 제공하면 APFS 클론, 하드 링크, 전체 복사본을 구분합니다.",
+      "scan": "현재 결과 분석",
+      "scanning": "중복 분석 중…",
+      "scanned": "{{count}} 파일 분석",
+      "empty": "현재 결과에서 같은 내용의 파일을 찾지 못했습니다.",
+      "groupSize": "각 파일: {{size}}",
+      "apfsClone": "APFS 클론",
+      "physicalCopy": "전체 복사본",
+      "hardLink": "하드 링크",
+      "unknown": "저장 방식 알 수 없음",
+      "tooMany": "중복을 분석하기 전에 현재 결과를 20,000개 이하의 파일로 좁혀 주세요.",
+      "tooLarge": "현재 결과가 안전한 50 GB 분석 한도를 초과합니다. 결과를 좁힌 뒤 다시 시도하세요.",
+      "incomplete": "{{count}}개 파일을 사용할 수 없거나 안전한 읽기 한도에 도달하여 건너뛰었습니다. 결과가 불완전할 수 있습니다.",
+      "failed": "중복 분석은 완료 할 수 없습니다. 현재 결과를 축소하고 다시 실행하십시오."
     }
   }
 }

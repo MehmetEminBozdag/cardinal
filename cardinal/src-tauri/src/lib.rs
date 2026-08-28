@@ -1,5 +1,6 @@
 mod background;
 mod commands;
+mod duplicate_files;
 mod lifecycle;
 mod quicklook;
 mod search_activity;
@@ -14,11 +15,12 @@ use background::{
 use cardinal_sdk::EventWatcher;
 use commands::{
     LatestRequestSlot, MetadataSortRequest, NodeInfoRequest, SearchJob, SearchState,
-    WatchConfigUpdate, activate_main_window, cancel_search, cancel_sort, close_quicklook,
-    copy_files_to_clipboard, get_app_status, get_nodes_info, get_sorted_view, hide_main_window,
-    move_to_trash, normalize_watch_config, open_in_finder, open_path, search, set_indexing_paused,
-    set_tray_activation_policy, set_watch_config, start_logic, toggle_main_window,
-    toggle_quicklook, trigger_rescan, update_icon_viewport, update_quicklook,
+    WatchConfigUpdate, activate_main_window, cancel_duplicate_scan, cancel_search, cancel_sort,
+    close_quicklook, copy_files_to_clipboard, find_duplicates, get_app_status, get_nodes_info,
+    get_sorted_view, hide_main_window, move_to_trash, normalize_watch_config, open_in_finder,
+    open_path, search, set_indexing_paused, set_tray_activation_policy, set_watch_config,
+    start_logic, toggle_main_window, toggle_quicklook, trigger_rescan, update_icon_viewport,
+    update_quicklook,
 };
 use crossbeam_channel::{Receiver, RecvTimeoutError, Sender, bounded, unbounded};
 use lifecycle::{APP_QUIT, AppLifecycleState, EXIT_REQUESTED, emit_app_state, update_app_state};
@@ -140,6 +142,8 @@ pub fn run() -> Result<()> {
             search,
             get_nodes_info,
             get_sorted_view,
+            find_duplicates,
+            cancel_duplicate_scan,
             update_icon_viewport,
             get_app_status,
             trigger_rescan,

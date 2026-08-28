@@ -159,7 +159,8 @@
     "maximize": "Zoom",
     "closeWindow": "Cerrar ventana",
     "help": "Ayuda",
-    "getUpdates": "Obtener actualizaciones"
+    "getUpdates": "Obtener actualizaciones",
+    "duplicates": "Archivos duplicados"
   },
   "preferences": {
     "title": "Preferencias",
@@ -235,7 +236,8 @@
       "saved": "Búsquedas guardadas",
       "favorites": "Favoritos",
       "coverage": "¿Por qué no fue encontrado?",
-      "operations": "Operaciones"
+      "operations": "Operaciones",
+      "duplicates": "Archivos duplicados"
     },
     "saved": {
       "nameLabel": "Nombre de búsqueda",
@@ -291,6 +293,22 @@
       "cancelSort": "Cancelar ordenación",
       "rescan": "Volver a analizar",
       "idle": "No hay operaciones de larga duración."
+    },
+    "duplicates": {
+      "explanation": "Analiza los resultados actuales por tamaño y contenido. Los clones APFS, enlaces físicos y copias completas se muestran por separado cuando macOS ofrece un mapa de clones fiable.",
+      "scan": "Analizar resultados actuales",
+      "scanning": "Analizando duplicados…",
+      "scanned": "{{count}} archivos analizados",
+      "empty": "No se encontró contenido duplicado en los resultados actuales.",
+      "groupSize": "Cada archivo: {{size}}",
+      "apfsClone": "Clon APFS",
+      "physicalCopy": "Copia completa",
+      "hardLink": "Enlace físico",
+      "unknown": "Almacenamiento desconocido",
+      "tooMany": "Limita los resultados actuales a 20.000 archivos o menos antes de analizar duplicados.",
+      "tooLarge": "Los resultados actuales superan el límite seguro de análisis de 50 GB. Reduce los resultados e inténtalo de nuevo.",
+      "incomplete": "Se omitieron {{count}} archivos porque no estaban disponibles o se alcanzó el límite seguro de lectura. Los resultados pueden estar incompletos.",
+      "failed": "No se pudo completar el análisis duplicado. Intente reducir los resultados actuales y ejecutarlo de nuevo."
     }
   }
 }
