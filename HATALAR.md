@@ -113,3 +113,10 @@ Kural: Node 26 üzerinde jsdom tabanlı Cardinal testlerinde bu ortam seçeneği
 Sebep: `git fetch --prune upstream origin` komutunda `origin`, ikinci remote yerine `upstream` uzerindeki ref adi olarak yorumlandi.
 Cozum: Her remote ayri `git fetch --prune <remote>` komutuyla guncellendi.
 Kural: Birden fazla Git remote guncellenecekse remote basina ayri fetch calistir.
+## [2026-09-07] Native baglam menusundeki Cop onayi sessizce calismadi
+
+Sebep: Native Tauri baglam menusu aksiyonu, WebView `window.confirm` cagrisini menu henuz kapanmadan eszamanli calistiriyordu; macOS onay penceresini gostermedi ve silme komutuna hic ulasilmadi.
+
+Cozum: Onay ve `move_to_trash` akisi bir sonraki event-loop turuna ertelendi; gecikmeyi zorunlu kilan regresyon testi eklendi ve gercek uygulama uzerinden toplu silme tekrarlandi.
+
+Kural: Native menu callback'lerinden WebView modal API'lerini ayni call stack icinde acma; menu kapandiktan sonraki event-loop turuna ertele ve gercek paketlenmis uygulamada dogrula.

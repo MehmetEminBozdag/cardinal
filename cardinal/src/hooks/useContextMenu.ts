@@ -110,21 +110,23 @@ export function useContextMenu(
         text: t('contextMenu.moveToTrash', { count: trashCount }),
         accelerator: 'Cmd+Backspace',
         action: () => {
-          const message = t('contextMenu.confirmTrash', { count: trashCount });
-          if (!window.confirm(message)) {
-            return;
-          }
-          const id = `trash-${Date.now()}-${Math.random().toString(16).slice(2)}`;
-          onFileOperation?.({ id, kind: 'trash', state: 'running', itemCount: trashCount });
-          void invoke('move_to_trash', { paths: targetPaths })
-            .then(() => {
-              onFileOperation?.({ id, kind: 'trash', state: 'completed', itemCount: trashCount });
-            })
-            .catch((error) => {
-              onFileOperation?.({ id, kind: 'trash', state: 'failed', itemCount: trashCount });
-              console.error('Failed to move files to Trash', error);
-              window.alert(t('contextMenu.trashFailed'));
-            });
+          window.setTimeout(() => {
+            const message = t('contextMenu.confirmTrash', { count: trashCount });
+            if (!window.confirm(message)) {
+              return;
+            }
+            const id = `trash-${Date.now()}-${Math.random().toString(16).slice(2)}`;
+            onFileOperation?.({ id, kind: 'trash', state: 'running', itemCount: trashCount });
+            void invoke('move_to_trash', { paths: targetPaths })
+              .then(() => {
+                onFileOperation?.({ id, kind: 'trash', state: 'completed', itemCount: trashCount });
+              })
+              .catch((error) => {
+                onFileOperation?.({ id, kind: 'trash', state: 'failed', itemCount: trashCount });
+                console.error('Failed to move files to Trash', error);
+                window.alert(t('contextMenu.trashFailed'));
+              });
+          }, 0);
         },
       });
 

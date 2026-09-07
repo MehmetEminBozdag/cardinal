@@ -1,7 +1,7 @@
 import { renderHook, waitFor } from '@testing-library/react';
 import type { ReactNode } from 'react';
 import { I18nextProvider } from 'react-i18next';
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import i18n from '../../i18n/config';
 import { useContextMenu } from '../useContextMenu';
 
@@ -46,6 +46,11 @@ describe('useContextMenu', () => {
     mocks.popupMock.mockClear();
     mocks.invokeMock.mockClear();
     await i18n.changeLanguage('en-US');
+  });
+
+  afterEach(() => {
+    vi.useRealTimers();
+    vi.restoreAllMocks();
   });
 
   it('uses plural Copy Paths label and shortcut when multiple paths are selected', async () => {
@@ -156,8 +161,12 @@ describe('useContextMenu', () => {
 
     expect(trashItem?.text).toBe('Move 2 Items to Trash…');
     trashItem?.action?.();
-    expect(confirmMock).toHaveBeenCalledWith('Move 2 selected items to Trash?');
-    expect(mocks.invokeMock).toHaveBeenCalledWith('move_to_trash', { paths: ['/a', '/b'] });
+    await waitFor(() =>
+      expect(confirmMock).toHaveBeenCalledWith('Move 2 selected items to Trash?'),
+    );
+    await waitFor(() =>
+      expect(mocks.invokeMock).toHaveBeenCalledWith('move_to_trash', { paths: ['/a', '/b'] }),
+    );
     expect(onFileOperation).toHaveBeenCalledWith(
       expect.objectContaining({ kind: 'trash', state: 'running', itemCount: 2 }),
     );
@@ -186,6 +195,5 @@ describe('useContextMenu', () => {
     await vi.runAllTimersAsync();
     expect(confirmMock).toHaveBeenCalledWith('Move 2 selected items to Trash?');
     expect(mocks.invokeMock).not.toHaveBeenCalled();
-    vi.useRealTimers();
   });
 });
