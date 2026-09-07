@@ -167,4 +167,25 @@ describe('useContextMenu', () => {
       ),
     );
   });
+
+  it('defers Trash confirmation until the native context-menu action has returned', async () => {
+    vi.useFakeTimers();
+    const confirmMock = vi.spyOn(window, 'confirm').mockReturnValue(false);
+    const { result } = renderHook(() => useContextMenu(null), { wrapper });
+
+    result.current.showContextMenu(createEvent(), ['/a', '/b']);
+    await vi.waitFor(() => expect(mocks.menuNewMock).toHaveBeenCalled());
+    const items = mocks.menuNewMock.mock.calls[0][0].items as Array<{
+      id: string;
+      action?: () => void;
+    }>;
+
+    items.find((item) => item.id === 'context_menu.move_to_trash')?.action?.();
+
+    expect(confirmMock).not.toHaveBeenCalled();
+    await vi.runAllTimersAsync();
+    expect(confirmMock).toHaveBeenCalledWith('Move 2 selected items to Trash?');
+    expect(mocks.invokeMock).not.toHaveBeenCalled();
+    vi.useRealTimers();
+  });
 });
