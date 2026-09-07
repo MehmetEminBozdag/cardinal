@@ -117,6 +117,6 @@ Kural: Birden fazla Git remote guncellenecekse remote basina ayri fetch calistir
 
 Sebep: Native Tauri baglam menusu aksiyonu, WebView `window.confirm` cagrisini menu henuz kapanmadan eszamanli calistiriyordu; macOS onay penceresini gostermedi ve silme komutuna hic ulasilmadi.
 
-Cozum: Onay ve `move_to_trash` akisi bir sonraki event-loop turuna ertelendi; gecikmeyi zorunlu kilan regresyon testi eklendi ve gercek uygulama uzerinden toplu silme tekrarlandi.
+Cozum: Onay ve `move_to_trash` akisi bir sonraki event-loop turuna ertelendi; gecikmeyi zorunlu kilan regresyon testi eklendi. Paketlenmis yeni imza macOS Tam Disk Erisimi yeniden verilmeden dosya listesini acmadigi icin fix sonrasi gercek UI silme kaniti henuz tamamlanmadi.
 
 Kural: Native menu callback'lerinden WebView modal API'lerini ayni call stack icinde acma; menu kapandiktan sonraki event-loop turuna ertele ve gercek paketlenmis uygulamada dogrula.
