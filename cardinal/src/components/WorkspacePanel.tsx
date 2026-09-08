@@ -45,6 +45,7 @@ type WorkspacePanelProps = {
   onOpenFavorite: (path: string) => void;
   onRevealFavorite: (path: string) => void;
   onRemoveFavorite: (path: string) => void;
+  onIncludePath: (path: string) => void;
   coverage: CoverageInfo;
   operations: OperationInfo;
   onOpenPreferences: () => void;
@@ -222,6 +223,8 @@ export function WorkspacePanel(props: WorkspacePanelProps): React.JSX.Element {
               title={t('workspace.coverage.excluded')}
               paths={coverage.ignorePaths}
               empty={t('workspace.coverage.none')}
+              actionLabel={t('workspace.coverage.includeInSearch')}
+              onAction={props.onIncludePath}
             />
             <PathGroup
               title={t('workspace.coverage.included')}
@@ -306,6 +309,7 @@ export function WorkspacePanel(props: WorkspacePanelProps): React.JSX.Element {
             </button>
           </div>
         ) : null}
+
       </div>
     </aside>
   );
@@ -324,7 +328,19 @@ function CoverageRow({ label, value }: { label: string; value: string }) {
   );
 }
 
-function PathGroup({ title, paths, empty }: { title: string; paths: string[]; empty: string }) {
+function PathGroup({
+  title,
+  paths,
+  empty,
+  actionLabel,
+  onAction,
+}: {
+  title: string;
+  paths: string[];
+  empty: string;
+  actionLabel?: string;
+  onAction?: (path: string) => void;
+}) {
   return (
     <section className="coverage-paths">
       <h3>{title}</h3>
@@ -332,7 +348,12 @@ function PathGroup({ title, paths, empty }: { title: string; paths: string[]; em
         <ul>
           {paths.map((path) => (
             <li key={path} title={path}>
-              {path}
+              <span>{path}</span>
+              {actionLabel && onAction ? (
+                <button type="button" aria-label={actionLabel} onClick={() => onAction(path)}>
+                  {actionLabel}
+                </button>
+              ) : null}
             </li>
           ))}
         </ul>
