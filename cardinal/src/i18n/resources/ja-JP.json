@@ -3,7 +3,8 @@
     "placeholder": {
       "files": "ファイルやフォルダを検索...",
       "events": "パスまたは名前でイベントを絞り込む...",
-      "directory": "フォルダ範囲..."
+      "directory": "フォルダ範囲...",
+      "sizes": "名前でフォルダとファイルを絞り込む..."
     },
     "options": {
       "caseSensitive": "大文字と小文字を区別する",
@@ -85,7 +86,8 @@
   "statusBar": {
     "tabs": {
       "files": "ファイル",
-      "events": "イベント"
+      "events": "イベント",
+      "sizes": "サイズ"
     },
     "lifecycle": {
       "Initializing": "初期化中",
@@ -309,6 +311,173 @@
       "cancelSort": "並べ替えをキャンセル",
       "rescan": "リスカ",
       "idle": "長時間の運転は行いません。"
+    }
+  },
+  "sizes": {
+    "smallFiles_one": "小さなファイル {{formatted}} 個 (< 1 MB)",
+    "smallFiles_other": "小さなファイル {{formatted}} 個 (< 1 MB)",
+    "unreadable_one": "{{formatted}} 個のフォルダを読み取れません — フルディスクアクセスを許可してください",
+    "unreadable_other": "{{formatted}} 個のフォルダを読み取れません — フルディスクアクセスを許可してください",
+    "unreadableItem_one": "{{count}} 個のサブフォルダを読み取れません",
+    "unreadableItem_other": "{{count}} 個のサブフォルダを読み取れません",
+    "breadcrumbs": "フォルダのパス",
+    "roots": {
+      "label": "スキャン場所",
+      "home": "ホームフォルダ",
+      "disk": "ディスク全体",
+      "pathPlaceholder": "スキャンするフォルダのパス…",
+      "scan": "スキャン"
+    },
+    "modes": {
+      "label": "表示",
+      "list": "リスト",
+      "treemap": "ツリーマップ",
+      "suggestions": "おすすめ"
+    },
+    "actions": {
+      "up": "親フォルダ",
+      "rescan": "再スキャン",
+      "rescanHint": "このフォルダだけ再スキャン",
+      "cancel": "停止"
+    },
+    "table": {
+      "label": "サイズ順のフォルダ内容",
+      "name": "名前",
+      "size": "サイズ",
+      "share": "割合",
+      "files": "ファイル"
+    },
+    "status": {
+      "idle": "フォルダのサイズを測る場所を選んでください。",
+      "scanning": "{{path}} をスキャン中 — {{files}} ファイル、{{size}}",
+      "ready": "{{files}} ファイル · {{size}}",
+      "fromSnapshot": "前回のセッションから、更新中",
+      "scanTime": "{{seconds}} 秒でスキャン",
+      "live": "ライブ",
+      "updating": "更新中…"
+    },
+    "suggestions": {
+      "empty": "50 MB を超える既知のキャッシュや一時フォルダは見つかりませんでした。ホームフォルダをスキャンしてください。",
+      "safeTotal": "再生成可能: {{size}}",
+      "reviewTotal": "確認推奨: {{size}}",
+      "note": "自動で削除されることはありません。右クリックでゴミ箱に移動できます。",
+      "show": "表示"
+    },
+    "rules": {
+      "appCache": {
+        "title": "アプリのキャッシュ",
+        "detail": "必要に応じてアプリが再作成します。削除前にアプリを終了してください。"
+      },
+      "logs": {
+        "title": "ログファイル",
+        "detail": "診断ログ。削除できます。"
+      },
+      "xcodeDerivedData": {
+        "title": "Xcode DerivedData",
+        "detail": "ビルドの中間ファイル。Xcode が再生成します。"
+      },
+      "xcodeDeviceSupport": {
+        "title": "Xcode デバイスサポート",
+        "detail": "接続したデバイスのシンボル。必要なら再ダウンロードされます。"
+      },
+      "simulatorCache": {
+        "title": "シミュレータのキャッシュ",
+        "detail": "iOS シミュレータのキャッシュ。自動で再作成されます。"
+      },
+      "xcodeArchives": {
+        "title": "Xcode アーカイブ",
+        "detail": "公開済みビルドのアーカイブ。dSYM が必要なら残してください。"
+      },
+      "simulatorDevices": {
+        "title": "iOS シミュレータのデバイス",
+        "detail": "Xcode › Devices または `xcrun simctl delete unavailable` を推奨。"
+      },
+      "androidEmulators": {
+        "title": "Android エミュレータ",
+        "detail": "使わない仮想デバイスは Android Studio › Device Manager で削除してください。"
+      },
+      "androidSystemImages": {
+        "title": "Android システムイメージ",
+        "detail": "エミュレータのイメージ。不要なものは SDK Manager で削除。"
+      },
+      "packageCache": {
+        "title": "パッケージキャッシュ",
+        "detail": "依存関係は次回のビルドで再ダウンロードされます。"
+      },
+      "toolCache": {
+        "title": "ツールのキャッシュ (~/.cache)",
+        "detail": "各種ツールのキャッシュ。多くは再生成されますが、先に確認を。"
+      },
+      "spotifyCache": {
+        "title": "Spotify オフラインキャッシュ",
+        "detail": "Spotify の設定でキャッシュサイズを制限することもできます。"
+      },
+      "deviceBackups": {
+        "title": "iPhone/iPad のバックアップ",
+        "detail": "古いバックアップ。Finder › デバイス › バックアップを管理 から削除。"
+      },
+      "docker": {
+        "title": "Docker ディスクイメージ",
+        "detail": "Docker Desktop または `docker system prune` で縮小できます。"
+      },
+      "trash": {
+        "title": "ゴミ箱",
+        "detail": "すでにゴミ箱内です。空にすると容量が空きます (元に戻せません)。"
+      },
+      "downloads": {
+        "title": "ダウンロード",
+        "detail": "忘れられた大きなファイルがたまりがちです。確認してください。"
+      },
+      "nodeModules": {
+        "title": "node_modules",
+        "detail": "`npm install` で再インストールできます。"
+      },
+      "installer": {
+        "title": "インストーラファイル",
+        "detail": "アプリのインストール後は不要です。"
+      },
+      "oldExtensions": {
+        "title": "古いエディタ拡張機能のバージョン",
+        "detail": "VS Code / Cursor / Antigravity 拡張機能の置き換え済みバージョン。エディタは最新版を使います。"
+      },
+      "chromeServiceWorker": {
+        "title": "Chrome の Service Worker キャッシュ",
+        "detail": "Web サイトのオフラインキャッシュ。再作成されますが、次に訪れるまでオフラインデータは失われます。"
+      },
+      "pnpmStore": {
+        "title": "pnpm パッケージストア",
+        "detail": "共有パッケージストア。次回のインストールで再ダウンロードされます。`pnpm store prune` は未使用分のみ削除します。"
+      },
+      "googleUpdaterCache": {
+        "title": "Google Updater キャッシュ",
+        "detail": "Google アプリのダウンロード済み更新パッケージ。必要に応じて再取得されます。"
+      },
+      "editorCache": {
+        "title": "エディタのキャッシュ",
+        "detail": "VS Code / Cursor / Antigravity のキャッシュ。起動時に再作成されます。先にエディタを終了してください。"
+      },
+      "clangModuleCache": {
+        "title": "Clang モジュールキャッシュ",
+        "detail": "Xcode/clang のコンパイル済みモジュールキャッシュ。次回のビルドで再作成されます。"
+      },
+      "editorWebCache": {
+        "title": "エディタの Webview キャッシュ",
+        "detail": "エディタのパネルや拡張機能の Web コンテンツのキャッシュ (VS Code、Cursor、Antigravity)。必要に応じて再作成されます。先にエディタを終了してください。"
+      },
+      "vsixCache": {
+        "title": "エディタ拡張機能のダウンロードキャッシュ",
+        "detail": "拡張機能のインストール後に残る .vsix パッケージ。必要に応じて再ダウンロードされます。"
+      },
+      "codexRuntimeInstall": {
+        "title": "Codex ランタイムのインストール残骸",
+        "detail": "完了していない Codex ランタイムのインストール。Codex が使用中のランタイムは表示されません。"
+      }
+    },
+    "space": {
+      "free": "空き: {{free}} / {{total}}",
+      "trash": "ゴミ箱: {{size}}",
+      "hint": "現在の空き: {{now}}。Finder の値はパージ可能な領域も含みます。",
+      "trashHint": "ゴミ箱に入れた項目は、ゴミ箱を空にするまで容量を空けません。"
     }
   }
 }

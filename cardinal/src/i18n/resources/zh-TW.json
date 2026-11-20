@@ -3,7 +3,8 @@
     "placeholder": {
       "files": "搜尋檔案和資料夾…",
       "events": "依路徑或名稱篩選事件…",
-      "directory": "限定資料夾範圍…"
+      "directory": "限定資料夾範圍…",
+      "sizes": "依名稱篩選檔案夾與檔案..."
     },
     "options": {
       "caseSensitive": "切換區分大小寫比對",
@@ -85,7 +86,8 @@
   "statusBar": {
     "tabs": {
       "files": "檔案",
-      "events": "事件"
+      "events": "事件",
+      "sizes": "大小"
     },
     "lifecycle": {
       "Initializing": "正在初始化",
@@ -308,6 +310,173 @@
       "cancelSort": "取消排序",
       "rescan": "重新掃描",
       "idle": "沒有長期運營."
+    }
+  },
+  "sizes": {
+    "smallFiles_one": "{{formatted}} 個小檔案 (< 1 MB)",
+    "smallFiles_other": "{{formatted}} 個小檔案 (< 1 MB)",
+    "unreadable_one": "{{formatted}} 個檔案夾無法讀取 — 請授予完整磁碟取用權",
+    "unreadable_other": "{{formatted}} 個檔案夾無法讀取 — 請授予完整磁碟取用權",
+    "unreadableItem_one": "{{count}} 個子檔案夾無法讀取",
+    "unreadableItem_other": "{{count}} 個子檔案夾無法讀取",
+    "breadcrumbs": "檔案夾路徑",
+    "roots": {
+      "label": "掃描位置",
+      "home": "個人專屬檔案夾",
+      "disk": "整個磁碟",
+      "pathPlaceholder": "要掃描的檔案夾路徑…",
+      "scan": "掃描"
+    },
+    "modes": {
+      "label": "顯示方式",
+      "list": "列表",
+      "treemap": "矩形樹狀圖",
+      "suggestions": "建議"
+    },
+    "actions": {
+      "up": "上層檔案夾",
+      "rescan": "重新掃描",
+      "rescanHint": "只重新掃描此檔案夾",
+      "cancel": "停止"
+    },
+    "table": {
+      "label": "依大小排列的檔案夾內容",
+      "name": "名稱",
+      "size": "大小",
+      "share": "比例",
+      "files": "檔案"
+    },
+    "status": {
+      "idle": "選擇一個位置來測量檔案夾大小。",
+      "scanning": "正在掃描 {{path}} — {{files}} 個檔案，{{size}}",
+      "ready": "{{files}} 個檔案 · {{size}}",
+      "fromSnapshot": "來自上次工作階段，正在重新整理",
+      "scanTime": "掃描用時 {{seconds}} 秒",
+      "live": "即時",
+      "updating": "更新中…"
+    },
+    "suggestions": {
+      "empty": "找不到超過 50 MB 的已知快取或暫存檔案夾。請掃描個人專屬檔案夾。",
+      "safeTotal": "可重新產生：{{size}}",
+      "reviewTotal": "值得檢查：{{size}}",
+      "note": "不會自動刪除任何內容；按右鍵可移到垃圾桶。",
+      "show": "顯示"
+    },
+    "rules": {
+      "appCache": {
+        "title": "App 快取",
+        "detail": "App 會在需要時重新建立。刪除前請先結束 App。"
+      },
+      "logs": {
+        "title": "記錄檔",
+        "detail": "診斷記錄，可以刪除。"
+      },
+      "xcodeDerivedData": {
+        "title": "Xcode DerivedData",
+        "detail": "建置中間檔，Xcode 會重新產生。"
+      },
+      "xcodeDeviceSupport": {
+        "title": "Xcode 裝置支援",
+        "detail": "已連接裝置的符號檔，需要時會重新下載。"
+      },
+      "simulatorCache": {
+        "title": "模擬器快取",
+        "detail": "iOS 模擬器快取，會自動重新建立。"
+      },
+      "xcodeArchives": {
+        "title": "Xcode 封存",
+        "detail": "已發布版本的封存；如需 dSYM 請保留。"
+      },
+      "simulatorDevices": {
+        "title": "iOS 模擬器裝置",
+        "detail": "建議使用 Xcode › Devices 或 `xcrun simctl delete unavailable`。"
+      },
+      "androidEmulators": {
+        "title": "Android 模擬器",
+        "detail": "請在 Android Studio › Device Manager 刪除不用的虛擬裝置。"
+      },
+      "androidSystemImages": {
+        "title": "Android 系統映像檔",
+        "detail": "模擬器映像檔；不用的可在 SDK Manager 解除安裝。"
+      },
+      "packageCache": {
+        "title": "套件快取",
+        "detail": "下次建置時會重新下載相依項目。"
+      },
+      "toolCache": {
+        "title": "工具快取 (~/.cache)",
+        "detail": "各種工具的快取；大多會重新產生，請先查看。"
+      },
+      "spotifyCache": {
+        "title": "Spotify 離線快取",
+        "detail": "也可以在 Spotify 設定中限制快取大小。"
+      },
+      "deviceBackups": {
+        "title": "iPhone/iPad 備份",
+        "detail": "舊的裝置備份；請在 Finder › 裝置 › 管理備份中刪除。"
+      },
+      "docker": {
+        "title": "Docker 磁碟映像檔",
+        "detail": "可用 Docker Desktop 或 `docker system prune` 縮小。"
+      },
+      "trash": {
+        "title": "垃圾桶",
+        "detail": "已在垃圾桶中；清空後才會釋出空間（無法還原）。"
+      },
+      "downloads": {
+        "title": "下載項目",
+        "detail": "遺忘的大型檔案常堆積在這裡，建議看看。"
+      },
+      "nodeModules": {
+        "title": "node_modules",
+        "detail": "可用 `npm install` 重新安裝。"
+      },
+      "installer": {
+        "title": "安裝檔",
+        "detail": "App 安裝後就不需要了。"
+      },
+      "oldExtensions": {
+        "title": "舊版編輯器延伸功能",
+        "detail": "VS Code / Cursor / Antigravity 延伸功能中已被取代的版本；編輯器使用最新版本。"
+      },
+      "chromeServiceWorker": {
+        "title": "Chrome Service Worker 快取",
+        "detail": "網站的離線快取；會重新建立，但在再次造訪前網站的離線資料會遺失。"
+      },
+      "pnpmStore": {
+        "title": "pnpm 套件儲存區",
+        "detail": "共用套件儲存區；專案會在下次安裝時重新下載套件。`pnpm store prune` 只移除未使用的套件。"
+      },
+      "googleUpdaterCache": {
+        "title": "Google Updater 快取",
+        "detail": "Google App 已下載的更新套件；需要時會重新下載。"
+      },
+      "editorCache": {
+        "title": "編輯器快取",
+        "detail": "VS Code / Cursor / Antigravity 快取；編輯器啟動時重新建立。請先結束編輯器。"
+      },
+      "clangModuleCache": {
+        "title": "Clang 模組快取",
+        "detail": "Xcode/clang 的已編譯模組快取；下次建置時重新建立。"
+      },
+      "editorWebCache": {
+        "title": "編輯器 webview 快取",
+        "detail": "編輯器面板與延伸功能的已快取網頁內容（VS Code、Cursor、Antigravity）；需要時重新建立。請先結束編輯器。"
+      },
+      "vsixCache": {
+        "title": "編輯器延伸功能下載快取",
+        "detail": "安裝延伸功能後保留的 .vsix 套件；需要時重新下載。"
+      },
+      "codexRuntimeInstall": {
+        "title": "Codex 執行環境安裝殘留",
+        "detail": "未完成的 Codex 執行環境安裝；Codex 實際使用的執行環境不會列出。"
+      }
+    },
+    "space": {
+      "free": "可用：{{free}} / {{total}}",
+      "trash": "垃圾桶：{{size}}",
+      "hint": "目前可用：{{now}}。Finder 顯示的數值也包含可清除空間。",
+      "trashHint": "移到垃圾桶的項目要在清空垃圾桶後才會釋出空間。"
     }
   }
 }

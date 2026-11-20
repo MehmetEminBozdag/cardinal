@@ -3,7 +3,8 @@
     "placeholder": {
       "files": "Search for files and folders...",
       "events": "Filter events by path or name...",
-      "directory": "Folder scope..."
+      "directory": "Folder scope...",
+      "sizes": "Filter folders and files by name..."
     },
     "options": {
       "caseSensitive": "Toggle case-sensitive matching",
@@ -85,7 +86,8 @@
   "statusBar": {
     "tabs": {
       "files": "Files",
-      "events": "Events"
+      "events": "Events",
+      "sizes": "Sizes"
     },
     "lifecycle": {
       "Initializing": "Initializing",
@@ -309,6 +311,173 @@
       "tooLarge": "The current results exceed the safe 50 GB duplicate-analysis limit. Narrow the results and try again.",
       "incomplete": "{{count}} files were skipped because they were unavailable or the safe read limit was reached. Results may be incomplete.",
       "failed": "Duplicate analysis could not be completed. Try narrowing the current results and run it again."
+    }
+  },
+  "sizes": {
+    "smallFiles_one": "{{formatted}} small file (< 1 MB)",
+    "smallFiles_other": "{{formatted}} small files (< 1 MB)",
+    "unreadable_one": "{{formatted}} folder could not be read — grant Full Disk Access",
+    "unreadable_other": "{{formatted}} folders could not be read — grant Full Disk Access",
+    "unreadableItem_one": "{{count}} subfolder could not be read",
+    "unreadableItem_other": "{{count}} subfolders could not be read",
+    "breadcrumbs": "Folder path",
+    "roots": {
+      "label": "Scan location",
+      "home": "Home Folder",
+      "disk": "Entire Disk",
+      "pathPlaceholder": "Folder path to scan…",
+      "scan": "Scan"
+    },
+    "modes": {
+      "label": "View",
+      "list": "List",
+      "treemap": "Treemap",
+      "suggestions": "Suggestions"
+    },
+    "actions": {
+      "up": "Parent folder",
+      "rescan": "Rescan",
+      "rescanHint": "Rescan only this folder",
+      "cancel": "Stop"
+    },
+    "table": {
+      "label": "Folder contents by size",
+      "name": "Name",
+      "size": "Size",
+      "share": "Share",
+      "files": "Files"
+    },
+    "status": {
+      "idle": "Choose a location to measure folder sizes.",
+      "scanning": "Scanning {{path}} — {{files}} files, {{size}}",
+      "ready": "{{files}} files · {{size}}",
+      "fromSnapshot": "from last session, refreshing",
+      "scanTime": "scanned in {{seconds}} s",
+      "live": "live",
+      "updating": "updating…"
+    },
+    "suggestions": {
+      "empty": "No known cache or temporary folders above 50 MB were found. Scan your home folder.",
+      "safeTotal": "Regenerable: {{size}}",
+      "reviewTotal": "Worth reviewing: {{size}}",
+      "note": "Nothing is deleted automatically; right-click an item to move it to Trash.",
+      "show": "Show"
+    },
+    "rules": {
+      "appCache": {
+        "title": "App cache",
+        "detail": "Apps rebuild it when needed. Quit the app before removing it."
+      },
+      "logs": {
+        "title": "Log files",
+        "detail": "Diagnostic logs; safe to remove."
+      },
+      "xcodeDerivedData": {
+        "title": "Xcode DerivedData",
+        "detail": "Build intermediates; Xcode regenerates them."
+      },
+      "xcodeDeviceSupport": {
+        "title": "Xcode device support",
+        "detail": "Symbols for connected devices; downloaded again when needed."
+      },
+      "simulatorCache": {
+        "title": "Simulator cache",
+        "detail": "iOS Simulator cache; regenerated automatically."
+      },
+      "xcodeArchives": {
+        "title": "Xcode archives",
+        "detail": "Archives of shipped builds; keep them if you need their dSYMs."
+      },
+      "simulatorDevices": {
+        "title": "iOS simulator devices",
+        "detail": "Prefer Xcode › Devices or `xcrun simctl delete unavailable`."
+      },
+      "androidEmulators": {
+        "title": "Android emulators",
+        "detail": "Remove unused virtual devices in Android Studio › Device Manager."
+      },
+      "androidSystemImages": {
+        "title": "Android system images",
+        "detail": "Emulator images; uninstall unused ones in the SDK Manager."
+      },
+      "packageCache": {
+        "title": "Package cache",
+        "detail": "Dependencies are downloaded again on the next build."
+      },
+      "toolCache": {
+        "title": "Tool cache (~/.cache)",
+        "detail": "Caches of various tools; most are regenerated, take a look first."
+      },
+      "spotifyCache": {
+        "title": "Spotify offline cache",
+        "detail": "You can also limit the cache size in Spotify's settings."
+      },
+      "deviceBackups": {
+        "title": "iPhone/iPad backups",
+        "detail": "Old device backups; delete them in Finder › device › Manage Backups."
+      },
+      "docker": {
+        "title": "Docker disk image",
+        "detail": "Shrink it with Docker Desktop or `docker system prune`."
+      },
+      "trash": {
+        "title": "Trash",
+        "detail": "Already in the Trash; space is freed when you empty it (cannot be undone)."
+      },
+      "downloads": {
+        "title": "Downloads",
+        "detail": "Forgotten large files tend to pile up here; take a look."
+      },
+      "nodeModules": {
+        "title": "node_modules",
+        "detail": "Reinstallable with `npm install`."
+      },
+      "installer": {
+        "title": "Installer file",
+        "detail": "Not needed once the app is installed."
+      },
+      "oldExtensions": {
+        "title": "Old editor extension versions",
+        "detail": "Superseded versions of VS Code / Cursor / Antigravity extensions; the editor uses the newest one."
+      },
+      "chromeServiceWorker": {
+        "title": "Chrome Service Worker cache",
+        "detail": "Websites' offline caches; they are rebuilt, but sites lose offline data until revisited."
+      },
+      "pnpmStore": {
+        "title": "pnpm package store",
+        "detail": "Shared package store; projects re-download packages on the next install. `pnpm store prune` removes only unused ones."
+      },
+      "googleUpdaterCache": {
+        "title": "Google Updater cache",
+        "detail": "Downloaded update packages of Google apps; fetched again when needed."
+      },
+      "editorCache": {
+        "title": "Editor cache",
+        "detail": "VS Code / Cursor / Antigravity caches; rebuilt when the editor starts. Quit the editor first."
+      },
+      "clangModuleCache": {
+        "title": "Clang module cache",
+        "detail": "Compiled module cache of Xcode/clang; rebuilt on the next build."
+      },
+      "editorWebCache": {
+        "title": "Editor webview cache",
+        "detail": "Cached web content of editor panels and extensions (VS Code, Cursor, Antigravity); rebuilt when needed. Quit the editor first."
+      },
+      "vsixCache": {
+        "title": "Editor extension download cache",
+        "detail": "Downloaded .vsix packages kept after installing extensions; downloaded again when needed."
+      },
+      "codexRuntimeInstall": {
+        "title": "Codex runtime install leftovers",
+        "detail": "Unfinished Codex runtime installs; the runtimes Codex actually uses are not listed."
+      }
+    },
+    "space": {
+      "free": "Free: {{free}} of {{total}}",
+      "trash": "Trash: {{size}}",
+      "hint": "Available now: {{now}}. Finder's figure also counts purgeable space.",
+      "trashHint": "Items moved to the Trash free space only after you empty it."
     }
   }
 }

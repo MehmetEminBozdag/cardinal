@@ -679,10 +679,13 @@ fn validate_trash_paths(paths: &[String]) -> Result<Vec<PathBuf>, String> {
 #[tauri::command]
 pub async fn move_to_trash(paths: Vec<String>) -> Result<(), String> {
     let validated = validate_trash_paths(&paths)?;
+    let trashed = validated.clone();
     tauri::async_runtime::spawn_blocking(move || trash::delete_all(validated))
         .await
         .map_err(|error| format!("Trash operation failed: {error}"))?
-        .map_err(|error| format!("Could not move item to Trash: {error}"))
+        .map_err(|error| format!("Could not move item to Trash: {error}"))?;
+    crate::folder_sizes::forget_paths(&trashed);
+    Ok(())
 }
 
 #[tauri::command]

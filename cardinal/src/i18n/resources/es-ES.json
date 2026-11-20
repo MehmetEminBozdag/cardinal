@@ -3,7 +3,8 @@
     "placeholder": {
       "files": "Buscar archivos y carpetas...",
       "events": "Filtrar eventos por ruta o nombre...",
-      "directory": "Ámbito de carpeta..."
+      "directory": "Ámbito de carpeta...",
+      "sizes": "Filtrar carpetas y archivos por nombre..."
     },
     "options": {
       "caseSensitive": "Activar coincidencia sensible a mayúsculas",
@@ -85,7 +86,8 @@
   "statusBar": {
     "tabs": {
       "files": "Archivos",
-      "events": "Eventos"
+      "events": "Eventos",
+      "sizes": "Tamaños"
     },
     "lifecycle": {
       "Initializing": "Inicializando",
@@ -309,6 +311,173 @@
       "cancelSort": "Cancelar ordenación",
       "rescan": "Volver a analizar",
       "idle": "No hay operaciones de larga duración."
+    }
+  },
+  "sizes": {
+    "smallFiles_one": "{{formatted}} archivo pequeño (< 1 MB)",
+    "smallFiles_other": "{{formatted}} archivos pequeños (< 1 MB)",
+    "unreadable_one": "{{formatted}} carpeta no se pudo leer: concede Acceso total al disco",
+    "unreadable_other": "{{formatted}} carpetas no se pudieron leer: concede Acceso total al disco",
+    "unreadableItem_one": "{{count}} subcarpeta no se pudo leer",
+    "unreadableItem_other": "{{count}} subcarpetas no se pudieron leer",
+    "breadcrumbs": "Ruta de la carpeta",
+    "roots": {
+      "label": "Ubicación a analizar",
+      "home": "Carpeta de inicio",
+      "disk": "Disco completo",
+      "pathPlaceholder": "Ruta de la carpeta a analizar…",
+      "scan": "Analizar"
+    },
+    "modes": {
+      "label": "Vista",
+      "list": "Lista",
+      "treemap": "Mapa de árbol",
+      "suggestions": "Sugerencias"
+    },
+    "actions": {
+      "up": "Carpeta superior",
+      "rescan": "Volver a analizar",
+      "rescanHint": "Volver a analizar solo esta carpeta",
+      "cancel": "Detener"
+    },
+    "table": {
+      "label": "Contenido de la carpeta por tamaño",
+      "name": "Nombre",
+      "size": "Tamaño",
+      "share": "Proporción",
+      "files": "Archivos"
+    },
+    "status": {
+      "idle": "Elige una ubicación para medir el tamaño de las carpetas.",
+      "scanning": "Analizando {{path}}: {{files}} archivos, {{size}}",
+      "ready": "{{files}} archivos · {{size}}",
+      "fromSnapshot": "de la sesión anterior, actualizando",
+      "scanTime": "analizado en {{seconds}} s",
+      "live": "en vivo",
+      "updating": "actualizando…"
+    },
+    "suggestions": {
+      "empty": "No se encontraron cachés ni carpetas temporales conocidas de más de 50 MB. Analiza tu carpeta de inicio.",
+      "safeTotal": "Regenerable: {{size}}",
+      "reviewTotal": "Para revisar: {{size}}",
+      "note": "No se elimina nada automáticamente; haz clic derecho para mover a la Papelera.",
+      "show": "Mostrar"
+    },
+    "rules": {
+      "appCache": {
+        "title": "Caché de apps",
+        "detail": "Las apps la regeneran cuando la necesitan. Cierra la app antes de eliminarla."
+      },
+      "logs": {
+        "title": "Archivos de registro",
+        "detail": "Registros de diagnóstico; se pueden eliminar."
+      },
+      "xcodeDerivedData": {
+        "title": "Xcode DerivedData",
+        "detail": "Archivos intermedios de compilación; Xcode los regenera."
+      },
+      "xcodeDeviceSupport": {
+        "title": "Soporte de dispositivos de Xcode",
+        "detail": "Símbolos de dispositivos conectados; se descargan de nuevo si hace falta."
+      },
+      "simulatorCache": {
+        "title": "Caché del simulador",
+        "detail": "Caché del Simulador de iOS; se regenera sola."
+      },
+      "xcodeArchives": {
+        "title": "Archivos de Xcode",
+        "detail": "Archivos de versiones publicadas; consérvalos si necesitas sus dSYM."
+      },
+      "simulatorDevices": {
+        "title": "Dispositivos del simulador iOS",
+        "detail": "Mejor desde Xcode › Devices o `xcrun simctl delete unavailable`."
+      },
+      "androidEmulators": {
+        "title": "Emuladores de Android",
+        "detail": "Elimina los dispositivos virtuales sin usar en Android Studio › Device Manager."
+      },
+      "androidSystemImages": {
+        "title": "Imágenes de sistema Android",
+        "detail": "Imágenes del emulador; desinstala las que no uses en el SDK Manager."
+      },
+      "packageCache": {
+        "title": "Caché de paquetes",
+        "detail": "Las dependencias se descargan de nuevo en la próxima compilación."
+      },
+      "toolCache": {
+        "title": "Caché de herramientas (~/.cache)",
+        "detail": "Cachés de varias herramientas; la mayoría se regeneran, revísalas antes."
+      },
+      "spotifyCache": {
+        "title": "Caché sin conexión de Spotify",
+        "detail": "También puedes limitar el tamaño de la caché en los ajustes de Spotify."
+      },
+      "deviceBackups": {
+        "title": "Copias de iPhone/iPad",
+        "detail": "Copias antiguas; elimínalas en Finder › dispositivo › Gestionar copias."
+      },
+      "docker": {
+        "title": "Imagen de disco de Docker",
+        "detail": "Redúcela con Docker Desktop o `docker system prune`."
+      },
+      "trash": {
+        "title": "Papelera",
+        "detail": "Ya está en la Papelera; el espacio se libera al vaciarla (no se puede deshacer)."
+      },
+      "downloads": {
+        "title": "Descargas",
+        "detail": "Aquí suelen acumularse archivos grandes olvidados; échale un vistazo."
+      },
+      "nodeModules": {
+        "title": "node_modules",
+        "detail": "Se reinstala con `npm install`."
+      },
+      "installer": {
+        "title": "Archivo instalador",
+        "detail": "No hace falta una vez instalada la app."
+      },
+      "oldExtensions": {
+        "title": "Versiones antiguas de extensiones del editor",
+        "detail": "Versiones reemplazadas de extensiones de VS Code / Cursor / Antigravity; el editor usa la más nueva."
+      },
+      "chromeServiceWorker": {
+        "title": "Caché de Service Worker de Chrome",
+        "detail": "Cachés sin conexión de sitios web; se regeneran, pero los sitios pierden sus datos sin conexión hasta que los visites."
+      },
+      "pnpmStore": {
+        "title": "Almacén de paquetes de pnpm",
+        "detail": "Almacén compartido; los proyectos vuelven a descargar paquetes en la próxima instalación. `pnpm store prune` solo quita los no usados."
+      },
+      "googleUpdaterCache": {
+        "title": "Caché de Google Updater",
+        "detail": "Paquetes de actualización descargados de apps de Google; se descargan de nuevo si hace falta."
+      },
+      "editorCache": {
+        "title": "Caché del editor",
+        "detail": "Cachés de VS Code / Cursor / Antigravity; se regeneran al abrir el editor. Ciérralo antes."
+      },
+      "clangModuleCache": {
+        "title": "Caché de módulos de Clang",
+        "detail": "Caché de módulos compilados de Xcode/clang; se regenera en la próxima compilación."
+      },
+      "editorWebCache": {
+        "title": "Caché de webview del editor",
+        "detail": "Contenido web en caché de paneles y extensiones del editor (VS Code, Cursor, Antigravity); se regenera si hace falta. Cierra el editor antes."
+      },
+      "vsixCache": {
+        "title": "Caché de descargas de extensiones",
+        "detail": "Paquetes .vsix guardados tras instalar extensiones; se descargan de nuevo si hace falta."
+      },
+      "codexRuntimeInstall": {
+        "title": "Restos de instalaciones del runtime de Codex",
+        "detail": "Instalaciones incompletas del runtime de Codex; no se listan los runtimes que Codex usa."
+      }
+    },
+    "space": {
+      "free": "Libre: {{free}} de {{total}}",
+      "trash": "Papelera: {{size}}",
+      "hint": "Libre ahora: {{now}}. La cifra de Finder también cuenta el espacio purgable.",
+      "trashHint": "Lo que mueves a la Papelera libera espacio solo al vaciarla."
     }
   }
 }

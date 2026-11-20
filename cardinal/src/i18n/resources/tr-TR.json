@@ -3,7 +3,8 @@
     "placeholder": {
       "files": "Dosya ve klasör arayın...",
       "events": "Olayları yol veya ada göre filtreleyin...",
-      "directory": "Klasör kapsamı..."
+      "directory": "Klasör kapsamı...",
+      "sizes": "Klasör ve dosyaları ada göre süz..."
     },
     "options": {
       "caseSensitive": "Büyük/küçük harfe duyarlı eşleşmeyi değiştir",
@@ -85,7 +86,8 @@
   "statusBar": {
     "tabs": {
       "files": "Dosyalar",
-      "events": "Olaylar"
+      "events": "Olaylar",
+      "sizes": "Boyut"
     },
     "lifecycle": {
       "Initializing": "Başlatılıyor",
@@ -309,6 +311,173 @@
       "tooLarge": "Mevcut sonuçlar güvenli 50 GB kopya analizi sınırını aşıyor. Sonuçları daraltıp yeniden deneyin.",
       "incomplete": "{{count}} dosya kullanılamadığı veya güvenli okuma sınırına ulaşıldığı için atlandı. Sonuçlar eksik olabilir.",
       "failed": "Kopya analizi tamamlanamadı. Mevcut sonuçları daraltıp yeniden deneyin."
+    }
+  },
+  "sizes": {
+    "smallFiles_one": "{{formatted}} küçük dosya (< 1 MB)",
+    "smallFiles_other": "{{formatted}} küçük dosya (< 1 MB)",
+    "unreadable_one": "{{formatted}} klasör okunamadı — Tam Disk Erişimi verin",
+    "unreadable_other": "{{formatted}} klasör okunamadı — Tam Disk Erişimi verin",
+    "unreadableItem_one": "{{count}} alt klasör okunamadı",
+    "unreadableItem_other": "{{count}} alt klasör okunamadı",
+    "breadcrumbs": "Klasör yolu",
+    "roots": {
+      "label": "Taranacak konum",
+      "home": "Ev Klasörü",
+      "disk": "Tüm Disk",
+      "pathPlaceholder": "Taranacak klasör yolu…",
+      "scan": "Tara"
+    },
+    "modes": {
+      "label": "Görünüm",
+      "list": "Liste",
+      "treemap": "Treemap",
+      "suggestions": "Öneriler"
+    },
+    "actions": {
+      "up": "Üst klasör",
+      "rescan": "Yeniden Tara",
+      "rescanHint": "Yalnızca bu klasörü yeniden tara",
+      "cancel": "Durdur"
+    },
+    "table": {
+      "label": "Boyuta göre klasör içeriği",
+      "name": "Ad",
+      "size": "Boyut",
+      "share": "Oran",
+      "files": "Dosya"
+    },
+    "status": {
+      "idle": "Klasör boyutlarını görmek için bir konum seçin.",
+      "scanning": "Taranıyor: {{path}} — {{files}} dosya, {{size}}",
+      "ready": "{{files}} dosya · {{size}}",
+      "fromSnapshot": "önceki oturumdan, tazeleniyor",
+      "scanTime": "{{seconds}} sn'de tarandı",
+      "live": "canlı",
+      "updating": "güncelleniyor…"
+    },
+    "suggestions": {
+      "empty": "50 MB üstü bilinen önbellek ya da geçici klasör bulunamadı. Ev klasörünüzü tarayın.",
+      "safeTotal": "Yeniden oluşturulabilir: {{size}}",
+      "reviewTotal": "Gözden geçirin: {{size}}",
+      "note": "Hiçbir şey kendiliğinden silinmez; Çöp'e taşımak için öğeye sağ tıklayın.",
+      "show": "Göster"
+    },
+    "rules": {
+      "appCache": {
+        "title": "Uygulama önbelleği",
+        "detail": "Uygulamalar gerektiğinde yeniden oluşturur. Silmeden önce uygulamayı kapatın."
+      },
+      "logs": {
+        "title": "Günlük dosyaları",
+        "detail": "Tanılama kayıtları; silinebilir."
+      },
+      "xcodeDerivedData": {
+        "title": "Xcode DerivedData",
+        "detail": "Derleme ara çıktıları; Xcode yeniden üretir."
+      },
+      "xcodeDeviceSupport": {
+        "title": "Xcode cihaz desteği",
+        "detail": "Bağlanan cihazların sembolleri; gerekince yeniden iner."
+      },
+      "simulatorCache": {
+        "title": "Simülatör önbelleği",
+        "detail": "iOS Simülatör önbelleği; kendiliğinden yeniden oluşur."
+      },
+      "xcodeArchives": {
+        "title": "Xcode arşivleri",
+        "detail": "Yayımlanan sürümlerin arşivleri; dSYM gerekiyorsa saklayın."
+      },
+      "simulatorDevices": {
+        "title": "iOS simülatör cihazları",
+        "detail": "Xcode › Devices ya da `xcrun simctl delete unavailable` tercih edin."
+      },
+      "androidEmulators": {
+        "title": "Android emülatörleri",
+        "detail": "Kullanmadığınız sanal cihazları Android Studio › Device Manager'dan silin."
+      },
+      "androidSystemImages": {
+        "title": "Android sistem imajları",
+        "detail": "Emülatör imajları; kullanmadıklarınızı SDK Manager'dan kaldırın."
+      },
+      "packageCache": {
+        "title": "Paket önbelleği",
+        "detail": "Bağımlılıklar bir sonraki derlemede yeniden iner."
+      },
+      "toolCache": {
+        "title": "Araç önbelleği (~/.cache)",
+        "detail": "Çeşitli araçların önbelleği; çoğu yeniden oluşur, önce göz atın."
+      },
+      "spotifyCache": {
+        "title": "Spotify çevrimdışı önbelleği",
+        "detail": "Önbellek boyutunu Spotify ayarlarından da sınırlayabilirsiniz."
+      },
+      "deviceBackups": {
+        "title": "iPhone/iPad yedekleri",
+        "detail": "Eski cihaz yedekleri; Finder › cihaz › Yedekleri Yönet'ten silin."
+      },
+      "docker": {
+        "title": "Docker disk imajı",
+        "detail": "Docker Desktop ya da `docker system prune` ile küçültün."
+      },
+      "trash": {
+        "title": "Çöp Sepeti",
+        "detail": "Zaten çöpte; Çöp'ü boşaltınca alan açılır (geri alınamaz)."
+      },
+      "downloads": {
+        "title": "İndirilenler",
+        "detail": "Unutulmuş büyük dosyalar genellikle burada birikir; göz atın."
+      },
+      "nodeModules": {
+        "title": "node_modules",
+        "detail": "`npm install` ile yeniden kurulabilir."
+      },
+      "installer": {
+        "title": "Kurulum dosyası",
+        "detail": "Uygulama kurulduktan sonra gerekmez."
+      },
+      "oldExtensions": {
+        "title": "Eski editör eklentisi sürümleri",
+        "detail": "VS Code / Cursor / Antigravity eklentilerinin yerini yenisi almış sürümleri; editör en yenisini kullanıyor."
+      },
+      "chromeServiceWorker": {
+        "title": "Chrome Service Worker önbelleği",
+        "detail": "Sitelerin çevrimdışı önbellekleri; yeniden oluşur, ama siteler tekrar ziyaret edilene kadar çevrimdışı verileri sıfırlanır."
+      },
+      "pnpmStore": {
+        "title": "pnpm paket deposu",
+        "detail": "Ortak paket deposu; projeler bir sonraki kurulumda paketleri yeniden indirir. `pnpm store prune` yalnızca kullanılmayanları siler."
+      },
+      "googleUpdaterCache": {
+        "title": "Google Updater önbelleği",
+        "detail": "Google uygulamalarının indirilmiş güncelleme paketleri; gerekince yeniden iner."
+      },
+      "editorCache": {
+        "title": "Editör önbelleği",
+        "detail": "VS Code / Cursor / Antigravity önbellekleri; editör açılınca yeniden oluşur. Önce editörü kapatın."
+      },
+      "clangModuleCache": {
+        "title": "Clang modül önbelleği",
+        "detail": "Xcode/clang'ın derlenmiş modül önbelleği; bir sonraki derlemede yeniden oluşur."
+      },
+      "editorWebCache": {
+        "title": "Editör webview önbelleği",
+        "detail": "Editör panellerinin ve eklentilerin önbelleğe alınmış web içeriği (VS Code, Cursor, Antigravity); gerekince yeniden oluşur. Önce editörü kapatın."
+      },
+      "vsixCache": {
+        "title": "Editör eklenti indirme önbelleği",
+        "detail": "Eklentiler kurulduktan sonra saklanan .vsix paketleri; gerekince yeniden iner."
+      },
+      "codexRuntimeInstall": {
+        "title": "Codex çalışma ortamı kurulum artıkları",
+        "detail": "Yarım kalmış Codex çalışma ortamı kurulumları; Codex'in kullandığı ortamlar listelenmez."
+      }
+    },
+    "space": {
+      "free": "Boş: {{free}} / {{total}}",
+      "trash": "Çöp: {{size}}",
+      "hint": "Şu an boş: {{now}}. Finder'daki değer, sistemin temizleyebileceği alanı da sayar.",
+      "trashHint": "Çöp'e taşınan öğeler, Çöp boşaltılınca yer açar."
     }
   }
 }

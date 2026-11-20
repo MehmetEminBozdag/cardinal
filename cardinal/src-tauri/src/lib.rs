@@ -1,6 +1,7 @@
 mod background;
 mod commands;
 mod duplicate_files;
+mod folder_sizes;
 mod lifecycle;
 mod quicklook;
 mod renderer_health;
@@ -166,6 +167,12 @@ pub fn run() -> Result<()> {
             set_tray_activation_policy,
             copy_files_to_clipboard,
             renderer_watchdog::renderer_heartbeat,
+            folder_sizes::get_size_status,
+            folder_sizes::start_size_scan,
+            folder_sizes::cancel_size_scan,
+            folder_sizes::get_size_listing,
+            folder_sizes::get_size_suggestions,
+            folder_sizes::get_volume_space,
         ])
         .build(tauri::generate_context!())
         .expect("error while running tauri application");
@@ -173,6 +180,7 @@ pub fn run() -> Result<()> {
     let db_path = DB_PATH
         .get_or_try_init(|| app.path().app_config_dir().map(|p| p.join("cardinal.db")))
         .expect("Failed to initialize database path");
+    folder_sizes::start(db_path.with_file_name("folder-sizes.db"));
 
     let app_handle = app.handle().to_owned();
     renderer_watchdog::start(app_handle.clone());

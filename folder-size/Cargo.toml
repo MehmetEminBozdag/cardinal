@@ -1,0 +1,19 @@
+[package]
+name = "folder-size"
+version = "0.1.0"
+edition = "2024"
+description = "Folder size analysis: parallel allocated-size scanner, live-updatable size tree, cleanup suggestions."
+
+[dependencies]
+anyhow = "1.0"
+libc = "0.2"
+parking_lot = "0.12"
+postcard = { version = "1", default-features = false, features = ["use-std"] }
+rayon = "1"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+tracing = "0.1"
+zstd = "0.13"
+
+[dev-dependencies]
+tempfile = "3"

@@ -3,7 +3,8 @@
     "placeholder": {
       "files": "Nach Dateien und Ordnern suchen...",
       "events": "Ereignisse nach Pfad oder Name filtern...",
-      "directory": "Ordnerbereich..."
+      "directory": "Ordnerbereich...",
+      "sizes": "Ordner und Dateien nach Namen filtern..."
     },
     "options": {
       "caseSensitive": "Groß-/Kleinschreibung beachten",
@@ -85,7 +86,8 @@
   "statusBar": {
     "tabs": {
       "files": "Dateien",
-      "events": "Ereignisse"
+      "events": "Ereignisse",
+      "sizes": "Größen"
     },
     "lifecycle": {
       "Initializing": "Initialisierung",
@@ -309,6 +311,173 @@
       "cancelSort": "Sortierung abbrechen",
       "rescan": "Erneut scannen",
       "idle": "Keine langfristigen Operationen."
+    }
+  },
+  "sizes": {
+    "smallFiles_one": "{{formatted}} kleine Datei (< 1 MB)",
+    "smallFiles_other": "{{formatted}} kleine Dateien (< 1 MB)",
+    "unreadable_one": "{{formatted}} Ordner nicht lesbar – Festplattenvollzugriff erteilen",
+    "unreadable_other": "{{formatted}} Ordner nicht lesbar – Festplattenvollzugriff erteilen",
+    "unreadableItem_one": "{{count}} Unterordner nicht lesbar",
+    "unreadableItem_other": "{{count}} Unterordner nicht lesbar",
+    "breadcrumbs": "Ordnerpfad",
+    "roots": {
+      "label": "Scan-Ort",
+      "home": "Benutzerordner",
+      "disk": "Gesamte Festplatte",
+      "pathPlaceholder": "Zu scannender Ordnerpfad…",
+      "scan": "Scannen"
+    },
+    "modes": {
+      "label": "Ansicht",
+      "list": "Liste",
+      "treemap": "Treemap",
+      "suggestions": "Vorschläge"
+    },
+    "actions": {
+      "up": "Übergeordneter Ordner",
+      "rescan": "Neu scannen",
+      "rescanHint": "Nur diesen Ordner neu scannen",
+      "cancel": "Stoppen"
+    },
+    "table": {
+      "label": "Ordnerinhalt nach Größe",
+      "name": "Name",
+      "size": "Größe",
+      "share": "Anteil",
+      "files": "Dateien"
+    },
+    "status": {
+      "idle": "Wähle einen Ort, um Ordnergrößen zu messen.",
+      "scanning": "Scanne {{path}} – {{files}} Dateien, {{size}}",
+      "ready": "{{files}} Dateien · {{size}}",
+      "fromSnapshot": "aus letzter Sitzung, wird aktualisiert",
+      "scanTime": "in {{seconds}} s gescannt",
+      "live": "live",
+      "updating": "wird aktualisiert…"
+    },
+    "suggestions": {
+      "empty": "Keine bekannten Cache- oder temporären Ordner über 50 MB gefunden. Scanne deinen Benutzerordner.",
+      "safeTotal": "Wiederherstellbar: {{size}}",
+      "reviewTotal": "Prüfenswert: {{size}}",
+      "note": "Nichts wird automatisch gelöscht; Rechtsklick, um Objekte in den Papierkorb zu legen.",
+      "show": "Zeigen"
+    },
+    "rules": {
+      "appCache": {
+        "title": "App-Cache",
+        "detail": "Apps erstellen ihn bei Bedarf neu. Beende die App vor dem Entfernen."
+      },
+      "logs": {
+        "title": "Protokolldateien",
+        "detail": "Diagnoseprotokolle; können entfernt werden."
+      },
+      "xcodeDerivedData": {
+        "title": "Xcode DerivedData",
+        "detail": "Build-Zwischenstände; Xcode erzeugt sie neu."
+      },
+      "xcodeDeviceSupport": {
+        "title": "Xcode-Geräteunterstützung",
+        "detail": "Symbole verbundener Geräte; werden bei Bedarf neu geladen."
+      },
+      "simulatorCache": {
+        "title": "Simulator-Cache",
+        "detail": "Cache des iOS-Simulators; wird automatisch neu erstellt."
+      },
+      "xcodeArchives": {
+        "title": "Xcode-Archive",
+        "detail": "Archive veröffentlichter Builds; behalte sie, wenn du die dSYMs brauchst."
+      },
+      "simulatorDevices": {
+        "title": "iOS-Simulator-Geräte",
+        "detail": "Besser über Xcode › Devices oder `xcrun simctl delete unavailable`."
+      },
+      "androidEmulators": {
+        "title": "Android-Emulatoren",
+        "detail": "Entferne ungenutzte virtuelle Geräte im Android Studio › Device Manager."
+      },
+      "androidSystemImages": {
+        "title": "Android-Systemabbilder",
+        "detail": "Emulator-Abbilder; ungenutzte im SDK Manager deinstallieren."
+      },
+      "packageCache": {
+        "title": "Paket-Cache",
+        "detail": "Abhängigkeiten werden beim nächsten Build erneut geladen."
+      },
+      "toolCache": {
+        "title": "Tool-Cache (~/.cache)",
+        "detail": "Caches verschiedener Tools; meist neu erzeugbar, erst ansehen."
+      },
+      "spotifyCache": {
+        "title": "Spotify-Offline-Cache",
+        "detail": "Die Cache-Größe lässt sich auch in den Spotify-Einstellungen begrenzen."
+      },
+      "deviceBackups": {
+        "title": "iPhone/iPad-Backups",
+        "detail": "Alte Geräte-Backups; im Finder › Gerät › Backups verwalten löschen."
+      },
+      "docker": {
+        "title": "Docker-Festplattenabbild",
+        "detail": "Mit Docker Desktop oder `docker system prune` verkleinern."
+      },
+      "trash": {
+        "title": "Papierkorb",
+        "detail": "Bereits im Papierkorb; Speicher wird beim Entleeren frei (nicht umkehrbar)."
+      },
+      "downloads": {
+        "title": "Downloads",
+        "detail": "Hier sammeln sich oft vergessene große Dateien; sieh nach."
+      },
+      "nodeModules": {
+        "title": "node_modules",
+        "detail": "Mit `npm install` neu installierbar."
+      },
+      "installer": {
+        "title": "Installationsdatei",
+        "detail": "Nach der Installation der App nicht mehr nötig."
+      },
+      "oldExtensions": {
+        "title": "Alte Editor-Erweiterungsversionen",
+        "detail": "Ersetzte Versionen von VS Code-/Cursor-/Antigravity-Erweiterungen; der Editor nutzt die neueste."
+      },
+      "chromeServiceWorker": {
+        "title": "Chrome-Service-Worker-Cache",
+        "detail": "Offline-Caches von Websites; werden neu aufgebaut, Offline-Daten fehlen bis zum nächsten Besuch."
+      },
+      "pnpmStore": {
+        "title": "pnpm-Paketspeicher",
+        "detail": "Gemeinsamer Paketspeicher; Projekte laden Pakete bei der nächsten Installation neu. `pnpm store prune` entfernt nur ungenutzte."
+      },
+      "googleUpdaterCache": {
+        "title": "Google-Updater-Cache",
+        "detail": "Heruntergeladene Update-Pakete von Google-Apps; werden bei Bedarf neu geladen."
+      },
+      "editorCache": {
+        "title": "Editor-Cache",
+        "detail": "Caches von VS Code / Cursor / Antigravity; werden beim Start neu erstellt. Editor vorher beenden."
+      },
+      "clangModuleCache": {
+        "title": "Clang-Modul-Cache",
+        "detail": "Kompilierter Modul-Cache von Xcode/clang; wird beim nächsten Build neu erstellt."
+      },
+      "editorWebCache": {
+        "title": "Editor-Webview-Cache",
+        "detail": "Zwischengespeicherte Webinhalte von Editor-Panels und Erweiterungen (VS Code, Cursor, Antigravity); bei Bedarf neu erstellt. Editor vorher beenden."
+      },
+      "vsixCache": {
+        "title": "Download-Cache für Editor-Erweiterungen",
+        "detail": "Nach der Installation aufbewahrte .vsix-Pakete; bei Bedarf neu geladen."
+      },
+      "codexRuntimeInstall": {
+        "title": "Reste von Codex-Laufzeitinstallationen",
+        "detail": "Unvollständige Codex-Laufzeitinstallationen; die tatsächlich genutzten Laufzeiten werden nicht aufgeführt."
+      }
+    },
+    "space": {
+      "free": "Frei: {{free}} von {{total}}",
+      "trash": "Papierkorb: {{size}}",
+      "hint": "Jetzt frei: {{now}}. Der Finder-Wert zählt auch löschbaren Speicher mit.",
+      "trashHint": "In den Papierkorb gelegte Objekte geben erst nach dem Entleeren Speicher frei."
     }
   }
 }

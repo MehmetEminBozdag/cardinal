@@ -3,7 +3,8 @@
     "placeholder": {
       "files": "搜索文件和文件夹…",
       "events": "按路径或名称筛选事件…",
-      "directory": "限定文件夹范围…"
+      "directory": "限定文件夹范围…",
+      "sizes": "按名称筛选文件夹和文件..."
     },
     "options": {
       "caseSensitive": "切换区分大小写匹配",
@@ -85,7 +86,8 @@
   "statusBar": {
     "tabs": {
       "files": "文件",
-      "events": "事件"
+      "events": "事件",
+      "sizes": "大小"
     },
     "lifecycle": {
       "Initializing": "正在初始化",
@@ -308,6 +310,173 @@
       "cancelSort": "取消排序",
       "rescan": "重新扫描",
       "idle": "没有长期运营."
+    }
+  },
+  "sizes": {
+    "smallFiles_one": "{{formatted}} 个小文件 (< 1 MB)",
+    "smallFiles_other": "{{formatted}} 个小文件 (< 1 MB)",
+    "unreadable_one": "{{formatted}} 个文件夹无法读取 — 请授予完全磁盘访问权限",
+    "unreadable_other": "{{formatted}} 个文件夹无法读取 — 请授予完全磁盘访问权限",
+    "unreadableItem_one": "{{count}} 个子文件夹无法读取",
+    "unreadableItem_other": "{{count}} 个子文件夹无法读取",
+    "breadcrumbs": "文件夹路径",
+    "roots": {
+      "label": "扫描位置",
+      "home": "个人文件夹",
+      "disk": "整个磁盘",
+      "pathPlaceholder": "要扫描的文件夹路径…",
+      "scan": "扫描"
+    },
+    "modes": {
+      "label": "视图",
+      "list": "列表",
+      "treemap": "矩形树图",
+      "suggestions": "建议"
+    },
+    "actions": {
+      "up": "上级文件夹",
+      "rescan": "重新扫描",
+      "rescanHint": "仅重新扫描此文件夹",
+      "cancel": "停止"
+    },
+    "table": {
+      "label": "按大小排列的文件夹内容",
+      "name": "名称",
+      "size": "大小",
+      "share": "占比",
+      "files": "文件"
+    },
+    "status": {
+      "idle": "选择一个位置来测量文件夹大小。",
+      "scanning": "正在扫描 {{path}} — {{files}} 个文件，{{size}}",
+      "ready": "{{files}} 个文件 · {{size}}",
+      "fromSnapshot": "来自上次会话，正在刷新",
+      "scanTime": "扫描用时 {{seconds}} 秒",
+      "live": "实时",
+      "updating": "更新中…"
+    },
+    "suggestions": {
+      "empty": "未发现超过 50 MB 的已知缓存或临时文件夹。请扫描个人文件夹。",
+      "safeTotal": "可重新生成：{{size}}",
+      "reviewTotal": "值得检查：{{size}}",
+      "note": "不会自动删除任何内容；右键点按可移到废纸篓。",
+      "show": "显示"
+    },
+    "rules": {
+      "appCache": {
+        "title": "应用缓存",
+        "detail": "应用会在需要时重新生成。删除前请先退出应用。"
+      },
+      "logs": {
+        "title": "日志文件",
+        "detail": "诊断日志，可以删除。"
+      },
+      "xcodeDerivedData": {
+        "title": "Xcode DerivedData",
+        "detail": "编译中间文件，Xcode 会重新生成。"
+      },
+      "xcodeDeviceSupport": {
+        "title": "Xcode 设备支持",
+        "detail": "已连接设备的符号文件，需要时会重新下载。"
+      },
+      "simulatorCache": {
+        "title": "模拟器缓存",
+        "detail": "iOS 模拟器缓存，会自动重新生成。"
+      },
+      "xcodeArchives": {
+        "title": "Xcode 归档",
+        "detail": "已发布版本的归档；如需 dSYM 请保留。"
+      },
+      "simulatorDevices": {
+        "title": "iOS 模拟器设备",
+        "detail": "建议使用 Xcode › Devices 或 `xcrun simctl delete unavailable`。"
+      },
+      "androidEmulators": {
+        "title": "Android 模拟器",
+        "detail": "请在 Android Studio › Device Manager 中删除不用的虚拟设备。"
+      },
+      "androidSystemImages": {
+        "title": "Android 系统映像",
+        "detail": "模拟器映像；不用的可在 SDK Manager 中卸载。"
+      },
+      "packageCache": {
+        "title": "软件包缓存",
+        "detail": "下次构建时会重新下载依赖。"
+      },
+      "toolCache": {
+        "title": "工具缓存 (~/.cache)",
+        "detail": "各种工具的缓存；大多会重新生成，请先查看。"
+      },
+      "spotifyCache": {
+        "title": "Spotify 离线缓存",
+        "detail": "也可以在 Spotify 设置中限制缓存大小。"
+      },
+      "deviceBackups": {
+        "title": "iPhone/iPad 备份",
+        "detail": "旧设备备份；请在 Finder › 设备 › 管理备份中删除。"
+      },
+      "docker": {
+        "title": "Docker 磁盘映像",
+        "detail": "可用 Docker Desktop 或 `docker system prune` 缩小。"
+      },
+      "trash": {
+        "title": "废纸篓",
+        "detail": "已在废纸篓中；清倒后才会释放空间（无法撤销）。"
+      },
+      "downloads": {
+        "title": "下载",
+        "detail": "遗忘的大文件常堆积在这里，建议看看。"
+      },
+      "nodeModules": {
+        "title": "node_modules",
+        "detail": "可用 `npm install` 重新安装。"
+      },
+      "installer": {
+        "title": "安装文件",
+        "detail": "应用安装后就不需要了。"
+      },
+      "oldExtensions": {
+        "title": "旧版编辑器扩展",
+        "detail": "VS Code / Cursor / Antigravity 扩展中已被替换的版本；编辑器使用最新版本。"
+      },
+      "chromeServiceWorker": {
+        "title": "Chrome Service Worker 缓存",
+        "detail": "网站的离线缓存；会重新生成，但在再次访问前网站的离线数据会丢失。"
+      },
+      "pnpmStore": {
+        "title": "pnpm 包存储",
+        "detail": "共享包存储；项目会在下次安装时重新下载包。`pnpm store prune` 只移除未使用的包。"
+      },
+      "googleUpdaterCache": {
+        "title": "Google Updater 缓存",
+        "detail": "Google 应用已下载的更新包；需要时会重新下载。"
+      },
+      "editorCache": {
+        "title": "编辑器缓存",
+        "detail": "VS Code / Cursor / Antigravity 缓存；编辑器启动时重新生成。请先退出编辑器。"
+      },
+      "clangModuleCache": {
+        "title": "Clang 模块缓存",
+        "detail": "Xcode/clang 的已编译模块缓存；下次构建时重新生成。"
+      },
+      "editorWebCache": {
+        "title": "编辑器 webview 缓存",
+        "detail": "编辑器面板和扩展的已缓存网页内容（VS Code、Cursor、Antigravity）；需要时重新生成。请先退出编辑器。"
+      },
+      "vsixCache": {
+        "title": "编辑器扩展下载缓存",
+        "detail": "安装扩展后保留的 .vsix 包；需要时重新下载。"
+      },
+      "codexRuntimeInstall": {
+        "title": "Codex 运行时安装残留",
+        "detail": "未完成的 Codex 运行时安装；Codex 实际使用的运行时不会列出。"
+      }
+    },
+    "space": {
+      "free": "可用：{{free}} / {{total}}",
+      "trash": "废纸篓：{{size}}",
+      "hint": "当前可用：{{now}}。Finder 显示的数值还包括可清除空间。",
+      "trashHint": "移到废纸篓的项目要在清倒废纸篓后才会释放空间。"
     }
   }
 }

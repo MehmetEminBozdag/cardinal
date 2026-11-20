@@ -41,6 +41,9 @@ const resources = {
 
 const featurePrefixes = [
   'search.options.newest',
+  'search.placeholder.sizes',
+  'statusBar.tabs.sizes',
+  'sizes.',
   'search.filters.',
   'contextMenu.moveToTrash_',
   'contextMenu.confirmTrash_',
