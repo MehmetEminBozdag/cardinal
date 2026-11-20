@@ -3,7 +3,9 @@
     "placeholder": {
       "files": "Cerca file e cartelle...",
       "events": "Filtra eventi per percorso o nome...",
-      "directory": "Ambito cartella..."
+      "directory": "Ambito cartella...",
+      "sizes": "Filtra cartelle e file per nome...",
+      "apps": "Filtra app per nome o ID bundle..."
     },
     "options": {
       "caseSensitive": "Attiva/disattiva distinzione tra maiuscole e minuscole",
@@ -85,7 +87,9 @@
   "statusBar": {
     "tabs": {
       "files": "File",
-      "events": "Eventi"
+      "events": "Eventi",
+      "sizes": "Dimensioni",
+      "apps": "App"
     },
     "lifecycle": {
       "Initializing": "Inizializzazione",
@@ -308,7 +312,270 @@
       "cancelSearch": "Annulla ricerca",
       "cancelSort": "Annulla ordinamento",
       "rescan": "Ripeti scansione",
-      "idle": "Nessuna operazione di lunga durata."
+      "idle": "Nessuna operazione di lunga durata.",
+      "history": {
+        "title": "Cronologia",
+        "empty": "Nessuna operazione del Cestino registrata.",
+        "reveal": "Mostra file di log nel Finder",
+        "items_one": "{{count}} elemento",
+        "items_other": "{{count}} elementi",
+        "failed_one": "{{count}} non riuscito",
+        "failed_other": "{{count}} non riusciti",
+        "toTrash": "nel Cestino come «{{name}}»",
+        "receipts_one": "{{count}} ricevuta di installazione rimossa",
+        "receipts_other": "{{count}} ricevute di installazione rimosse",
+        "sources": {
+          "contextMenu": "Spostamento nel Cestino",
+          "appUninstall": "Disinstallazione app",
+          "orphans": "Residui orfani"
+        }
+      }
     }
+  },
+  "sizes": {
+    "smallFiles_one": "{{formatted}} file piccolo (< 1 MB)",
+    "smallFiles_other": "{{formatted}} file piccoli (< 1 MB)",
+    "unreadable_one": "{{formatted}} cartella non leggibile: concedi l'accesso completo al disco",
+    "unreadable_other": "{{formatted}} cartelle non leggibili: concedi l'accesso completo al disco",
+    "unreadableItem_one": "{{count}} sottocartella non leggibile",
+    "unreadableItem_other": "{{count}} sottocartelle non leggibili",
+    "breadcrumbs": "Percorso cartella",
+    "roots": {
+      "label": "Posizione da analizzare",
+      "home": "Cartella Inizio",
+      "disk": "Intero disco",
+      "pathPlaceholder": "Percorso della cartella da analizzare…",
+      "scan": "Analizza"
+    },
+    "modes": {
+      "label": "Vista",
+      "list": "Elenco",
+      "treemap": "Treemap",
+      "suggestions": "Suggerimenti"
+    },
+    "actions": {
+      "up": "Cartella superiore",
+      "rescan": "Rianalizza",
+      "rescanHint": "Rianalizza solo questa cartella",
+      "cancel": "Interrompi"
+    },
+    "table": {
+      "label": "Contenuto della cartella per dimensione",
+      "name": "Nome",
+      "size": "Dimensione",
+      "share": "Quota",
+      "files": "File"
+    },
+    "status": {
+      "idle": "Scegli una posizione per misurare le dimensioni delle cartelle.",
+      "scanning": "Analisi di {{path}}: {{files}} file, {{size}}",
+      "ready": "{{files}} file · {{size}}",
+      "fromSnapshot": "dalla sessione precedente, aggiornamento",
+      "scanTime": "analizzato in {{seconds}} s",
+      "live": "in tempo reale",
+      "updating": "aggiornamento…"
+    },
+    "suggestions": {
+      "empty": "Nessuna cache o cartella temporanea nota oltre 50 MB. Analizza la cartella Inizio.",
+      "safeTotal": "Rigenerabile: {{size}}",
+      "reviewTotal": "Da verificare: {{size}}",
+      "note": "Nulla viene eliminato automaticamente; clic destro per spostare nel Cestino.",
+      "show": "Mostra"
+    },
+    "rules": {
+      "appCache": {
+        "title": "Cache app",
+        "detail": "Le app la ricreano quando serve. Chiudi l'app prima di rimuoverla."
+      },
+      "logs": {
+        "title": "File di log",
+        "detail": "Log diagnostici; possono essere rimossi."
+      },
+      "xcodeDerivedData": {
+        "title": "Xcode DerivedData",
+        "detail": "File intermedi di compilazione; Xcode li ricrea."
+      },
+      "xcodeDeviceSupport": {
+        "title": "Supporto dispositivi Xcode",
+        "detail": "Simboli dei dispositivi collegati; riscaricati se necessario."
+      },
+      "simulatorCache": {
+        "title": "Cache del simulatore",
+        "detail": "Cache del Simulatore iOS; ricreata automaticamente."
+      },
+      "xcodeArchives": {
+        "title": "Archivi Xcode",
+        "detail": "Archivi delle versioni pubblicate; conservali se ti servono i dSYM."
+      },
+      "simulatorDevices": {
+        "title": "Dispositivi simulatore iOS",
+        "detail": "Meglio da Xcode › Devices o `xcrun simctl delete unavailable`."
+      },
+      "androidEmulators": {
+        "title": "Emulatori Android",
+        "detail": "Rimuovi i dispositivi virtuali inutilizzati in Android Studio › Device Manager."
+      },
+      "androidSystemImages": {
+        "title": "Immagini di sistema Android",
+        "detail": "Immagini dell'emulatore; disinstalla quelle inutilizzate dall'SDK Manager."
+      },
+      "packageCache": {
+        "title": "Cache dei pacchetti",
+        "detail": "Le dipendenze verranno riscaricate alla prossima compilazione."
+      },
+      "toolCache": {
+        "title": "Cache strumenti (~/.cache)",
+        "detail": "Cache di vari strumenti; quasi tutte si ricreano, controlla prima."
+      },
+      "spotifyCache": {
+        "title": "Cache offline di Spotify",
+        "detail": "Puoi anche limitare la cache nelle impostazioni di Spotify."
+      },
+      "deviceBackups": {
+        "title": "Backup di iPhone/iPad",
+        "detail": "Vecchi backup; eliminali dal Finder › dispositivo › Gestisci backup."
+      },
+      "docker": {
+        "title": "Immagine disco Docker",
+        "detail": "Riducila con Docker Desktop o `docker system prune`."
+      },
+      "trash": {
+        "title": "Cestino",
+        "detail": "Già nel Cestino; lo spazio si libera svuotandolo (irreversibile)."
+      },
+      "downloads": {
+        "title": "Download",
+        "detail": "Qui si accumulano spesso file grandi dimenticati; dai un'occhiata."
+      },
+      "nodeModules": {
+        "title": "node_modules",
+        "detail": "Reinstallabile con `npm install`."
+      },
+      "installer": {
+        "title": "File di installazione",
+        "detail": "Non serve più dopo aver installato l'app."
+      },
+      "oldExtensions": {
+        "title": "Vecchie versioni delle estensioni dell'editor",
+        "detail": "Versioni sostituite delle estensioni di VS Code / Cursor / Antigravity; l'editor usa la più recente."
+      },
+      "chromeServiceWorker": {
+        "title": "Cache Service Worker di Chrome",
+        "detail": "Cache offline dei siti; vengono ricreate, ma i siti perdono i dati offline fino alla prossima visita."
+      },
+      "pnpmStore": {
+        "title": "Archivio pacchetti pnpm",
+        "detail": "Archivio condiviso; i progetti riscaricano i pacchetti alla prossima installazione. `pnpm store prune` rimuove solo quelli inutilizzati."
+      },
+      "googleUpdaterCache": {
+        "title": "Cache di Google Updater",
+        "detail": "Pacchetti di aggiornamento scaricati delle app Google; riscaricati se necessario."
+      },
+      "editorCache": {
+        "title": "Cache dell'editor",
+        "detail": "Cache di VS Code / Cursor / Antigravity; ricreate all'avvio. Chiudi prima l'editor."
+      },
+      "clangModuleCache": {
+        "title": "Cache dei moduli Clang",
+        "detail": "Cache dei moduli compilati di Xcode/clang; ricreata alla prossima compilazione."
+      },
+      "editorWebCache": {
+        "title": "Cache webview dell'editor",
+        "detail": "Contenuti web in cache di pannelli ed estensioni dell'editor (VS Code, Cursor, Antigravity); ricreati se necessario. Chiudi prima l'editor."
+      },
+      "vsixCache": {
+        "title": "Cache dei download delle estensioni",
+        "detail": "Pacchetti .vsix conservati dopo l'installazione delle estensioni; riscaricati se necessario."
+      },
+      "codexRuntimeInstall": {
+        "title": "Residui di installazione del runtime Codex",
+        "detail": "Installazioni incomplete del runtime Codex; i runtime effettivamente usati non sono elencati."
+      }
+    },
+    "space": {
+      "free": "Libero: {{free}} di {{total}}",
+      "trash": "Cestino: {{size}}",
+      "hint": "Libero ora: {{now}}. Il valore del Finder include lo spazio eliminabile.",
+      "trashHint": "Gli elementi nel Cestino liberano spazio solo dopo averlo svuotato."
+    }
+  },
+  "apps": {
+    "listLabel": "App installate",
+    "count_one": "{{formatted}} app",
+    "count_other": "{{formatted}} app",
+    "loading": "Elenco delle app…",
+    "running": "aperta",
+    "leftoverEstimate": "+{{size}} di residui",
+    "analyzing": "Ricerca di tutto ciò che questa app ha lasciato…",
+    "pick": "Scegli un'app per vedere tutto ciò che ha installato e lasciato.",
+    "selectRecommended": "Seleziona consigliati",
+    "selectAll": "Seleziona tutto",
+    "kinds": {
+      "appBundle": "Applicazione",
+      "support": "Application Support",
+      "cache": "Cache",
+      "preferences": "Preferenze",
+      "container": "Contenitori",
+      "savedState": "Stato salvato",
+      "logs": "Log",
+      "webData": "Dati web e cookie",
+      "launchItem": "Agenti e servizi di avvio",
+      "helper": "Helper privilegiati",
+      "receipt": "Installato dal pacchetto",
+      "recentDocuments": "Elenco documenti recenti",
+      "other": "Altrove sul disco"
+    },
+    "confidence": {
+      "certain": "certo",
+      "likely": "probabile",
+      "possible": "forse"
+    },
+    "adminHint": "Richiede i privilegi di amministratore; macOS chiederà la password.",
+    "reveal": "Mostra nel Finder",
+    "receiptsTitle": "Ricevute di installazione (rimosse dopo la disinstallazione)",
+    "selected_one": "{{count}} elemento ({{leftovers}} residui) · {{size}}",
+    "selected_other": "{{count}} elementi ({{leftovers}} residui) · {{size}}",
+    "adminCount_one": "{{count}} richiede i privilegi di amministratore",
+    "adminCount_other": "{{count}} richiedono i privilegi di amministratore",
+    "removing": "Spostamento nel Cestino…",
+    "remove": "Sposta nel Cestino ({{size}})",
+    "confirm": {
+      "title_one": "Rimuovere {{name}}? {{count}} elemento ({{size}}) verrà spostato nel Cestino.",
+      "title_other": "Rimuovere {{name}}? {{count}} elementi ({{size}}) verranno spostati nel Cestino.",
+      "more_one": "…e {{count}} altro",
+      "more_other": "…e altri {{count}}",
+      "admin_one": "{{count}} elemento richiede i privilegi di amministratore; macOS chiederà la password.",
+      "admin_other": "{{count}} elementi richiedono i privilegi di amministratore; macOS chiederà la password.",
+      "trashNote": "Nulla viene eliminato definitivamente; svuota il Cestino per liberare spazio."
+    },
+    "errors": {
+      "running": "Chiudi l'app (e il suo helper nella barra dei menu) prima di rimuoverla."
+    },
+    "report": {
+      "moved_one": "{{count}} elemento spostato nel Cestino.",
+      "moved_other": "{{count}} elementi spostati nel Cestino.",
+      "receipts_one": "{{count}} ricevuta di installazione rimossa.",
+      "receipts_other": "{{count}} ricevute di installazione rimosse.",
+      "adminCancelled": "Accesso amministratore annullato; gli elementi che lo richiedevano sono rimasti al loro posto.",
+      "emptyTrash": "Svuota il Cestino per liberare spazio."
+    },
+    "orphans": {
+      "title": "Residui orfani",
+      "subtitle_one": "{{count}} app disinstallata",
+      "subtitle_other": "{{count}} app disinstallate",
+      "scanning": "Ricerca dei residui di app rimosse…",
+      "empty": "Nessun residuo di app disinstallate trovato.",
+      "note": "Sembrano appartenere ad app non più installate. Nulla è preselezionato: controlla ogni elemento (↗ lo mostra nel Finder) e seleziona solo ciò che riconosci.",
+      "selectGroup": "Seleziona gruppo",
+      "selected_one": "{{count}} elemento · {{size}}",
+      "selected_other": "{{count}} elementi · {{size}}",
+      "confirmTitle_one": "Spostare {{count}} residuo ({{size}}) di app disinstallate nel Cestino?",
+      "confirmTitle_other": "Spostare {{count}} residui ({{size}}) di app disinstallate nel Cestino?"
+    }
+  },
+  "dialog": {
+    "cancel": "Annulla",
+    "moveToTrash": "Sposta nel Cestino",
+    "ok": "OK"
   }
 }

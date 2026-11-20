@@ -27,6 +27,8 @@ type UseFilesTabStateResult = {
   handleSearchBlur: () => void;
   eventFilterQuery: string;
   setEventFilterQuery: (value: string) => void;
+  /** Name filter of the Sizes and Apps tabs (shares the main search input). */
+  sizeFilterQuery: string;
   searchInputValue: string;
   directoryInputValue: string;
   onQueryChange: (event: ChangeEvent<HTMLInputElement>) => void;
@@ -37,7 +39,7 @@ type UseFilesTabStateResult = {
 };
 
 /**
- * Manages files/events tab UI state, including search input behavior and history navigation.
+ * Manages files/events/sizes tab UI state, including search input behavior and history navigation.
  */
 export function useFilesTabState({
   searchQuery,
@@ -50,6 +52,7 @@ export function useFilesTabState({
   const [activeTab, setActiveTab] = useState<StatusTabKey>('files');
   const [isSearchFocused, setIsSearchFocused] = useState(false);
   const [eventFilterQuery, setEventFilterQuery] = useState('');
+  const [sizeFilterQuery, setSizeFilterQuery] = useState('');
   const {
     handleInputChange: updateHistoryFromInput,
     navigate: navigateSearchHistory,
@@ -139,6 +142,11 @@ export function useFilesTabState({
         return;
       }
 
+      if (activeTab === 'sizes' || activeTab === 'apps') {
+        setSizeFilterQuery(inputValue);
+        return;
+      }
+
       submitFilesQuery(inputValue);
     },
     [activeTab, setEventFilterQuery, submitFilesQuery],
@@ -165,13 +173,23 @@ export function useFilesTabState({
         return;
       }
 
+      if (nextTab === 'sizes' || nextTab === 'apps') {
+        setSizeFilterQuery('');
+        return;
+      }
+
       ensureHistoryBuffer('');
       queueSearch('', { immediate: true });
     },
     [ensureHistoryBuffer, queueSearch, resetCursorToTail, setEventFilterQuery],
   );
 
-  const searchInputValue = activeTab === 'events' ? eventFilterQuery : searchQuery;
+  const searchInputValue =
+    activeTab === 'events'
+      ? eventFilterQuery
+      : activeTab === 'sizes' || activeTab === 'apps'
+        ? sizeFilterQuery
+        : searchQuery;
   const directoryInputValue = activeTab === 'files' ? directoryQuery : '';
 
   return {
@@ -183,6 +201,7 @@ export function useFilesTabState({
     handleSearchBlur,
     eventFilterQuery,
     setEventFilterQuery,
+    sizeFilterQuery,
     searchInputValue,
     directoryInputValue,
     onQueryChange,

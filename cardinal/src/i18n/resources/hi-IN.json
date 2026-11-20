@@ -3,7 +3,9 @@
     "placeholder": {
       "files": "फ़ाइलों और फ़ोल्डरों में खोजें...",
       "events": "पथ या नाम से ईवेंट फ़िल्टर करें...",
-      "directory": "फ़ोल्डर स्कोप..."
+      "directory": "फ़ोल्डर स्कोप...",
+      "sizes": "नाम से फ़ोल्डर और फ़ाइलें फ़िल्टर करें...",
+      "apps": "नाम या बंडल ID से ऐप फ़िल्टर करें..."
     },
     "options": {
       "caseSensitive": "केस-सेंसिटिव मिलान टॉगल करें",
@@ -85,7 +87,9 @@
   "statusBar": {
     "tabs": {
       "files": "फ़ाइलें",
-      "events": "ईवेंट"
+      "events": "ईवेंट",
+      "sizes": "आकार",
+      "apps": "ऐप्स"
     },
     "lifecycle": {
       "Initializing": "आरंभ हो रहा है",
@@ -298,7 +302,270 @@
       "cancelSearch": "खोज रद्द करना",
       "cancelSort": "क्रमबद्ध करना रद्द करें",
       "rescan": "रेस्कन",
-      "idle": "लंबे समय तक चलने वाले ऑपरेशन नहीं।"
+      "idle": "लंबे समय तक चलने वाले ऑपरेशन नहीं।",
+      "history": {
+        "title": "इतिहास",
+        "empty": "अभी तक कोई ट्रैश कार्रवाई दर्ज नहीं हुई।",
+        "reveal": "लॉग फ़ाइल Finder में दिखाएँ",
+        "items_one": "{{count}} आइटम",
+        "items_other": "{{count}} आइटम",
+        "failed_one": "{{count}} विफल",
+        "failed_other": "{{count}} विफल",
+        "toTrash": "ट्रैश में “{{name}}” नाम से",
+        "receipts_one": "{{count}} इंस्टॉलर रसीद भुलाई गई",
+        "receipts_other": "{{count}} इंस्टॉलर रसीदें भुलाई गईं",
+        "sources": {
+          "contextMenu": "ट्रैश में ले जाना",
+          "appUninstall": "ऐप हटाना",
+          "orphans": "अनाथ बचे हुए आइटम"
+        }
+      }
     }
+  },
+  "sizes": {
+    "smallFiles_one": "{{formatted}} छोटी फ़ाइल (< 1 MB)",
+    "smallFiles_other": "{{formatted}} छोटी फ़ाइलें (< 1 MB)",
+    "unreadable_one": "{{formatted}} फ़ोल्डर पढ़ा नहीं जा सका — पूर्ण डिस्क एक्सेस दें",
+    "unreadable_other": "{{formatted}} फ़ोल्डर पढ़े नहीं जा सके — पूर्ण डिस्क एक्सेस दें",
+    "unreadableItem_one": "{{count}} सबफ़ोल्डर पढ़ा नहीं जा सका",
+    "unreadableItem_other": "{{count}} सबफ़ोल्डर पढ़े नहीं जा सके",
+    "breadcrumbs": "फ़ोल्डर पथ",
+    "roots": {
+      "label": "स्कैन स्थान",
+      "home": "होम फ़ोल्डर",
+      "disk": "पूरी डिस्क",
+      "pathPlaceholder": "स्कैन करने के लिए फ़ोल्डर पथ…",
+      "scan": "स्कैन करें"
+    },
+    "modes": {
+      "label": "दृश्य",
+      "list": "सूची",
+      "treemap": "ट्रीमैप",
+      "suggestions": "सुझाव"
+    },
+    "actions": {
+      "up": "मूल फ़ोल्डर",
+      "rescan": "फिर से स्कैन करें",
+      "rescanHint": "केवल यह फ़ोल्डर फिर से स्कैन करें",
+      "cancel": "रोकें"
+    },
+    "table": {
+      "label": "आकार के अनुसार फ़ोल्डर सामग्री",
+      "name": "नाम",
+      "size": "आकार",
+      "share": "हिस्सा",
+      "files": "फ़ाइलें"
+    },
+    "status": {
+      "idle": "फ़ोल्डर आकार मापने के लिए कोई स्थान चुनें।",
+      "scanning": "{{path}} स्कैन हो रहा है — {{files}} फ़ाइलें, {{size}}",
+      "ready": "{{files}} फ़ाइलें · {{size}}",
+      "fromSnapshot": "पिछले सत्र से, ताज़ा हो रहा है",
+      "scanTime": "{{seconds}} सेकंड में स्कैन हुआ",
+      "live": "लाइव",
+      "updating": "अपडेट हो रहा है…"
+    },
+    "suggestions": {
+      "empty": "50 MB से बड़े कोई ज्ञात कैश या अस्थायी फ़ोल्डर नहीं मिले। अपना होम फ़ोल्डर स्कैन करें।",
+      "safeTotal": "फिर से बन सकता है: {{size}}",
+      "reviewTotal": "समीक्षा योग्य: {{size}}",
+      "note": "कुछ भी अपने आप नहीं हटता; ट्रैश में ले जाने के लिए राइट-क्लिक करें।",
+      "show": "दिखाएँ"
+    },
+    "rules": {
+      "appCache": {
+        "title": "ऐप कैश",
+        "detail": "ऐप ज़रूरत पड़ने पर इसे फिर बनाते हैं। हटाने से पहले ऐप बंद करें।"
+      },
+      "logs": {
+        "title": "लॉग फ़ाइलें",
+        "detail": "निदान लॉग; हटाए जा सकते हैं।"
+      },
+      "xcodeDerivedData": {
+        "title": "Xcode DerivedData",
+        "detail": "बिल्ड की मध्यवर्ती फ़ाइलें; Xcode इन्हें फिर बनाता है।"
+      },
+      "xcodeDeviceSupport": {
+        "title": "Xcode डिवाइस सपोर्ट",
+        "detail": "जुड़े डिवाइसों के सिंबल; ज़रूरत पर फिर डाउनलोड होते हैं।"
+      },
+      "simulatorCache": {
+        "title": "सिम्युलेटर कैश",
+        "detail": "iOS सिम्युलेटर कैश; अपने आप फिर बनता है।"
+      },
+      "xcodeArchives": {
+        "title": "Xcode आर्काइव",
+        "detail": "जारी बिल्ड के आर्काइव; dSYM चाहिए तो रखें।"
+      },
+      "simulatorDevices": {
+        "title": "iOS सिम्युलेटर डिवाइस",
+        "detail": "Xcode › Devices या `xcrun simctl delete unavailable` बेहतर है।"
+      },
+      "androidEmulators": {
+        "title": "Android एमुलेटर",
+        "detail": "अनुपयोगी वर्चुअल डिवाइस Android Studio › Device Manager से हटाएँ।"
+      },
+      "androidSystemImages": {
+        "title": "Android सिस्टम इमेज",
+        "detail": "एमुलेटर इमेज; अनुपयोगी को SDK Manager से हटाएँ।"
+      },
+      "packageCache": {
+        "title": "पैकेज कैश",
+        "detail": "अगले बिल्ड में निर्भरताएँ फिर डाउनलोड होंगी।"
+      },
+      "toolCache": {
+        "title": "टूल कैश (~/.cache)",
+        "detail": "विभिन्न टूल के कैश; अधिकांश फिर बनते हैं, पहले देख लें।"
+      },
+      "spotifyCache": {
+        "title": "Spotify ऑफ़लाइन कैश",
+        "detail": "Spotify सेटिंग्स में कैश आकार सीमित भी कर सकते हैं।"
+      },
+      "deviceBackups": {
+        "title": "iPhone/iPad बैकअप",
+        "detail": "पुराने बैकअप; Finder › डिवाइस › बैकअप प्रबंधित करें से हटाएँ।"
+      },
+      "docker": {
+        "title": "Docker डिस्क इमेज",
+        "detail": "Docker Desktop या `docker system prune` से छोटा करें।"
+      },
+      "trash": {
+        "title": "ट्रैश",
+        "detail": "पहले से ट्रैश में; खाली करने पर जगह मिलती है (वापस नहीं होगा)।"
+      },
+      "downloads": {
+        "title": "डाउनलोड",
+        "detail": "भूली हुई बड़ी फ़ाइलें अक्सर यहाँ जमा होती हैं; देख लें।"
+      },
+      "nodeModules": {
+        "title": "node_modules",
+        "detail": "`npm install` से फिर इंस्टॉल हो सकता है।"
+      },
+      "installer": {
+        "title": "इंस्टॉलर फ़ाइल",
+        "detail": "ऐप इंस्टॉल होने के बाद ज़रूरी नहीं।"
+      },
+      "oldExtensions": {
+        "title": "एडिटर एक्सटेंशन के पुराने संस्करण",
+        "detail": "VS Code / Cursor / Antigravity एक्सटेंशन के बदले जा चुके संस्करण; एडिटर नवीनतम उपयोग करता है।"
+      },
+      "chromeServiceWorker": {
+        "title": "Chrome Service Worker कैश",
+        "detail": "वेबसाइटों के ऑफ़लाइन कैश; फिर बनते हैं, पर दोबारा देखने तक साइटों का ऑफ़लाइन डेटा मिट जाता है।"
+      },
+      "pnpmStore": {
+        "title": "pnpm पैकेज स्टोर",
+        "detail": "साझा पैकेज स्टोर; अगली इंस्टॉल पर प्रोजेक्ट पैकेज फिर डाउनलोड करेंगे। `pnpm store prune` केवल अनुपयोगी हटाता है।"
+      },
+      "googleUpdaterCache": {
+        "title": "Google Updater कैश",
+        "detail": "Google ऐप्स के डाउनलोड किए गए अपडेट पैकेज; ज़रूरत पर फिर डाउनलोड होते हैं।"
+      },
+      "editorCache": {
+        "title": "एडिटर कैश",
+        "detail": "VS Code / Cursor / Antigravity कैश; एडिटर खुलने पर फिर बनते हैं। पहले एडिटर बंद करें।"
+      },
+      "clangModuleCache": {
+        "title": "Clang मॉड्यूल कैश",
+        "detail": "Xcode/clang का कंपाइल्ड मॉड्यूल कैश; अगले बिल्ड पर फिर बनता है।"
+      },
+      "editorWebCache": {
+        "title": "एडिटर webview कैश",
+        "detail": "एडिटर पैनलों और एक्सटेंशन की कैश की गई वेब सामग्री (VS Code, Cursor, Antigravity); ज़रूरत पर फिर बनती है। पहले एडिटर बंद करें।"
+      },
+      "vsixCache": {
+        "title": "एडिटर एक्सटेंशन डाउनलोड कैश",
+        "detail": "एक्सटेंशन इंस्टॉल होने के बाद रखे गए .vsix पैकेज; ज़रूरत पर फिर डाउनलोड होते हैं।"
+      },
+      "codexRuntimeInstall": {
+        "title": "Codex रनटाइम इंस्टॉल के बचे हिस्से",
+        "detail": "अधूरे Codex रनटाइम इंस्टॉल; Codex जिन रनटाइम का उपयोग करता है वे सूचीबद्ध नहीं होते।"
+      }
+    },
+    "space": {
+      "free": "खाली: {{total}} में से {{free}}",
+      "trash": "ट्रैश: {{size}}",
+      "hint": "अभी खाली: {{now}}। Finder का आँकड़ा साफ़ की जा सकने वाली जगह भी गिनता है।",
+      "trashHint": "ट्रैश में डाली गई चीज़ें ट्रैश खाली करने पर ही जगह खाली करती हैं।"
+    }
+  },
+  "apps": {
+    "listLabel": "इंस्टॉल किए गए ऐप्स",
+    "count_one": "{{formatted}} ऐप",
+    "count_other": "{{formatted}} ऐप्स",
+    "loading": "ऐप्स की सूची बन रही है…",
+    "running": "चल रहा है",
+    "leftoverEstimate": "+{{size}} बचा हुआ",
+    "analyzing": "इस ऐप ने जो कुछ छोड़ा है वह खोजा जा रहा है…",
+    "pick": "कोई ऐप चुनें ताकि उसका इंस्टॉल किया और छोड़ा हुआ सब दिखे।",
+    "selectRecommended": "सुझाए गए चुनें",
+    "selectAll": "सब चुनें",
+    "kinds": {
+      "appBundle": "ऐप",
+      "support": "Application Support",
+      "cache": "कैश",
+      "preferences": "प्राथमिकताएँ",
+      "container": "कंटेनर",
+      "savedState": "सहेजी गई स्थिति",
+      "logs": "लॉग",
+      "webData": "वेब डेटा और कुकीज़",
+      "launchItem": "लॉन्च एजेंट और डेमन",
+      "helper": "विशेषाधिकार वाले हेल्पर",
+      "receipt": "पैकेज द्वारा इंस्टॉल",
+      "recentDocuments": "हाल के दस्तावेज़ों की सूची",
+      "other": "डिस्क पर अन्य जगह"
+    },
+    "confidence": {
+      "certain": "निश्चित",
+      "likely": "संभावित",
+      "possible": "शायद"
+    },
+    "adminHint": "व्यवस्थापक अधिकार चाहिए; macOS आपका पासवर्ड माँगेगा।",
+    "reveal": "Finder में दिखाएँ",
+    "receiptsTitle": "इंस्टॉलर रसीदें (हटाने के बाद भुला दी जाती हैं)",
+    "selected_one": "{{count}} आइटम ({{leftovers}} बचे हुए) · {{size}}",
+    "selected_other": "{{count}} आइटम ({{leftovers}} बचे हुए) · {{size}}",
+    "adminCount_one": "{{count}} को व्यवस्थापक अधिकार चाहिए",
+    "adminCount_other": "{{count}} को व्यवस्थापक अधिकार चाहिए",
+    "removing": "ट्रैश में ले जाया जा रहा है…",
+    "remove": "ट्रैश में ले जाएँ ({{size}})",
+    "confirm": {
+      "title_one": "{{name}} हटाएँ? {{count}} आइटम ({{size}}) ट्रैश में जाएगा।",
+      "title_other": "{{name}} हटाएँ? {{count}} आइटम ({{size}}) ट्रैश में जाएँगे।",
+      "more_one": "…और {{count}}",
+      "more_other": "…और {{count}}",
+      "admin_one": "{{count}} आइटम को व्यवस्थापक अधिकार चाहिए; macOS आपका पासवर्ड माँगेगा।",
+      "admin_other": "{{count}} आइटम को व्यवस्थापक अधिकार चाहिए; macOS आपका पासवर्ड माँगेगा।",
+      "trashNote": "कुछ भी स्थायी रूप से नहीं हटता; जगह खाली करने के लिए ट्रैश खाली करें।"
+    },
+    "errors": {
+      "running": "हटाने से पहले ऐप (और उसका मेनू बार हेल्पर) बंद करें।"
+    },
+    "report": {
+      "moved_one": "{{count}} आइटम ट्रैश में गया।",
+      "moved_other": "{{count}} आइटम ट्रैश में गए।",
+      "receipts_one": "{{count}} इंस्टॉलर रसीद भुलाई गई।",
+      "receipts_other": "{{count}} इंस्टॉलर रसीदें भुलाई गईं।",
+      "adminCancelled": "व्यवस्थापक अनुमति रद्द हुई; जिन आइटम को इसकी ज़रूरत थी वे वहीं रहे।",
+      "emptyTrash": "जगह खाली करने के लिए ट्रैश खाली करें।"
+    },
+    "orphans": {
+      "title": "अनाथ बचे हुए आइटम",
+      "subtitle_one": "{{count}} हटाया गया ऐप",
+      "subtitle_other": "{{count}} हटाए गए ऐप्स",
+      "scanning": "हटाए गए ऐप्स का बचा हुआ खोजा जा रहा है…",
+      "empty": "हटाए गए ऐप्स का कोई बचा हुआ नहीं मिला।",
+      "note": "ये उन ऐप्स के लगते हैं जो अब इंस्टॉल नहीं हैं। कुछ भी पहले से चुना नहीं है: हर आइटम जाँचें (↗ Finder में दिखाता है) और केवल पहचाने हुए चुनें।",
+      "selectGroup": "समूह चुनें",
+      "selected_one": "{{count}} आइटम · {{size}}",
+      "selected_other": "{{count}} आइटम · {{size}}",
+      "confirmTitle_one": "हटाए गए ऐप्स के {{count}} बचे आइटम ({{size}}) ट्रैश में ले जाएँ?",
+      "confirmTitle_other": "हटाए गए ऐप्स के {{count}} बचे आइटम ({{size}}) ट्रैश में ले जाएँ?"
+    }
+  },
+  "dialog": {
+    "cancel": "रद्द करें",
+    "moveToTrash": "ट्रैश में ले जाएँ",
+    "ok": "ठीक है"
   }
 }

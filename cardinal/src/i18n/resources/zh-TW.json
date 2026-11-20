@@ -3,7 +3,9 @@
     "placeholder": {
       "files": "搜尋檔案和資料夾…",
       "events": "依路徑或名稱篩選事件…",
-      "directory": "限定資料夾範圍…"
+      "directory": "限定資料夾範圍…",
+      "sizes": "依名稱篩選檔案夾與檔案...",
+      "apps": "依名稱或 Bundle ID 篩選 App..."
     },
     "options": {
       "caseSensitive": "切換區分大小寫比對",
@@ -85,7 +87,9 @@
   "statusBar": {
     "tabs": {
       "files": "檔案",
-      "events": "事件"
+      "events": "事件",
+      "sizes": "大小",
+      "apps": "App"
     },
     "lifecycle": {
       "Initializing": "正在初始化",
@@ -307,7 +311,270 @@
       "cancelSearch": "取消搜索",
       "cancelSort": "取消排序",
       "rescan": "重新掃描",
-      "idle": "沒有長期運營."
+      "idle": "沒有長期運營.",
+      "history": {
+        "title": "歷史記錄",
+        "empty": "尚無已記錄的垃圾桶操作。",
+        "reveal": "在 Finder 中顯示記錄檔",
+        "items_one": "{{count}} 項",
+        "items_other": "{{count}} 項",
+        "failed_one": "{{count}} 項失敗",
+        "failed_other": "{{count}} 項失敗",
+        "toTrash": "在垃圾桶中名為「{{name}}」",
+        "receipts_one": "已清除 {{count}} 個安裝收據",
+        "receipts_other": "已清除 {{count}} 個安裝收據",
+        "sources": {
+          "contextMenu": "移到垃圾桶",
+          "appUninstall": "解除安裝 App",
+          "orphans": "孤立殘留"
+        }
+      }
     }
+  },
+  "sizes": {
+    "smallFiles_one": "{{formatted}} 個小檔案 (< 1 MB)",
+    "smallFiles_other": "{{formatted}} 個小檔案 (< 1 MB)",
+    "unreadable_one": "{{formatted}} 個檔案夾無法讀取 — 請授予完整磁碟取用權",
+    "unreadable_other": "{{formatted}} 個檔案夾無法讀取 — 請授予完整磁碟取用權",
+    "unreadableItem_one": "{{count}} 個子檔案夾無法讀取",
+    "unreadableItem_other": "{{count}} 個子檔案夾無法讀取",
+    "breadcrumbs": "檔案夾路徑",
+    "roots": {
+      "label": "掃描位置",
+      "home": "個人專屬檔案夾",
+      "disk": "整個磁碟",
+      "pathPlaceholder": "要掃描的檔案夾路徑…",
+      "scan": "掃描"
+    },
+    "modes": {
+      "label": "顯示方式",
+      "list": "列表",
+      "treemap": "矩形樹狀圖",
+      "suggestions": "建議"
+    },
+    "actions": {
+      "up": "上層檔案夾",
+      "rescan": "重新掃描",
+      "rescanHint": "只重新掃描此檔案夾",
+      "cancel": "停止"
+    },
+    "table": {
+      "label": "依大小排列的檔案夾內容",
+      "name": "名稱",
+      "size": "大小",
+      "share": "比例",
+      "files": "檔案"
+    },
+    "status": {
+      "idle": "選擇一個位置來測量檔案夾大小。",
+      "scanning": "正在掃描 {{path}} — {{files}} 個檔案，{{size}}",
+      "ready": "{{files}} 個檔案 · {{size}}",
+      "fromSnapshot": "來自上次工作階段，正在重新整理",
+      "scanTime": "掃描用時 {{seconds}} 秒",
+      "live": "即時",
+      "updating": "更新中…"
+    },
+    "suggestions": {
+      "empty": "找不到超過 50 MB 的已知快取或暫存檔案夾。請掃描個人專屬檔案夾。",
+      "safeTotal": "可重新產生：{{size}}",
+      "reviewTotal": "值得檢查：{{size}}",
+      "note": "不會自動刪除任何內容；按右鍵可移到垃圾桶。",
+      "show": "顯示"
+    },
+    "rules": {
+      "appCache": {
+        "title": "App 快取",
+        "detail": "App 會在需要時重新建立。刪除前請先結束 App。"
+      },
+      "logs": {
+        "title": "記錄檔",
+        "detail": "診斷記錄，可以刪除。"
+      },
+      "xcodeDerivedData": {
+        "title": "Xcode DerivedData",
+        "detail": "建置中間檔，Xcode 會重新產生。"
+      },
+      "xcodeDeviceSupport": {
+        "title": "Xcode 裝置支援",
+        "detail": "已連接裝置的符號檔，需要時會重新下載。"
+      },
+      "simulatorCache": {
+        "title": "模擬器快取",
+        "detail": "iOS 模擬器快取，會自動重新建立。"
+      },
+      "xcodeArchives": {
+        "title": "Xcode 封存",
+        "detail": "已發布版本的封存；如需 dSYM 請保留。"
+      },
+      "simulatorDevices": {
+        "title": "iOS 模擬器裝置",
+        "detail": "建議使用 Xcode › Devices 或 `xcrun simctl delete unavailable`。"
+      },
+      "androidEmulators": {
+        "title": "Android 模擬器",
+        "detail": "請在 Android Studio › Device Manager 刪除不用的虛擬裝置。"
+      },
+      "androidSystemImages": {
+        "title": "Android 系統映像檔",
+        "detail": "模擬器映像檔；不用的可在 SDK Manager 解除安裝。"
+      },
+      "packageCache": {
+        "title": "套件快取",
+        "detail": "下次建置時會重新下載相依項目。"
+      },
+      "toolCache": {
+        "title": "工具快取 (~/.cache)",
+        "detail": "各種工具的快取；大多會重新產生，請先查看。"
+      },
+      "spotifyCache": {
+        "title": "Spotify 離線快取",
+        "detail": "也可以在 Spotify 設定中限制快取大小。"
+      },
+      "deviceBackups": {
+        "title": "iPhone/iPad 備份",
+        "detail": "舊的裝置備份；請在 Finder › 裝置 › 管理備份中刪除。"
+      },
+      "docker": {
+        "title": "Docker 磁碟映像檔",
+        "detail": "可用 Docker Desktop 或 `docker system prune` 縮小。"
+      },
+      "trash": {
+        "title": "垃圾桶",
+        "detail": "已在垃圾桶中；清空後才會釋出空間（無法還原）。"
+      },
+      "downloads": {
+        "title": "下載項目",
+        "detail": "遺忘的大型檔案常堆積在這裡，建議看看。"
+      },
+      "nodeModules": {
+        "title": "node_modules",
+        "detail": "可用 `npm install` 重新安裝。"
+      },
+      "installer": {
+        "title": "安裝檔",
+        "detail": "App 安裝後就不需要了。"
+      },
+      "oldExtensions": {
+        "title": "舊版編輯器延伸功能",
+        "detail": "VS Code / Cursor / Antigravity 延伸功能中已被取代的版本；編輯器使用最新版本。"
+      },
+      "chromeServiceWorker": {
+        "title": "Chrome Service Worker 快取",
+        "detail": "網站的離線快取；會重新建立，但在再次造訪前網站的離線資料會遺失。"
+      },
+      "pnpmStore": {
+        "title": "pnpm 套件儲存區",
+        "detail": "共用套件儲存區；專案會在下次安裝時重新下載套件。`pnpm store prune` 只移除未使用的套件。"
+      },
+      "googleUpdaterCache": {
+        "title": "Google Updater 快取",
+        "detail": "Google App 已下載的更新套件；需要時會重新下載。"
+      },
+      "editorCache": {
+        "title": "編輯器快取",
+        "detail": "VS Code / Cursor / Antigravity 快取；編輯器啟動時重新建立。請先結束編輯器。"
+      },
+      "clangModuleCache": {
+        "title": "Clang 模組快取",
+        "detail": "Xcode/clang 的已編譯模組快取；下次建置時重新建立。"
+      },
+      "editorWebCache": {
+        "title": "編輯器 webview 快取",
+        "detail": "編輯器面板與延伸功能的已快取網頁內容（VS Code、Cursor、Antigravity）；需要時重新建立。請先結束編輯器。"
+      },
+      "vsixCache": {
+        "title": "編輯器延伸功能下載快取",
+        "detail": "安裝延伸功能後保留的 .vsix 套件；需要時重新下載。"
+      },
+      "codexRuntimeInstall": {
+        "title": "Codex 執行環境安裝殘留",
+        "detail": "未完成的 Codex 執行環境安裝；Codex 實際使用的執行環境不會列出。"
+      }
+    },
+    "space": {
+      "free": "可用：{{free}} / {{total}}",
+      "trash": "垃圾桶：{{size}}",
+      "hint": "目前可用：{{now}}。Finder 顯示的數值也包含可清除空間。",
+      "trashHint": "移到垃圾桶的項目要在清空垃圾桶後才會釋出空間。"
+    }
+  },
+  "apps": {
+    "listLabel": "已安裝的 App",
+    "count_one": "{{formatted}} 個 App",
+    "count_other": "{{formatted}} 個 App",
+    "loading": "正在列出 App…",
+    "running": "執行中",
+    "leftoverEstimate": "+{{size}} 殘留",
+    "analyzing": "正在尋找此 App 留下的所有內容…",
+    "pick": "選擇一個 App，查看它安裝與留下的所有內容。",
+    "selectRecommended": "選擇建議項目",
+    "selectAll": "全選",
+    "kinds": {
+      "appBundle": "應用程式",
+      "support": "Application Support",
+      "cache": "快取",
+      "preferences": "偏好設定",
+      "container": "容器",
+      "savedState": "儲存的狀態",
+      "logs": "記錄",
+      "webData": "網頁資料與 Cookie",
+      "launchItem": "啟動代理程式與常駐程式",
+      "helper": "特權輔助程式",
+      "receipt": "由安裝套件安裝",
+      "recentDocuments": "最近使用的文件列表",
+      "other": "磁碟上的其他位置"
+    },
+    "confidence": {
+      "certain": "確定",
+      "likely": "很可能",
+      "possible": "可能"
+    },
+    "adminHint": "需要管理者權限；macOS 會要求輸入密碼。",
+    "reveal": "在 Finder 中顯示",
+    "receiptsTitle": "安裝收據（移除後清除）",
+    "selected_one": "{{count}} 項（{{leftovers}} 項殘留）· {{size}}",
+    "selected_other": "{{count}} 項（{{leftovers}} 項殘留）· {{size}}",
+    "adminCount_one": "{{count}} 項需要管理者權限",
+    "adminCount_other": "{{count}} 項需要管理者權限",
+    "removing": "正在移到垃圾桶…",
+    "remove": "移到垃圾桶（{{size}}）",
+    "confirm": {
+      "title_one": "要移除 {{name}} 嗎？{{count}} 項（{{size}}）將移到垃圾桶。",
+      "title_other": "要移除 {{name}} 嗎？{{count}} 項（{{size}}）將移到垃圾桶。",
+      "more_one": "…以及另外 {{count}} 項",
+      "more_other": "…以及另外 {{count}} 項",
+      "admin_one": "{{count}} 項需要管理者權限；macOS 會要求輸入密碼。",
+      "admin_other": "{{count}} 項需要管理者權限；macOS 會要求輸入密碼。",
+      "trashNote": "不會永久刪除任何內容；清空垃圾桶後才會釋出空間。"
+    },
+    "errors": {
+      "running": "移除前請先結束該 App（及其選單列輔助程式）。"
+    },
+    "report": {
+      "moved_one": "已將 {{count}} 項移到垃圾桶。",
+      "moved_other": "已將 {{count}} 項移到垃圾桶。",
+      "receipts_one": "已清除 {{count}} 個安裝收據。",
+      "receipts_other": "已清除 {{count}} 個安裝收據。",
+      "adminCancelled": "已取消管理者授權；需要權限的項目保留在原處。",
+      "emptyTrash": "清空垃圾桶後才會釋出空間。"
+    },
+    "orphans": {
+      "title": "孤立殘留",
+      "subtitle_one": "{{count}} 個已解除安裝的 App",
+      "subtitle_other": "{{count}} 個已解除安裝的 App",
+      "scanning": "正在尋找已移除 App 的殘留…",
+      "empty": "找不到已解除安裝 App 的殘留。",
+      "note": "這些似乎屬於已不再安裝的 App。沒有預先選取任何項目：請逐項檢查（↗ 在 Finder 中顯示），只選取你認得的。",
+      "selectGroup": "選取整組",
+      "selected_one": "{{count}} 項 · {{size}}",
+      "selected_other": "{{count}} 項 · {{size}}",
+      "confirmTitle_one": "要將已解除安裝 App 的 {{count}} 項殘留（{{size}}）移到垃圾桶嗎？",
+      "confirmTitle_other": "要將已解除安裝 App 的 {{count}} 項殘留（{{size}}）移到垃圾桶嗎？"
+    }
+  },
+  "dialog": {
+    "cancel": "取消",
+    "moveToTrash": "移到垃圾桶",
+    "ok": "好"
   }
 }

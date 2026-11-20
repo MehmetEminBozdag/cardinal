@@ -3,7 +3,9 @@
     "placeholder": {
       "files": "ابحث عن الملفات والمجلدات...",
       "events": "رشّح الأحداث حسب المسار أو الاسم...",
-      "directory": "نطاق المجلد..."
+      "directory": "نطاق المجلد...",
+      "sizes": "تصفية المجلدات والملفات بالاسم...",
+      "apps": "تصفية التطبيقات بالاسم أو معرّف الحزمة..."
     },
     "options": {
       "caseSensitive": "تفعيل/إيقاف حساسية حالة الأحرف",
@@ -85,7 +87,9 @@
   "statusBar": {
     "tabs": {
       "files": "الملفات",
-      "events": "الأحداث"
+      "events": "الأحداث",
+      "sizes": "الأحجام",
+      "apps": "التطبيقات"
     },
     "lifecycle": {
       "Initializing": "جارٍ التهيئة",
@@ -308,7 +312,270 @@
       "cancelSearch": "إلغاء البحث",
       "cancelSort": "إلغاء الترتيب",
       "rescan": "إعادة الفحص",
-      "idle": "لا عمليات طويلة المدى."
+      "idle": "لا عمليات طويلة المدى.",
+      "history": {
+        "title": "السجل",
+        "empty": "لم تُسجّل أي عمليات على سلة المهملات بعد.",
+        "reveal": "إظهار ملف السجل في Finder",
+        "items_one": "{{count}} عنصر",
+        "items_other": "{{count}} عناصر",
+        "failed_one": "فشل {{count}}",
+        "failed_other": "فشلت {{count}}",
+        "toTrash": "في سلة المهملات باسم «{{name}}»",
+        "receipts_one": "نُسي {{count}} إيصال تثبيت",
+        "receipts_other": "نُسيت {{count}} إيصالات تثبيت",
+        "sources": {
+          "contextMenu": "النقل إلى سلة المهملات",
+          "appUninstall": "إزالة تطبيق",
+          "orphans": "بقايا يتيمة"
+        }
+      }
     }
+  },
+  "sizes": {
+    "smallFiles_one": "{{formatted}} ملف صغير (< 1 ميغابايت)",
+    "smallFiles_other": "{{formatted}} ملفات صغيرة (< 1 ميغابايت)",
+    "unreadable_one": "تعذّرت قراءة {{formatted}} مجلد — امنح الوصول الكامل إلى القرص",
+    "unreadable_other": "تعذّرت قراءة {{formatted}} مجلدات — امنح الوصول الكامل إلى القرص",
+    "unreadableItem_one": "تعذّرت قراءة {{count}} مجلد فرعي",
+    "unreadableItem_other": "تعذّرت قراءة {{count}} مجلدات فرعية",
+    "breadcrumbs": "مسار المجلد",
+    "roots": {
+      "label": "موقع الفحص",
+      "home": "مجلد المستخدم",
+      "disk": "القرص بالكامل",
+      "pathPlaceholder": "مسار المجلد المراد فحصه…",
+      "scan": "فحص"
+    },
+    "modes": {
+      "label": "العرض",
+      "list": "قائمة",
+      "treemap": "خريطة شجرية",
+      "suggestions": "اقتراحات"
+    },
+    "actions": {
+      "up": "المجلد الأعلى",
+      "rescan": "إعادة الفحص",
+      "rescanHint": "إعادة فحص هذا المجلد فقط",
+      "cancel": "إيقاف"
+    },
+    "table": {
+      "label": "محتوى المجلد حسب الحجم",
+      "name": "الاسم",
+      "size": "الحجم",
+      "share": "النسبة",
+      "files": "الملفات"
+    },
+    "status": {
+      "idle": "اختر موقعًا لقياس أحجام المجلدات.",
+      "scanning": "جارٍ فحص {{path}} — {{files}} ملف، {{size}}",
+      "ready": "{{files}} ملف · {{size}}",
+      "fromSnapshot": "من الجلسة السابقة، جارٍ التحديث",
+      "scanTime": "تم الفحص في {{seconds}} ث",
+      "live": "مباشر",
+      "updating": "جارٍ التحديث…"
+    },
+    "suggestions": {
+      "empty": "لم يُعثر على ذاكرات تخزين مؤقت أو مجلدات مؤقتة معروفة تتجاوز 50 ميغابايت. افحص مجلد المستخدم.",
+      "safeTotal": "قابل لإعادة الإنشاء: {{size}}",
+      "reviewTotal": "يستحق المراجعة: {{size}}",
+      "note": "لا يُحذف شيء تلقائيًا؛ انقر بزر الفأرة الأيمن لنقل العنصر إلى سلة المهملات.",
+      "show": "إظهار"
+    },
+    "rules": {
+      "appCache": {
+        "title": "ذاكرة التطبيقات المؤقتة",
+        "detail": "تعيد التطبيقات إنشاءها عند الحاجة. أغلق التطبيق قبل الإزالة."
+      },
+      "logs": {
+        "title": "ملفات السجل",
+        "detail": "سجلات تشخيص؛ يمكن إزالتها."
+      },
+      "xcodeDerivedData": {
+        "title": "Xcode DerivedData",
+        "detail": "ملفات بناء وسيطة؛ يعيد Xcode إنشاءها."
+      },
+      "xcodeDeviceSupport": {
+        "title": "دعم أجهزة Xcode",
+        "detail": "رموز الأجهزة المتصلة؛ تُنزّل مجددًا عند الحاجة."
+      },
+      "simulatorCache": {
+        "title": "ذاكرة المحاكي المؤقتة",
+        "detail": "ذاكرة محاكي iOS؛ يعاد إنشاؤها تلقائيًا."
+      },
+      "xcodeArchives": {
+        "title": "أرشيفات Xcode",
+        "detail": "أرشيفات الإصدارات المنشورة؛ احتفظ بها إذا احتجت ملفات dSYM."
+      },
+      "simulatorDevices": {
+        "title": "أجهزة محاكي iOS",
+        "detail": "يفضّل استخدام Xcode › Devices أو `xcrun simctl delete unavailable`."
+      },
+      "androidEmulators": {
+        "title": "محاكيات Android",
+        "detail": "احذف الأجهزة الافتراضية غير المستخدمة من Android Studio › Device Manager."
+      },
+      "androidSystemImages": {
+        "title": "صور نظام Android",
+        "detail": "صور المحاكي؛ أزل غير المستخدم منها عبر SDK Manager."
+      },
+      "packageCache": {
+        "title": "ذاكرة الحزم المؤقتة",
+        "detail": "ستُنزّل الاعتماديات مجددًا في البناء التالي."
+      },
+      "toolCache": {
+        "title": "ذاكرة الأدوات (~/.cache)",
+        "detail": "ذاكرات أدوات متعددة؛ معظمها يعاد إنشاؤه، راجعها أولًا."
+      },
+      "spotifyCache": {
+        "title": "ذاكرة Spotify دون اتصال",
+        "detail": "يمكنك أيضًا تحديد حجم الذاكرة من إعدادات Spotify."
+      },
+      "deviceBackups": {
+        "title": "نسخ iPhone/iPad الاحتياطية",
+        "detail": "نسخ قديمة؛ احذفها من Finder › الجهاز › إدارة النسخ الاحتياطية."
+      },
+      "docker": {
+        "title": "صورة قرص Docker",
+        "detail": "قلّص حجمها عبر Docker Desktop أو `docker system prune`."
+      },
+      "trash": {
+        "title": "سلة المهملات",
+        "detail": "موجودة في السلة بالفعل؛ تتحرر المساحة عند إفراغها (لا يمكن التراجع)."
+      },
+      "downloads": {
+        "title": "التنزيلات",
+        "detail": "غالبًا ما تتراكم هنا ملفات كبيرة منسية؛ ألقِ نظرة."
+      },
+      "nodeModules": {
+        "title": "node_modules",
+        "detail": "يعاد تثبيتها بالأمر `npm install`."
+      },
+      "installer": {
+        "title": "ملف تثبيت",
+        "detail": "لا حاجة إليه بعد تثبيت التطبيق."
+      },
+      "oldExtensions": {
+        "title": "إصدارات قديمة من إضافات المحرر",
+        "detail": "إصدارات مستبدلة من إضافات VS Code / Cursor / Antigravity؛ يستخدم المحرر أحدثها."
+      },
+      "chromeServiceWorker": {
+        "title": "ذاكرة Service Worker في Chrome",
+        "detail": "ذاكرات المواقع للعمل دون اتصال؛ يعاد إنشاؤها، لكن المواقع تفقد بياناتها دون اتصال حتى زيارتها مجددًا."
+      },
+      "pnpmStore": {
+        "title": "مخزن حزم pnpm",
+        "detail": "مخزن حزم مشترك؛ تعيد المشاريع تنزيل الحزم عند التثبيت التالي. `pnpm store prune` يزيل غير المستخدم فقط."
+      },
+      "googleUpdaterCache": {
+        "title": "ذاكرة Google Updater",
+        "detail": "حزم تحديث تطبيقات Google المنزّلة؛ تُنزّل مجددًا عند الحاجة."
+      },
+      "editorCache": {
+        "title": "ذاكرة المحرر",
+        "detail": "ذاكرات VS Code / Cursor / Antigravity؛ يعاد إنشاؤها عند فتح المحرر. أغلق المحرر أولًا."
+      },
+      "clangModuleCache": {
+        "title": "ذاكرة وحدات Clang",
+        "detail": "ذاكرة الوحدات المترجمة في Xcode/clang؛ يعاد إنشاؤها عند البناء التالي."
+      },
+      "editorWebCache": {
+        "title": "ذاكرة webview للمحرر",
+        "detail": "محتوى ويب مخزن مؤقتًا للوحات المحرر وإضافاته (VS Code وCursor وAntigravity)؛ يعاد إنشاؤه عند الحاجة. أغلق المحرر أولًا."
+      },
+      "vsixCache": {
+        "title": "ذاكرة تنزيل إضافات المحرر",
+        "detail": "حزم .vsix المحفوظة بعد تثبيت الإضافات؛ تُنزّل مجددًا عند الحاجة."
+      },
+      "codexRuntimeInstall": {
+        "title": "بقايا تثبيت بيئة تشغيل Codex",
+        "detail": "عمليات تثبيت غير مكتملة لبيئة تشغيل Codex؛ لا تُدرج البيئات التي يستخدمها Codex."
+      }
+    },
+    "space": {
+      "free": "متاح: {{free}} من {{total}}",
+      "trash": "سلة المهملات: {{size}}",
+      "hint": "المتاح الآن: {{now}}. رقم Finder يحتسب أيضًا المساحة القابلة للتفريغ.",
+      "trashHint": "العناصر المنقولة إلى سلة المهملات لا تحرر مساحة إلا بعد إفراغها."
+    }
+  },
+  "apps": {
+    "listLabel": "التطبيقات المثبتة",
+    "count_one": "{{formatted}} تطبيق",
+    "count_other": "{{formatted}} تطبيقات",
+    "loading": "جارٍ سرد التطبيقات…",
+    "running": "قيد التشغيل",
+    "leftoverEstimate": "+{{size}} بقايا",
+    "analyzing": "جارٍ البحث عن كل ما تركه هذا التطبيق…",
+    "pick": "اختر تطبيقًا لرؤية كل ما ثبّته وتركه.",
+    "selectRecommended": "تحديد الموصى به",
+    "selectAll": "تحديد الكل",
+    "kinds": {
+      "appBundle": "التطبيق",
+      "support": "Application Support",
+      "cache": "الذاكرات المؤقتة",
+      "preferences": "التفضيلات",
+      "container": "الحاويات",
+      "savedState": "الحالة المحفوظة",
+      "logs": "السجلات",
+      "webData": "بيانات الويب وملفات تعريف الارتباط",
+      "launchItem": "وكلاء وخدمات الإقلاع",
+      "helper": "المساعدات المميزة",
+      "receipt": "ثبّتته الحزمة",
+      "recentDocuments": "قائمة المستندات الأخيرة",
+      "other": "في أماكن أخرى من القرص"
+    },
+    "confidence": {
+      "certain": "مؤكد",
+      "likely": "مرجّح",
+      "possible": "محتمل"
+    },
+    "adminHint": "يتطلب صلاحيات المسؤول؛ سيطلب macOS كلمة السر.",
+    "reveal": "إظهار في Finder",
+    "receiptsTitle": "إيصالات المثبّت (تُنسى بعد الإزالة)",
+    "selected_one": "{{count}} عنصر ({{leftovers}} بقايا) · {{size}}",
+    "selected_other": "{{count}} عناصر ({{leftovers}} بقايا) · {{size}}",
+    "adminCount_one": "{{count}} يتطلب صلاحيات المسؤول",
+    "adminCount_other": "{{count}} تتطلب صلاحيات المسؤول",
+    "removing": "جارٍ النقل إلى سلة المهملات…",
+    "remove": "نقل إلى سلة المهملات ({{size}})",
+    "confirm": {
+      "title_one": "إزالة {{name}}؟ سيُنقل {{count}} عنصر ({{size}}) إلى سلة المهملات.",
+      "title_other": "إزالة {{name}}؟ ستُنقل {{count}} عناصر ({{size}}) إلى سلة المهملات.",
+      "more_one": "…و{{count}} آخر",
+      "more_other": "…و{{count}} أخرى",
+      "admin_one": "{{count}} عنصر يتطلب صلاحيات المسؤول؛ سيطلب macOS كلمة السر.",
+      "admin_other": "{{count}} عناصر تتطلب صلاحيات المسؤول؛ سيطلب macOS كلمة السر.",
+      "trashNote": "لا يُحذف شيء نهائيًا؛ أفرغ سلة المهملات لتحرير المساحة."
+    },
+    "errors": {
+      "running": "أغلق التطبيق (ومساعده في شريط القوائم) قبل إزالته."
+    },
+    "report": {
+      "moved_one": "نُقل {{count}} عنصر إلى سلة المهملات.",
+      "moved_other": "نُقلت {{count}} عناصر إلى سلة المهملات.",
+      "receipts_one": "نُسي {{count}} إيصال تثبيت.",
+      "receipts_other": "نُسيت {{count}} إيصالات تثبيت.",
+      "adminCancelled": "أُلغي وصول المسؤول؛ بقيت العناصر التي تتطلبه في مكانها.",
+      "emptyTrash": "أفرغ سلة المهملات لتحرير المساحة."
+    },
+    "orphans": {
+      "title": "بقايا يتيمة",
+      "subtitle_one": "{{count}} تطبيق محذوف",
+      "subtitle_other": "{{count}} تطبيقات محذوفة",
+      "scanning": "جارٍ البحث عن بقايا التطبيقات المحذوفة…",
+      "empty": "لم يُعثر على بقايا لتطبيقات محذوفة.",
+      "note": "يبدو أنها تعود لتطبيقات لم تعد مثبتة. لا شيء محدد مسبقًا: افحص كل عنصر (↗ يعرضه في Finder) وحدد فقط ما تعرفه.",
+      "selectGroup": "تحديد المجموعة",
+      "selected_one": "{{count}} عنصر · {{size}}",
+      "selected_other": "{{count}} عناصر · {{size}}",
+      "confirmTitle_one": "نقل {{count}} عنصر متبقٍ ({{size}}) من تطبيقات محذوفة إلى سلة المهملات؟",
+      "confirmTitle_other": "نقل {{count}} عناصر متبقية ({{size}}) من تطبيقات محذوفة إلى سلة المهملات؟"
+    }
+  },
+  "dialog": {
+    "cancel": "إلغاء",
+    "moveToTrash": "نقل إلى سلة المهملات",
+    "ok": "حسنًا"
   }
 }

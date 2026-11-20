@@ -4,6 +4,7 @@ import type { FavoritePath, SavedSearch } from '../hooks/useWorkspaceCollections
 import { useTranslation } from 'react-i18next';
 import { splitPath } from '../utils/path';
 import type { FileOperationUpdate } from '../hooks/useContextMenu';
+import { OperationHistory } from './OperationHistory';
 import type { DuplicateGroup, DuplicateScanError } from '../hooks/useDuplicateFiles';
 
 export type WorkspaceSection = 'saved' | 'favorites' | 'coverage' | 'operations' | 'duplicates';
@@ -325,6 +326,7 @@ export function WorkspacePanel(props: WorkspacePanelProps): React.JSX.Element {
             >
               {t('workspace.operations.rescan')}
             </button>
+            <OperationHistory />
           </div>
         ) : null}
 

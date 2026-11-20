@@ -159,6 +159,38 @@ impl SearchState {
         }
     }
 
+    /// Paths in the index whose names match `query` (Cardinal query syntax),
+    /// at most `limit`. Used to find app leftovers outside the usual folders.
+    pub(crate) fn find_paths(&self, query: String, limit: usize) -> Vec<std::path::PathBuf> {
+        let (result_tx, result_rx) = bounded(1);
+        let job = SearchJob {
+            query: SearchQuery {
+                directory_query: None,
+                query: Some(query),
+            },
+            options: SearchOptionsPayload {
+                case_insensitive: true,
+            },
+            cancellation_token: CancellationToken::new_search(),
+            result_tx,
+        };
+        if self.search_tx.send(job).is_err() {
+            return Vec::new();
+        }
+        let Ok(Ok(SearchOutcome {
+            nodes: Some(mut nodes),
+            ..
+        })) = result_rx.recv_timeout(std::time::Duration::from_secs(10))
+        else {
+            return Vec::new();
+        };
+        nodes.truncate(limit);
+        self.request_nodes(nodes)
+            .into_iter()
+            .map(|node| node.path)
+            .collect()
+    }
+
     fn request_nodes(&self, slab_indices: Vec<SlabIndex>) -> Vec<SearchResultNode> {
         if slab_indices.is_empty() {
             return Vec::new();
@@ -679,10 +711,30 @@ fn validate_trash_paths(paths: &[String]) -> Result<Vec<PathBuf>, String> {
 #[tauri::command]
 pub async fn move_to_trash(paths: Vec<String>) -> Result<(), String> {
     let validated = validate_trash_paths(&paths)?;
-    tauri::async_runtime::spawn_blocking(move || trash::delete_all(validated))
+    let trashed = validated.clone();
+    let result = tauri::async_runtime::spawn_blocking(move || trash::delete_all(validated))
         .await
         .map_err(|error| format!("Trash operation failed: {error}"))?
-        .map_err(|error| format!("Could not move item to Trash: {error}"))
+        .map_err(|error| format!("Could not move item to Trash: {error}"));
+    let logged = trashed
+        .iter()
+        .map(|path| crate::operation_log::LoggedItem {
+            path: path.to_string(),
+            trashed_to: None,
+            size: crate::folder_sizes::size_of(path.as_std_path()),
+            admin: false,
+            ok: result.is_ok(),
+            error: result.as_ref().err().cloned(),
+        })
+        .collect();
+    crate::operation_log::record(crate::operation_log::LogEntry::now(
+        crate::operation_log::Source::ContextMenu,
+        None,
+        logged,
+    ));
+    result?;
+    crate::folder_sizes::forget_paths(&trashed);
+    Ok(())
 }
 
 #[tauri::command]

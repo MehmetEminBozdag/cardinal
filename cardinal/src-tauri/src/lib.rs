@@ -1,7 +1,11 @@
+mod app_uninstall;
 mod background;
 mod commands;
+mod dialogs;
 mod duplicate_files;
+mod folder_sizes;
 mod lifecycle;
+mod operation_log;
 mod quicklook;
 mod renderer_health;
 mod renderer_watchdog;
@@ -166,6 +170,21 @@ pub fn run() -> Result<()> {
             set_tray_activation_policy,
             copy_files_to_clipboard,
             renderer_watchdog::renderer_heartbeat,
+            folder_sizes::get_size_status,
+            folder_sizes::start_size_scan,
+            folder_sizes::cancel_size_scan,
+            folder_sizes::get_size_listing,
+            folder_sizes::get_size_suggestions,
+            folder_sizes::get_volume_space,
+            app_uninstall::list_installed_apps,
+            app_uninstall::analyze_app,
+            app_uninstall::uninstall_app,
+            app_uninstall::list_orphans,
+            app_uninstall::remove_orphans,
+            dialogs::confirm_dialog,
+            dialogs::message_dialog,
+            operation_log::get_operation_log,
+            operation_log::get_operation_log_path,
         ])
         .build(tauri::generate_context!())
         .expect("error while running tauri application");
@@ -173,9 +192,13 @@ pub fn run() -> Result<()> {
     let db_path = DB_PATH
         .get_or_try_init(|| app.path().app_config_dir().map(|p| p.join("cardinal.db")))
         .expect("Failed to initialize database path");
+    folder_sizes::start(db_path.with_file_name("folder-sizes.db"));
 
     let app_handle = app.handle().to_owned();
     renderer_watchdog::start(app_handle.clone());
+    if let Ok(log_dir) = app.path().app_log_dir() {
+        operation_log::init(&app_handle, log_dir);
+    }
     let channels = BackgroundLoopChannels {
         finish_rx,
         search_rx,

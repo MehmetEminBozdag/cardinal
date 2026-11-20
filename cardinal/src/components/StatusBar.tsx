@@ -4,11 +4,15 @@ import type { AppLifecycleStatus } from '../types/ipc';
 import { useTranslation } from 'react-i18next';
 import { openPreferences } from '../utils/openPreferences';
 
-export type StatusTabKey = 'files' | 'events';
+export type StatusTabKey = 'files' | 'events' | 'sizes' | 'apps';
 
 type StatusBarProps = {
   scannedFiles: number;
   processedEvents: number;
+  /** Formatted total of the folder size view, or null before the first scan. */
+  sizesValue?: string | null;
+  /** Number of removable apps, or null before they are listed. */
+  appsValue?: string | null;
   lifecycleState: AppLifecycleStatus;
   searchDurationMs: number | null;
   resultCount: number | null;
@@ -20,7 +24,7 @@ type StatusBarProps = {
   onToggleIndexing: () => void;
 };
 
-const TABS: StatusTabKey[] = ['files', 'events'];
+const TABS: StatusTabKey[] = ['files', 'events', 'sizes', 'apps'];
 
 const LIFECYCLE_META: Record<AppLifecycleStatus, { icon: string; tone: string }> = {
   Initializing: { icon: '○', tone: 'initializing' },
@@ -31,6 +35,8 @@ const LIFECYCLE_META: Record<AppLifecycleStatus, { icon: string; tone: string }>
 const StatusBar = ({
   scannedFiles,
   processedEvents,
+  sizesValue = null,
+  appsValue = null,
   lifecycleState,
   searchDurationMs,
   resultCount,
@@ -45,12 +51,21 @@ const StatusBar = ({
   const tabsRef = useRef<HTMLDivElement | null>(null);
   const filesTabRef = useRef<HTMLButtonElement | null>(null);
   const eventsTabRef = useRef<HTMLButtonElement | null>(null);
+  const sizesTabRef = useRef<HTMLButtonElement | null>(null);
+  const appsTabRef = useRef<HTMLButtonElement | null>(null);
   const [sliderStyle, setSliderStyle] = useState<CSSProperties>({});
 
   useLayoutEffect(() => {
     // Keep the active-tab underline aligned even when labels resize or counters update.
     const updateSliderPosition = () => {
-      const activeTabRef = activeTab === 'files' ? filesTabRef : eventsTabRef;
+      const activeTabRef =
+        activeTab === 'files'
+          ? filesTabRef
+          : activeTab === 'events'
+            ? eventsTabRef
+            : activeTab === 'sizes'
+              ? sizesTabRef
+              : appsTabRef;
       if (activeTabRef.current && tabsRef.current) {
         const tabRect = activeTabRef.current.getBoundingClientRect();
         const containerRect = tabsRef.current.getBoundingClientRect();
@@ -66,7 +81,7 @@ const StatusBar = ({
     // Re-align the slider when the viewport changes width.
     window.addEventListener('resize', updateSliderPosition);
     return () => window.removeEventListener('resize', updateSliderPosition);
-  }, [activeTab, scannedFiles, processedEvents]);
+  }, [activeTab, scannedFiles, processedEvents, sizesValue, appsValue]);
 
   const handleSelect = useCallback(
     (tabKey: StatusTabKey) => {
@@ -135,8 +150,21 @@ const StatusBar = ({
             const isActive = activeTab === key;
             const label = t(`statusBar.tabs.${key}`);
             const value =
-              key === 'files' ? scannedFiles.toLocaleString() : processedEvents.toLocaleString();
-            const ref = key === 'files' ? filesTabRef : eventsTabRef;
+              key === 'files'
+                ? scannedFiles.toLocaleString()
+                : key === 'events'
+                  ? processedEvents.toLocaleString()
+                  : key === 'sizes'
+                    ? (sizesValue ?? '–')
+                    : (appsValue ?? '–');
+            const ref =
+              key === 'files'
+                ? filesTabRef
+                : key === 'events'
+                  ? eventsTabRef
+                  : key === 'sizes'
+                    ? sizesTabRef
+                    : appsTabRef;
             return (
               <button
                 key={key}

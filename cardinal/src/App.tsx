@@ -21,6 +21,11 @@ import { useQuickLook } from './hooks/useQuickLook';
 import { ROW_HEIGHT, OVERSCAN_ROW_COUNT } from './constants';
 import type { VirtualListHandle } from './components/VirtualList';
 import FSEventsPanel from './components/FSEventsPanel';
+import { SizesPanel } from './components/SizesPanel';
+import { AppsPanel } from './components/AppsPanel';
+import { useInstalledApps } from './hooks/useInstalledApps';
+import { useFolderSizes } from './hooks/useFolderSizes';
+import { formatBytes } from './utils/folderSize';
 import type { FSEventsPanelHandle } from './components/FSEventsPanel';
 import { useTranslation } from 'react-i18next';
 import { useFullDiskAccessPermission } from './hooks/useFullDiskAccessPermission';
@@ -134,6 +139,7 @@ function App() {
     handleSearchBlur,
     eventFilterQuery,
     setEventFilterQuery,
+    sizeFilterQuery,
     onTabChange,
     searchInputValue,
     directoryInputValue,
@@ -185,6 +191,8 @@ function App() {
     isChecking: isCheckingFullDiskAccess,
     requestPermission: requestFullDiskAccessPermission,
   } = useFullDiskAccessPermission();
+  const folderSizes = useFolderSizes(activeTab === 'sizes');
+  const installedApps = useInstalledApps(activeTab === 'apps');
 
   const focusSearchInput = useCallback(() => {
     requestAnimationFrame(() => {
@@ -383,7 +391,13 @@ function App() {
   const caseSensitiveLabel = t('search.options.caseSensitive');
   const directoryScopeLabel = t('search.options.directoryScope');
   const searchPlaceholder =
-    activeTab === 'files' ? t('search.placeholder.files') : t('search.placeholder.events');
+    activeTab === 'files'
+      ? t('search.placeholder.files')
+      : activeTab === 'events'
+        ? t('search.placeholder.events')
+        : activeTab === 'sizes'
+          ? t('search.placeholder.sizes')
+          : t('search.placeholder.apps');
   const directorySearchPlaceholder = t('search.placeholder.directory');
   const searchAriaLabel = t('search.aria.searchInput');
   const permissionSteps = [
@@ -501,6 +515,19 @@ function App() {
                 searchQuery={eventFilterQuery}
                 caseInsensitive={!caseSensitive}
               />
+            ) : activeTab === 'apps' ? (
+              <AppsPanel
+                apps={installedApps}
+                filterQuery={sizeFilterQuery}
+                home={folderSizes.home}
+              />
+            ) : activeTab === 'sizes' ? (
+              <SizesPanel
+                sizes={folderSizes}
+                filterQuery={sizeFilterQuery}
+                onItemContextMenu={showFilesContextMenu}
+                onRequestFullDiskAccess={() => void requestFullDiskAccessPermission()}
+              />
             ) : (
               // `dataResultsVersion`: backend result-set changes. This resets row metadata cache.
               // `displayedResultsVersion`: visible-order/projection changes. This refreshes viewport
@@ -591,6 +618,14 @@ function App() {
         <StatusBar
           scannedFiles={scannedFiles}
           processedEvents={processedEvents}
+          sizesValue={
+            folderSizes.status &&
+            folderSizes.status.phase !== 'idle' &&
+            folderSizes.status.totalSize > 0
+              ? formatBytes(folderSizes.status.totalSize)
+              : null
+          }
+          appsValue={installedApps.apps ? installedApps.apps.length.toLocaleString() : null}
           lifecycleState={lifecycleState}
           searchDurationMs={durationMs}
           resultCount={resultCount}

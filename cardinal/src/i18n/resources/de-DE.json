@@ -3,7 +3,9 @@
     "placeholder": {
       "files": "Nach Dateien und Ordnern suchen...",
       "events": "Ereignisse nach Pfad oder Name filtern...",
-      "directory": "Ordnerbereich..."
+      "directory": "Ordnerbereich...",
+      "sizes": "Ordner und Dateien nach Namen filtern...",
+      "apps": "Apps nach Name oder Bundle-ID filtern..."
     },
     "options": {
       "caseSensitive": "Groß-/Kleinschreibung beachten",
@@ -85,7 +87,9 @@
   "statusBar": {
     "tabs": {
       "files": "Dateien",
-      "events": "Ereignisse"
+      "events": "Ereignisse",
+      "sizes": "Größen",
+      "apps": "Apps"
     },
     "lifecycle": {
       "Initializing": "Initialisierung",
@@ -308,7 +312,270 @@
       "cancelSearch": "Suche abbrechen",
       "cancelSort": "Sortierung abbrechen",
       "rescan": "Erneut scannen",
-      "idle": "Keine langfristigen Operationen."
+      "idle": "Keine langfristigen Operationen.",
+      "history": {
+        "title": "Verlauf",
+        "empty": "Noch keine Papierkorb-Vorgänge aufgezeichnet.",
+        "reveal": "Protokolldatei im Finder zeigen",
+        "items_one": "{{count}} Objekt",
+        "items_other": "{{count}} Objekte",
+        "failed_one": "{{count}} fehlgeschlagen",
+        "failed_other": "{{count}} fehlgeschlagen",
+        "toTrash": "im Papierkorb als „{{name}}“",
+        "receipts_one": "{{count}} Installationsbeleg entfernt",
+        "receipts_other": "{{count}} Installationsbelege entfernt",
+        "sources": {
+          "contextMenu": "In den Papierkorb",
+          "appUninstall": "App-Deinstallation",
+          "orphans": "Verwaiste Reste"
+        }
+      }
     }
+  },
+  "sizes": {
+    "smallFiles_one": "{{formatted}} kleine Datei (< 1 MB)",
+    "smallFiles_other": "{{formatted}} kleine Dateien (< 1 MB)",
+    "unreadable_one": "{{formatted}} Ordner nicht lesbar – Festplattenvollzugriff erteilen",
+    "unreadable_other": "{{formatted}} Ordner nicht lesbar – Festplattenvollzugriff erteilen",
+    "unreadableItem_one": "{{count}} Unterordner nicht lesbar",
+    "unreadableItem_other": "{{count}} Unterordner nicht lesbar",
+    "breadcrumbs": "Ordnerpfad",
+    "roots": {
+      "label": "Scan-Ort",
+      "home": "Benutzerordner",
+      "disk": "Gesamte Festplatte",
+      "pathPlaceholder": "Zu scannender Ordnerpfad…",
+      "scan": "Scannen"
+    },
+    "modes": {
+      "label": "Ansicht",
+      "list": "Liste",
+      "treemap": "Treemap",
+      "suggestions": "Vorschläge"
+    },
+    "actions": {
+      "up": "Übergeordneter Ordner",
+      "rescan": "Neu scannen",
+      "rescanHint": "Nur diesen Ordner neu scannen",
+      "cancel": "Stoppen"
+    },
+    "table": {
+      "label": "Ordnerinhalt nach Größe",
+      "name": "Name",
+      "size": "Größe",
+      "share": "Anteil",
+      "files": "Dateien"
+    },
+    "status": {
+      "idle": "Wähle einen Ort, um Ordnergrößen zu messen.",
+      "scanning": "Scanne {{path}} – {{files}} Dateien, {{size}}",
+      "ready": "{{files}} Dateien · {{size}}",
+      "fromSnapshot": "aus letzter Sitzung, wird aktualisiert",
+      "scanTime": "in {{seconds}} s gescannt",
+      "live": "live",
+      "updating": "wird aktualisiert…"
+    },
+    "suggestions": {
+      "empty": "Keine bekannten Cache- oder temporären Ordner über 50 MB gefunden. Scanne deinen Benutzerordner.",
+      "safeTotal": "Wiederherstellbar: {{size}}",
+      "reviewTotal": "Prüfenswert: {{size}}",
+      "note": "Nichts wird automatisch gelöscht; Rechtsklick, um Objekte in den Papierkorb zu legen.",
+      "show": "Zeigen"
+    },
+    "rules": {
+      "appCache": {
+        "title": "App-Cache",
+        "detail": "Apps erstellen ihn bei Bedarf neu. Beende die App vor dem Entfernen."
+      },
+      "logs": {
+        "title": "Protokolldateien",
+        "detail": "Diagnoseprotokolle; können entfernt werden."
+      },
+      "xcodeDerivedData": {
+        "title": "Xcode DerivedData",
+        "detail": "Build-Zwischenstände; Xcode erzeugt sie neu."
+      },
+      "xcodeDeviceSupport": {
+        "title": "Xcode-Geräteunterstützung",
+        "detail": "Symbole verbundener Geräte; werden bei Bedarf neu geladen."
+      },
+      "simulatorCache": {
+        "title": "Simulator-Cache",
+        "detail": "Cache des iOS-Simulators; wird automatisch neu erstellt."
+      },
+      "xcodeArchives": {
+        "title": "Xcode-Archive",
+        "detail": "Archive veröffentlichter Builds; behalte sie, wenn du die dSYMs brauchst."
+      },
+      "simulatorDevices": {
+        "title": "iOS-Simulator-Geräte",
+        "detail": "Besser über Xcode › Devices oder `xcrun simctl delete unavailable`."
+      },
+      "androidEmulators": {
+        "title": "Android-Emulatoren",
+        "detail": "Entferne ungenutzte virtuelle Geräte im Android Studio › Device Manager."
+      },
+      "androidSystemImages": {
+        "title": "Android-Systemabbilder",
+        "detail": "Emulator-Abbilder; ungenutzte im SDK Manager deinstallieren."
+      },
+      "packageCache": {
+        "title": "Paket-Cache",
+        "detail": "Abhängigkeiten werden beim nächsten Build erneut geladen."
+      },
+      "toolCache": {
+        "title": "Tool-Cache (~/.cache)",
+        "detail": "Caches verschiedener Tools; meist neu erzeugbar, erst ansehen."
+      },
+      "spotifyCache": {
+        "title": "Spotify-Offline-Cache",
+        "detail": "Die Cache-Größe lässt sich auch in den Spotify-Einstellungen begrenzen."
+      },
+      "deviceBackups": {
+        "title": "iPhone/iPad-Backups",
+        "detail": "Alte Geräte-Backups; im Finder › Gerät › Backups verwalten löschen."
+      },
+      "docker": {
+        "title": "Docker-Festplattenabbild",
+        "detail": "Mit Docker Desktop oder `docker system prune` verkleinern."
+      },
+      "trash": {
+        "title": "Papierkorb",
+        "detail": "Bereits im Papierkorb; Speicher wird beim Entleeren frei (nicht umkehrbar)."
+      },
+      "downloads": {
+        "title": "Downloads",
+        "detail": "Hier sammeln sich oft vergessene große Dateien; sieh nach."
+      },
+      "nodeModules": {
+        "title": "node_modules",
+        "detail": "Mit `npm install` neu installierbar."
+      },
+      "installer": {
+        "title": "Installationsdatei",
+        "detail": "Nach der Installation der App nicht mehr nötig."
+      },
+      "oldExtensions": {
+        "title": "Alte Editor-Erweiterungsversionen",
+        "detail": "Ersetzte Versionen von VS Code-/Cursor-/Antigravity-Erweiterungen; der Editor nutzt die neueste."
+      },
+      "chromeServiceWorker": {
+        "title": "Chrome-Service-Worker-Cache",
+        "detail": "Offline-Caches von Websites; werden neu aufgebaut, Offline-Daten fehlen bis zum nächsten Besuch."
+      },
+      "pnpmStore": {
+        "title": "pnpm-Paketspeicher",
+        "detail": "Gemeinsamer Paketspeicher; Projekte laden Pakete bei der nächsten Installation neu. `pnpm store prune` entfernt nur ungenutzte."
+      },
+      "googleUpdaterCache": {
+        "title": "Google-Updater-Cache",
+        "detail": "Heruntergeladene Update-Pakete von Google-Apps; werden bei Bedarf neu geladen."
+      },
+      "editorCache": {
+        "title": "Editor-Cache",
+        "detail": "Caches von VS Code / Cursor / Antigravity; werden beim Start neu erstellt. Editor vorher beenden."
+      },
+      "clangModuleCache": {
+        "title": "Clang-Modul-Cache",
+        "detail": "Kompilierter Modul-Cache von Xcode/clang; wird beim nächsten Build neu erstellt."
+      },
+      "editorWebCache": {
+        "title": "Editor-Webview-Cache",
+        "detail": "Zwischengespeicherte Webinhalte von Editor-Panels und Erweiterungen (VS Code, Cursor, Antigravity); bei Bedarf neu erstellt. Editor vorher beenden."
+      },
+      "vsixCache": {
+        "title": "Download-Cache für Editor-Erweiterungen",
+        "detail": "Nach der Installation aufbewahrte .vsix-Pakete; bei Bedarf neu geladen."
+      },
+      "codexRuntimeInstall": {
+        "title": "Reste von Codex-Laufzeitinstallationen",
+        "detail": "Unvollständige Codex-Laufzeitinstallationen; die tatsächlich genutzten Laufzeiten werden nicht aufgeführt."
+      }
+    },
+    "space": {
+      "free": "Frei: {{free}} von {{total}}",
+      "trash": "Papierkorb: {{size}}",
+      "hint": "Jetzt frei: {{now}}. Der Finder-Wert zählt auch löschbaren Speicher mit.",
+      "trashHint": "In den Papierkorb gelegte Objekte geben erst nach dem Entleeren Speicher frei."
+    }
+  },
+  "apps": {
+    "listLabel": "Installierte Apps",
+    "count_one": "{{formatted}} App",
+    "count_other": "{{formatted}} Apps",
+    "loading": "Apps werden aufgelistet…",
+    "running": "geöffnet",
+    "leftoverEstimate": "+{{size}} Reste",
+    "analyzing": "Suche alles, was diese App hinterlassen hat…",
+    "pick": "Wähle eine App, um alles zu sehen, was sie installiert und hinterlassen hat.",
+    "selectRecommended": "Empfohlene auswählen",
+    "selectAll": "Alle auswählen",
+    "kinds": {
+      "appBundle": "Programm",
+      "support": "Application Support",
+      "cache": "Caches",
+      "preferences": "Einstellungen",
+      "container": "Container",
+      "savedState": "Gespeicherter Zustand",
+      "logs": "Protokolle",
+      "webData": "Webdaten & Cookies",
+      "launchItem": "Startagenten & -dienste",
+      "helper": "Privilegierte Helfer",
+      "receipt": "Vom Paket installiert",
+      "recentDocuments": "Liste zuletzt benutzter Dokumente",
+      "other": "Anderswo auf der Festplatte"
+    },
+    "confidence": {
+      "certain": "sicher",
+      "likely": "wahrscheinlich",
+      "possible": "vielleicht"
+    },
+    "adminHint": "Erfordert Administratorrechte; macOS fragt nach deinem Passwort.",
+    "reveal": "Im Finder zeigen",
+    "receiptsTitle": "Installationsbelege (werden danach entfernt)",
+    "selected_one": "{{count}} Objekt ({{leftovers}} Reste) · {{size}}",
+    "selected_other": "{{count}} Objekte ({{leftovers}} Reste) · {{size}}",
+    "adminCount_one": "{{count}} benötigt Administratorrechte",
+    "adminCount_other": "{{count}} benötigen Administratorrechte",
+    "removing": "Wird in den Papierkorb gelegt…",
+    "remove": "In den Papierkorb ({{size}})",
+    "confirm": {
+      "title_one": "{{name}} entfernen? {{count}} Objekt ({{size}}) wird in den Papierkorb gelegt.",
+      "title_other": "{{name}} entfernen? {{count}} Objekte ({{size}}) werden in den Papierkorb gelegt.",
+      "more_one": "…und {{count}} weiteres",
+      "more_other": "…und {{count}} weitere",
+      "admin_one": "{{count}} Objekt benötigt Administratorrechte; macOS fragt nach deinem Passwort.",
+      "admin_other": "{{count}} Objekte benötigen Administratorrechte; macOS fragt nach deinem Passwort.",
+      "trashNote": "Nichts wird endgültig gelöscht; leere den Papierkorb, um Speicher freizugeben."
+    },
+    "errors": {
+      "running": "Beende die App (und ihren Menüleisten-Helfer) vor dem Entfernen."
+    },
+    "report": {
+      "moved_one": "{{count}} Objekt in den Papierkorb gelegt.",
+      "moved_other": "{{count}} Objekte in den Papierkorb gelegt.",
+      "receipts_one": "{{count}} Installationsbeleg entfernt.",
+      "receipts_other": "{{count}} Installationsbelege entfernt.",
+      "adminCancelled": "Administratorzugriff abgebrochen; betroffene Objekte wurden nicht verschoben.",
+      "emptyTrash": "Leere den Papierkorb, um Speicher freizugeben."
+    },
+    "orphans": {
+      "title": "Verwaiste Reste",
+      "subtitle_one": "{{count}} deinstallierte App",
+      "subtitle_other": "{{count}} deinstallierte Apps",
+      "scanning": "Suche nach Resten entfernter Apps…",
+      "empty": "Keine Reste deinstallierter Apps gefunden.",
+      "note": "Diese scheinen zu nicht mehr installierten Apps zu gehören. Nichts ist vorausgewählt: Prüfe jedes Objekt (↗ zeigt es im Finder) und wähle nur, was du kennst.",
+      "selectGroup": "Gruppe auswählen",
+      "selected_one": "{{count}} Objekt · {{size}}",
+      "selected_other": "{{count}} Objekte · {{size}}",
+      "confirmTitle_one": "{{count}} Rest ({{size}}) deinstallierter Apps in den Papierkorb legen?",
+      "confirmTitle_other": "{{count}} Reste ({{size}}) deinstallierter Apps in den Papierkorb legen?"
+    }
+  },
+  "dialog": {
+    "cancel": "Abbrechen",
+    "moveToTrash": "In den Papierkorb legen",
+    "ok": "OK"
   }
 }

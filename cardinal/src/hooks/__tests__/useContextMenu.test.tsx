@@ -194,6 +194,6 @@ describe('useContextMenu', () => {
     expect(confirmMock).not.toHaveBeenCalled();
     await vi.runAllTimersAsync();
     expect(confirmMock).toHaveBeenCalledWith('Move 2 selected items to Trash?');
-    expect(mocks.invokeMock).not.toHaveBeenCalled();
+    expect(mocks.invokeMock).not.toHaveBeenCalledWith('move_to_trash', expect.anything());
   });
 });

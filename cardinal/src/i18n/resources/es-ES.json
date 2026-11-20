@@ -3,7 +3,9 @@
     "placeholder": {
       "files": "Buscar archivos y carpetas...",
       "events": "Filtrar eventos por ruta o nombre...",
-      "directory": "Ámbito de carpeta..."
+      "directory": "Ámbito de carpeta...",
+      "sizes": "Filtrar carpetas y archivos por nombre...",
+      "apps": "Filtrar apps por nombre o ID de paquete..."
     },
     "options": {
       "caseSensitive": "Activar coincidencia sensible a mayúsculas",
@@ -85,7 +87,9 @@
   "statusBar": {
     "tabs": {
       "files": "Archivos",
-      "events": "Eventos"
+      "events": "Eventos",
+      "sizes": "Tamaños",
+      "apps": "Apps"
     },
     "lifecycle": {
       "Initializing": "Inicializando",
@@ -308,7 +312,270 @@
       "cancelSearch": "Cancel search",
       "cancelSort": "Cancelar ordenación",
       "rescan": "Volver a analizar",
-      "idle": "No hay operaciones de larga duración."
+      "idle": "No hay operaciones de larga duración.",
+      "history": {
+        "title": "Historial",
+        "empty": "Aún no hay operaciones de Papelera registradas.",
+        "reveal": "Mostrar archivo de registro en Finder",
+        "items_one": "{{count}} elemento",
+        "items_other": "{{count}} elementos",
+        "failed_one": "{{count}} fallido",
+        "failed_other": "{{count}} fallidos",
+        "toTrash": "en la Papelera como «{{name}}»",
+        "receipts_one": "{{count}} recibo de instalación olvidado",
+        "receipts_other": "{{count}} recibos de instalación olvidados",
+        "sources": {
+          "contextMenu": "Mover a la Papelera",
+          "appUninstall": "Desinstalación de app",
+          "orphans": "Restos huérfanos"
+        }
+      }
     }
+  },
+  "sizes": {
+    "smallFiles_one": "{{formatted}} archivo pequeño (< 1 MB)",
+    "smallFiles_other": "{{formatted}} archivos pequeños (< 1 MB)",
+    "unreadable_one": "{{formatted}} carpeta no se pudo leer: concede Acceso total al disco",
+    "unreadable_other": "{{formatted}} carpetas no se pudieron leer: concede Acceso total al disco",
+    "unreadableItem_one": "{{count}} subcarpeta no se pudo leer",
+    "unreadableItem_other": "{{count}} subcarpetas no se pudieron leer",
+    "breadcrumbs": "Ruta de la carpeta",
+    "roots": {
+      "label": "Ubicación a analizar",
+      "home": "Carpeta de inicio",
+      "disk": "Disco completo",
+      "pathPlaceholder": "Ruta de la carpeta a analizar…",
+      "scan": "Analizar"
+    },
+    "modes": {
+      "label": "Vista",
+      "list": "Lista",
+      "treemap": "Mapa de árbol",
+      "suggestions": "Sugerencias"
+    },
+    "actions": {
+      "up": "Carpeta superior",
+      "rescan": "Volver a analizar",
+      "rescanHint": "Volver a analizar solo esta carpeta",
+      "cancel": "Detener"
+    },
+    "table": {
+      "label": "Contenido de la carpeta por tamaño",
+      "name": "Nombre",
+      "size": "Tamaño",
+      "share": "Proporción",
+      "files": "Archivos"
+    },
+    "status": {
+      "idle": "Elige una ubicación para medir el tamaño de las carpetas.",
+      "scanning": "Analizando {{path}}: {{files}} archivos, {{size}}",
+      "ready": "{{files}} archivos · {{size}}",
+      "fromSnapshot": "de la sesión anterior, actualizando",
+      "scanTime": "analizado en {{seconds}} s",
+      "live": "en vivo",
+      "updating": "actualizando…"
+    },
+    "suggestions": {
+      "empty": "No se encontraron cachés ni carpetas temporales conocidas de más de 50 MB. Analiza tu carpeta de inicio.",
+      "safeTotal": "Regenerable: {{size}}",
+      "reviewTotal": "Para revisar: {{size}}",
+      "note": "No se elimina nada automáticamente; haz clic derecho para mover a la Papelera.",
+      "show": "Mostrar"
+    },
+    "rules": {
+      "appCache": {
+        "title": "Caché de apps",
+        "detail": "Las apps la regeneran cuando la necesitan. Cierra la app antes de eliminarla."
+      },
+      "logs": {
+        "title": "Archivos de registro",
+        "detail": "Registros de diagnóstico; se pueden eliminar."
+      },
+      "xcodeDerivedData": {
+        "title": "Xcode DerivedData",
+        "detail": "Archivos intermedios de compilación; Xcode los regenera."
+      },
+      "xcodeDeviceSupport": {
+        "title": "Soporte de dispositivos de Xcode",
+        "detail": "Símbolos de dispositivos conectados; se descargan de nuevo si hace falta."
+      },
+      "simulatorCache": {
+        "title": "Caché del simulador",
+        "detail": "Caché del Simulador de iOS; se regenera sola."
+      },
+      "xcodeArchives": {
+        "title": "Archivos de Xcode",
+        "detail": "Archivos de versiones publicadas; consérvalos si necesitas sus dSYM."
+      },
+      "simulatorDevices": {
+        "title": "Dispositivos del simulador iOS",
+        "detail": "Mejor desde Xcode › Devices o `xcrun simctl delete unavailable`."
+      },
+      "androidEmulators": {
+        "title": "Emuladores de Android",
+        "detail": "Elimina los dispositivos virtuales sin usar en Android Studio › Device Manager."
+      },
+      "androidSystemImages": {
+        "title": "Imágenes de sistema Android",
+        "detail": "Imágenes del emulador; desinstala las que no uses en el SDK Manager."
+      },
+      "packageCache": {
+        "title": "Caché de paquetes",
+        "detail": "Las dependencias se descargan de nuevo en la próxima compilación."
+      },
+      "toolCache": {
+        "title": "Caché de herramientas (~/.cache)",
+        "detail": "Cachés de varias herramientas; la mayoría se regeneran, revísalas antes."
+      },
+      "spotifyCache": {
+        "title": "Caché sin conexión de Spotify",
+        "detail": "También puedes limitar el tamaño de la caché en los ajustes de Spotify."
+      },
+      "deviceBackups": {
+        "title": "Copias de iPhone/iPad",
+        "detail": "Copias antiguas; elimínalas en Finder › dispositivo › Gestionar copias."
+      },
+      "docker": {
+        "title": "Imagen de disco de Docker",
+        "detail": "Redúcela con Docker Desktop o `docker system prune`."
+      },
+      "trash": {
+        "title": "Papelera",
+        "detail": "Ya está en la Papelera; el espacio se libera al vaciarla (no se puede deshacer)."
+      },
+      "downloads": {
+        "title": "Descargas",
+        "detail": "Aquí suelen acumularse archivos grandes olvidados; échale un vistazo."
+      },
+      "nodeModules": {
+        "title": "node_modules",
+        "detail": "Se reinstala con `npm install`."
+      },
+      "installer": {
+        "title": "Archivo instalador",
+        "detail": "No hace falta una vez instalada la app."
+      },
+      "oldExtensions": {
+        "title": "Versiones antiguas de extensiones del editor",
+        "detail": "Versiones reemplazadas de extensiones de VS Code / Cursor / Antigravity; el editor usa la más nueva."
+      },
+      "chromeServiceWorker": {
+        "title": "Caché de Service Worker de Chrome",
+        "detail": "Cachés sin conexión de sitios web; se regeneran, pero los sitios pierden sus datos sin conexión hasta que los visites."
+      },
+      "pnpmStore": {
+        "title": "Almacén de paquetes de pnpm",
+        "detail": "Almacén compartido; los proyectos vuelven a descargar paquetes en la próxima instalación. `pnpm store prune` solo quita los no usados."
+      },
+      "googleUpdaterCache": {
+        "title": "Caché de Google Updater",
+        "detail": "Paquetes de actualización descargados de apps de Google; se descargan de nuevo si hace falta."
+      },
+      "editorCache": {
+        "title": "Caché del editor",
+        "detail": "Cachés de VS Code / Cursor / Antigravity; se regeneran al abrir el editor. Ciérralo antes."
+      },
+      "clangModuleCache": {
+        "title": "Caché de módulos de Clang",
+        "detail": "Caché de módulos compilados de Xcode/clang; se regenera en la próxima compilación."
+      },
+      "editorWebCache": {
+        "title": "Caché de webview del editor",
+        "detail": "Contenido web en caché de paneles y extensiones del editor (VS Code, Cursor, Antigravity); se regenera si hace falta. Cierra el editor antes."
+      },
+      "vsixCache": {
+        "title": "Caché de descargas de extensiones",
+        "detail": "Paquetes .vsix guardados tras instalar extensiones; se descargan de nuevo si hace falta."
+      },
+      "codexRuntimeInstall": {
+        "title": "Restos de instalaciones del runtime de Codex",
+        "detail": "Instalaciones incompletas del runtime de Codex; no se listan los runtimes que Codex usa."
+      }
+    },
+    "space": {
+      "free": "Libre: {{free}} de {{total}}",
+      "trash": "Papelera: {{size}}",
+      "hint": "Libre ahora: {{now}}. La cifra de Finder también cuenta el espacio purgable.",
+      "trashHint": "Lo que mueves a la Papelera libera espacio solo al vaciarla."
+    }
+  },
+  "apps": {
+    "listLabel": "Apps instaladas",
+    "count_one": "{{formatted}} app",
+    "count_other": "{{formatted}} apps",
+    "loading": "Listando apps…",
+    "running": "abierta",
+    "leftoverEstimate": "+{{size}} restos",
+    "analyzing": "Buscando todo lo que dejó esta app…",
+    "pick": "Elige una app para ver todo lo que instaló y dejó.",
+    "selectRecommended": "Seleccionar recomendados",
+    "selectAll": "Seleccionar todo",
+    "kinds": {
+      "appBundle": "Aplicación",
+      "support": "Application Support",
+      "cache": "Cachés",
+      "preferences": "Preferencias",
+      "container": "Contenedores",
+      "savedState": "Estado guardado",
+      "logs": "Registros",
+      "webData": "Datos web y cookies",
+      "launchItem": "Agentes y servicios de arranque",
+      "helper": "Ayudantes privilegiados",
+      "receipt": "Instalado por su paquete",
+      "recentDocuments": "Lista de documentos recientes",
+      "other": "En otras partes del disco"
+    },
+    "confidence": {
+      "certain": "seguro",
+      "likely": "probable",
+      "possible": "quizá"
+    },
+    "adminHint": "Requiere permisos de administrador; macOS pedirá tu contraseña.",
+    "reveal": "Mostrar en Finder",
+    "receiptsTitle": "Recibos de instalación (se olvidan al eliminar)",
+    "selected_one": "{{count}} elemento ({{leftovers}} restos) · {{size}}",
+    "selected_other": "{{count}} elementos ({{leftovers}} restos) · {{size}}",
+    "adminCount_one": "{{count}} requiere permisos de administrador",
+    "adminCount_other": "{{count}} requieren permisos de administrador",
+    "removing": "Moviendo a la Papelera…",
+    "remove": "Mover a la Papelera ({{size}})",
+    "confirm": {
+      "title_one": "¿Eliminar {{name}}? Se moverá {{count}} elemento ({{size}}) a la Papelera.",
+      "title_other": "¿Eliminar {{name}}? Se moverán {{count}} elementos ({{size}}) a la Papelera.",
+      "more_one": "…y {{count}} más",
+      "more_other": "…y {{count}} más",
+      "admin_one": "{{count}} elemento requiere permisos de administrador; macOS pedirá tu contraseña.",
+      "admin_other": "{{count}} elementos requieren permisos de administrador; macOS pedirá tu contraseña.",
+      "trashNote": "No se borra nada definitivamente; vacía la Papelera para liberar espacio."
+    },
+    "errors": {
+      "running": "Cierra la app (y su ayudante de la barra de menús) antes de eliminarla."
+    },
+    "report": {
+      "moved_one": "{{count}} elemento movido a la Papelera.",
+      "moved_other": "{{count}} elementos movidos a la Papelera.",
+      "receipts_one": "{{count}} recibo de instalación olvidado.",
+      "receipts_other": "{{count}} recibos de instalación olvidados.",
+      "adminCancelled": "Se canceló el acceso de administrador; los elementos que lo requerían no se movieron.",
+      "emptyTrash": "Vacía la Papelera para liberar espacio."
+    },
+    "orphans": {
+      "title": "Restos huérfanos",
+      "subtitle_one": "{{count}} app desinstalada",
+      "subtitle_other": "{{count}} apps desinstaladas",
+      "scanning": "Buscando restos de apps eliminadas…",
+      "empty": "No se encontraron restos de apps desinstaladas.",
+      "note": "Parecen pertenecer a apps que ya no están instaladas. Nada está preseleccionado: revisa cada elemento (↗ lo muestra en Finder) y selecciona solo lo que reconozcas.",
+      "selectGroup": "Seleccionar grupo",
+      "selected_one": "{{count}} elemento · {{size}}",
+      "selected_other": "{{count}} elementos · {{size}}",
+      "confirmTitle_one": "¿Mover {{count}} resto ({{size}}) de apps desinstaladas a la Papelera?",
+      "confirmTitle_other": "¿Mover {{count}} restos ({{size}}) de apps desinstaladas a la Papelera?"
+    }
+  },
+  "dialog": {
+    "cancel": "Cancelar",
+    "moveToTrash": "Mover a la Papelera",
+    "ok": "Aceptar"
   }
 }

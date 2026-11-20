@@ -3,7 +3,9 @@
     "placeholder": {
       "files": "파일과 폴더 검색...",
       "events": "경로 또는 이름으로 이벤트 필터링...",
-      "directory": "폴더 범위..."
+      "directory": "폴더 범위...",
+      "sizes": "이름으로 폴더와 파일 필터링...",
+      "apps": "이름이나 번들 ID로 앱 필터링..."
     },
     "options": {
       "caseSensitive": "대소문자 구분 검색 전환",
@@ -85,7 +87,9 @@
   "statusBar": {
     "tabs": {
       "files": "파일",
-      "events": "이벤트"
+      "events": "이벤트",
+      "sizes": "크기",
+      "apps": "앱"
     },
     "lifecycle": {
       "Initializing": "초기화 중",
@@ -308,7 +312,270 @@
       "cancelSearch": "자주 묻는 질문",
       "cancelSort": "정렬 취소",
       "rescan": "사이트맵",
-      "idle": "긴 가동 없음."
+      "idle": "긴 가동 없음.",
+      "history": {
+        "title": "기록",
+        "empty": "아직 기록된 휴지통 작업이 없습니다.",
+        "reveal": "로그 파일을 Finder에서 보기",
+        "items_one": "항목 {{count}}개",
+        "items_other": "항목 {{count}}개",
+        "failed_one": "{{count}}개 실패",
+        "failed_other": "{{count}}개 실패",
+        "toTrash": "휴지통에 “{{name}}”(으)로 있음",
+        "receipts_one": "설치 영수증 {{count}}개 삭제",
+        "receipts_other": "설치 영수증 {{count}}개 삭제",
+        "sources": {
+          "contextMenu": "휴지통으로 이동",
+          "appUninstall": "앱 제거",
+          "orphans": "주인 없는 잔여물"
+        }
+      }
     }
+  },
+  "sizes": {
+    "smallFiles_one": "작은 파일 {{formatted}}개 (< 1 MB)",
+    "smallFiles_other": "작은 파일 {{formatted}}개 (< 1 MB)",
+    "unreadable_one": "폴더 {{formatted}}개를 읽을 수 없음 — 전체 디스크 접근 권한을 허용하세요",
+    "unreadable_other": "폴더 {{formatted}}개를 읽을 수 없음 — 전체 디스크 접근 권한을 허용하세요",
+    "unreadableItem_one": "하위 폴더 {{count}}개를 읽을 수 없음",
+    "unreadableItem_other": "하위 폴더 {{count}}개를 읽을 수 없음",
+    "breadcrumbs": "폴더 경로",
+    "roots": {
+      "label": "스캔 위치",
+      "home": "홈 폴더",
+      "disk": "전체 디스크",
+      "pathPlaceholder": "스캔할 폴더 경로…",
+      "scan": "스캔"
+    },
+    "modes": {
+      "label": "보기",
+      "list": "목록",
+      "treemap": "트리맵",
+      "suggestions": "제안"
+    },
+    "actions": {
+      "up": "상위 폴더",
+      "rescan": "다시 스캔",
+      "rescanHint": "이 폴더만 다시 스캔",
+      "cancel": "중지"
+    },
+    "table": {
+      "label": "크기순 폴더 내용",
+      "name": "이름",
+      "size": "크기",
+      "share": "비율",
+      "files": "파일"
+    },
+    "status": {
+      "idle": "폴더 크기를 측정할 위치를 선택하세요.",
+      "scanning": "{{path}} 스캔 중 — 파일 {{files}}개, {{size}}",
+      "ready": "파일 {{files}}개 · {{size}}",
+      "fromSnapshot": "이전 세션에서 불러옴, 새로 고치는 중",
+      "scanTime": "{{seconds}}초 만에 스캔",
+      "live": "실시간",
+      "updating": "업데이트 중…"
+    },
+    "suggestions": {
+      "empty": "50 MB가 넘는 알려진 캐시나 임시 폴더가 없습니다. 홈 폴더를 스캔하세요.",
+      "safeTotal": "재생성 가능: {{size}}",
+      "reviewTotal": "검토 권장: {{size}}",
+      "note": "자동으로 삭제되지 않습니다. 오른쪽 클릭으로 휴지통으로 이동하세요.",
+      "show": "보기"
+    },
+    "rules": {
+      "appCache": {
+        "title": "앱 캐시",
+        "detail": "앱이 필요할 때 다시 만듭니다. 삭제 전에 앱을 종료하세요."
+      },
+      "logs": {
+        "title": "로그 파일",
+        "detail": "진단 로그이며 삭제해도 됩니다."
+      },
+      "xcodeDerivedData": {
+        "title": "Xcode DerivedData",
+        "detail": "빌드 중간 파일이며 Xcode가 다시 만듭니다."
+      },
+      "xcodeDeviceSupport": {
+        "title": "Xcode 기기 지원",
+        "detail": "연결한 기기의 심볼이며 필요하면 다시 받습니다."
+      },
+      "simulatorCache": {
+        "title": "시뮬레이터 캐시",
+        "detail": "iOS 시뮬레이터 캐시이며 자동으로 다시 만들어집니다."
+      },
+      "xcodeArchives": {
+        "title": "Xcode 아카이브",
+        "detail": "배포한 빌드의 아카이브입니다. dSYM이 필요하면 보관하세요."
+      },
+      "simulatorDevices": {
+        "title": "iOS 시뮬레이터 기기",
+        "detail": "Xcode › Devices 또는 `xcrun simctl delete unavailable` 사용을 권장합니다."
+      },
+      "androidEmulators": {
+        "title": "Android 에뮬레이터",
+        "detail": "사용하지 않는 가상 기기는 Android Studio › Device Manager에서 삭제하세요."
+      },
+      "androidSystemImages": {
+        "title": "Android 시스템 이미지",
+        "detail": "에뮬레이터 이미지입니다. 사용하지 않는 것은 SDK Manager에서 제거하세요."
+      },
+      "packageCache": {
+        "title": "패키지 캐시",
+        "detail": "다음 빌드 때 종속성을 다시 받습니다."
+      },
+      "toolCache": {
+        "title": "도구 캐시 (~/.cache)",
+        "detail": "여러 도구의 캐시입니다. 대부분 다시 만들어지지만 먼저 확인하세요."
+      },
+      "spotifyCache": {
+        "title": "Spotify 오프라인 캐시",
+        "detail": "Spotify 설정에서 캐시 크기를 제한할 수도 있습니다."
+      },
+      "deviceBackups": {
+        "title": "iPhone/iPad 백업",
+        "detail": "오래된 백업입니다. Finder › 기기 › 백업 관리에서 삭제하세요."
+      },
+      "docker": {
+        "title": "Docker 디스크 이미지",
+        "detail": "Docker Desktop 또는 `docker system prune`으로 줄이세요."
+      },
+      "trash": {
+        "title": "휴지통",
+        "detail": "이미 휴지통에 있습니다. 비우면 공간이 확보됩니다(되돌릴 수 없음)."
+      },
+      "downloads": {
+        "title": "다운로드",
+        "detail": "잊어버린 큰 파일이 쌓이기 쉽습니다. 살펴보세요."
+      },
+      "nodeModules": {
+        "title": "node_modules",
+        "detail": "`npm install`로 다시 설치할 수 있습니다."
+      },
+      "installer": {
+        "title": "설치 파일",
+        "detail": "앱을 설치한 뒤에는 필요 없습니다."
+      },
+      "oldExtensions": {
+        "title": "이전 편집기 확장 버전",
+        "detail": "VS Code / Cursor / Antigravity 확장의 대체된 버전입니다. 편집기는 최신 버전을 사용합니다."
+      },
+      "chromeServiceWorker": {
+        "title": "Chrome Service Worker 캐시",
+        "detail": "웹사이트의 오프라인 캐시입니다. 다시 만들어지지만 다시 방문할 때까지 오프라인 데이터가 사라집니다."
+      },
+      "pnpmStore": {
+        "title": "pnpm 패키지 저장소",
+        "detail": "공유 패키지 저장소입니다. 다음 설치 때 패키지를 다시 받습니다. `pnpm store prune`은 사용하지 않는 것만 제거합니다."
+      },
+      "googleUpdaterCache": {
+        "title": "Google Updater 캐시",
+        "detail": "Google 앱의 다운로드된 업데이트 패키지입니다. 필요하면 다시 받습니다."
+      },
+      "editorCache": {
+        "title": "편집기 캐시",
+        "detail": "VS Code / Cursor / Antigravity 캐시입니다. 편집기를 열면 다시 만들어집니다. 먼저 편집기를 종료하세요."
+      },
+      "clangModuleCache": {
+        "title": "Clang 모듈 캐시",
+        "detail": "Xcode/clang의 컴파일된 모듈 캐시입니다. 다음 빌드 때 다시 만들어집니다."
+      },
+      "editorWebCache": {
+        "title": "편집기 웹뷰 캐시",
+        "detail": "편집기 패널과 확장의 캐시된 웹 콘텐츠(VS Code, Cursor, Antigravity)입니다. 필요하면 다시 만들어집니다. 먼저 편집기를 종료하세요."
+      },
+      "vsixCache": {
+        "title": "편집기 확장 다운로드 캐시",
+        "detail": "확장 설치 후 남은 .vsix 패키지입니다. 필요하면 다시 받습니다."
+      },
+      "codexRuntimeInstall": {
+        "title": "Codex 런타임 설치 잔여물",
+        "detail": "완료되지 않은 Codex 런타임 설치입니다. Codex가 사용하는 런타임은 표시되지 않습니다."
+      }
+    },
+    "space": {
+      "free": "여유: {{free}} / {{total}}",
+      "trash": "휴지통: {{size}}",
+      "hint": "현재 여유: {{now}}. Finder 값은 제거 가능한 공간도 포함합니다.",
+      "trashHint": "휴지통으로 옮긴 항목은 휴지통을 비워야 공간이 확보됩니다."
+    }
+  },
+  "apps": {
+    "listLabel": "설치된 앱",
+    "count_one": "앱 {{formatted}}개",
+    "count_other": "앱 {{formatted}}개",
+    "loading": "앱 목록을 만드는 중…",
+    "running": "실행 중",
+    "leftoverEstimate": "+{{size}} 잔여물",
+    "analyzing": "이 앱이 남긴 모든 것을 찾는 중…",
+    "pick": "앱을 선택하면 설치하고 남긴 모든 것을 볼 수 있습니다.",
+    "selectRecommended": "권장 항목 선택",
+    "selectAll": "모두 선택",
+    "kinds": {
+      "appBundle": "응용 프로그램",
+      "support": "Application Support",
+      "cache": "캐시",
+      "preferences": "환경설정",
+      "container": "컨테이너",
+      "savedState": "저장된 상태",
+      "logs": "로그",
+      "webData": "웹 데이터 및 쿠키",
+      "launchItem": "실행 에이전트 및 데몬",
+      "helper": "권한 있는 도우미",
+      "receipt": "패키지가 설치함",
+      "recentDocuments": "최근 문서 목록",
+      "other": "디스크의 다른 위치"
+    },
+    "confidence": {
+      "certain": "확실",
+      "likely": "가능성 높음",
+      "possible": "가능성 있음"
+    },
+    "adminHint": "관리자 권한이 필요합니다. macOS가 암호를 요청합니다.",
+    "reveal": "Finder에서 보기",
+    "receiptsTitle": "설치 프로그램 영수증 (제거 후 삭제)",
+    "selected_one": "항목 {{count}}개 (잔여물 {{leftovers}}개) · {{size}}",
+    "selected_other": "항목 {{count}}개 (잔여물 {{leftovers}}개) · {{size}}",
+    "adminCount_one": "{{count}}개 항목에 관리자 권한 필요",
+    "adminCount_other": "{{count}}개 항목에 관리자 권한 필요",
+    "removing": "휴지통으로 이동 중…",
+    "remove": "휴지통으로 이동 ({{size}})",
+    "confirm": {
+      "title_one": "{{name}}을(를) 제거할까요? 항목 {{count}}개({{size}})가 휴지통으로 이동합니다.",
+      "title_other": "{{name}}을(를) 제거할까요? 항목 {{count}}개({{size}})가 휴지통으로 이동합니다.",
+      "more_one": "…외 {{count}}개",
+      "more_other": "…외 {{count}}개",
+      "admin_one": "{{count}}개 항목에 관리자 권한이 필요합니다. macOS가 암호를 요청합니다.",
+      "admin_other": "{{count}}개 항목에 관리자 권한이 필요합니다. macOS가 암호를 요청합니다.",
+      "trashNote": "영구적으로 삭제되는 것은 없습니다. 공간을 확보하려면 휴지통을 비우세요."
+    },
+    "errors": {
+      "running": "제거하기 전에 앱(과 메뉴 막대 도우미)을 종료하세요."
+    },
+    "report": {
+      "moved_one": "항목 {{count}}개를 휴지통으로 이동했습니다.",
+      "moved_other": "항목 {{count}}개를 휴지통으로 이동했습니다.",
+      "receipts_one": "설치 영수증 {{count}}개를 삭제했습니다.",
+      "receipts_other": "설치 영수증 {{count}}개를 삭제했습니다.",
+      "adminCancelled": "관리자 접근이 취소되어 권한이 필요한 항목은 그대로 남았습니다.",
+      "emptyTrash": "공간을 확보하려면 휴지통을 비우세요."
+    },
+    "orphans": {
+      "title": "주인 없는 잔여물",
+      "subtitle_one": "제거된 앱 {{count}}개",
+      "subtitle_other": "제거된 앱 {{count}}개",
+      "scanning": "제거된 앱의 잔여물을 찾는 중…",
+      "empty": "제거된 앱의 잔여물이 없습니다.",
+      "note": "더 이상 설치되어 있지 않은 앱의 것으로 보입니다. 미리 선택된 항목은 없습니다. 각 항목을 확인하고(↗ Finder에서 보기) 아는 것만 선택하세요.",
+      "selectGroup": "그룹 선택",
+      "selected_one": "항목 {{count}}개 · {{size}}",
+      "selected_other": "항목 {{count}}개 · {{size}}",
+      "confirmTitle_one": "제거된 앱의 잔여 항목 {{count}}개({{size}})를 휴지통으로 옮길까요?",
+      "confirmTitle_other": "제거된 앱의 잔여 항목 {{count}}개({{size}})를 휴지통으로 옮길까요?"
+    }
+  },
+  "dialog": {
+    "cancel": "취소",
+    "moveToTrash": "휴지통으로 이동",
+    "ok": "확인"
   }
 }

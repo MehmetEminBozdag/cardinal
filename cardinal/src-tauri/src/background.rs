@@ -359,6 +359,7 @@ fn handle_event_watcher_events(
         }
     }
 
+    crate::folder_sizes::note_events(&events);
     let handle_result = cache.handle_fs_events(events);
     let needs_rescan = matches!(handle_result, Err(HandleFSEError::Rescan));
     if needs_rescan {
