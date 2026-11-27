@@ -129,7 +129,7 @@ impl SizeEngine {
     /// Suspends full and incremental scans, preserving pending changes.
     pub fn set_active(&self, active: bool) {
         let mut st = self.state.lock();
-        if st.paused == !active {
+        if st.paused != active {
             return;
         }
         st.paused = !active;
