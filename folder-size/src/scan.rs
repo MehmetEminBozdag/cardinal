@@ -85,6 +85,20 @@ impl ScanContext {
 }
 
 /// Direct entries of one directory.
+#[cfg(test)]
+mod cancellation_tests {
+    use super::*;
+
+    #[test]
+    fn cancelled_direct_read_does_not_enumerate_files() {
+        let dir = tempfile::tempdir().unwrap();
+        std::fs::write(dir.path().join("file"), b"test").unwrap();
+        let ctx = ScanContext::new(dir.path(), Arc::new(AtomicBool::new(true)));
+        assert_eq!(read_entries(dir.path(), &ctx).direct_files, 0);
+    }
+}
+
+/// Direct entries of one directory.
 #[derive(Debug, Default)]
 pub struct Entries {
     pub unreadable: bool,
@@ -123,6 +137,9 @@ pub fn scan_dir(path: &Path, name: Box<str>, ctx: &ScanContext) -> Dir {
 /// Reads the direct entries of `path` (no recursion).
 pub fn read_entries(path: &Path, ctx: &ScanContext) -> Entries {
     let mut out = Entries::default();
+    if ctx.is_cancelled() {
+        return out;
+    }
     let Ok(cpath) = CString::new(path.as_os_str().as_bytes()) else {
         out.unreadable = true;
         return out;
@@ -214,6 +231,9 @@ fn read_bulk(fd: i32, dev: libc::dev_t, path: &Path, ctx: &ScanContext, out: &mu
     let mut buf = vec![0u8; BULK_BUFFER_SIZE];
     let mut first = true;
     loop {
+        if ctx.is_cancelled() {
+            return true;
+        }
         let count = unsafe {
             libc::getattrlistbulk(
                 fd,
@@ -292,6 +312,9 @@ fn read_posix(path: &Path, dev: libc::dev_t, ctx: &ScanContext, out: &mut Entrie
         return;
     };
     for entry in iter.flatten() {
+        if ctx.is_cancelled() {
+            break;
+        }
         let Ok(meta) = entry.metadata() else { continue };
         let name = entry.file_name();
         if meta.is_dir() {

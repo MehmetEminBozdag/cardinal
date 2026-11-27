@@ -72,6 +72,20 @@ const VOLUME_POLL_MS = 15_000;
  * show up without user action.
  */
 export function useFolderSizes(active: boolean) {
+  const [nativeActive, setNativeActive] = useState(false);
+  useEffect(() => {
+    let cancelled = false;
+    setNativeActive(false);
+    void invoke('set_size_view_active', { active })
+      .then(() => {
+        if (!cancelled) setNativeActive(active);
+      })
+      .catch(console.error);
+    return () => {
+      cancelled = true;
+      void invoke('set_size_view_active', { active: false }).catch(console.error);
+    };
+  }, [active]);
   const [status, setStatus] = useState<SizeStatus | null>(null);
   const [home, setHome] = useState<string | null>(null);
   const [currentPath, setCurrentPath] = useState<string | null>(null);
@@ -132,14 +146,14 @@ export function useFolderSizes(active: boolean) {
 
   // First visit with nothing scanned yet: scan the home folder.
   useEffect(() => {
-    if (!active || autoStarted.current || !home || !status) return;
+    if (!active || !nativeActive || autoStarted.current || !home || !status) return;
     if (status.phase === 'idle') {
       autoStarted.current = true;
       void scan(home);
     } else {
       autoStarted.current = true;
     }
-  }, [active, home, scan, status]);
+  }, [active, nativeActive, home, scan, status]);
 
   // Follow the root when it appears or changes.
   useEffect(() => {

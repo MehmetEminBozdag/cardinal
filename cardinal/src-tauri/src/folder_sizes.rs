@@ -5,15 +5,38 @@
 //! without rescanning the disk. The tree is snapshotted next to `cardinal.db`
 //! and shown immediately on the next launch, followed by a fresh scan.
 
+use crate::size_activity::SizeActivity;
 use cardinal_sdk::{EventFlag, FsEvent, ScanType};
 use folder_size::{Listing, SizeEngine, Status, Suggestion, VolumeSpace, volume_space};
 use once_cell::sync::{Lazy, OnceCell};
+use parking_lot::{Condvar, Mutex};
 use std::{
     path::{Path, PathBuf},
     sync::Arc,
     time::{Duration, Instant},
 };
+use tauri::AppHandle;
 use tracing::{info, warn};
+
+static ACTIVITY: Lazy<Mutex<SizeActivity>> = Lazy::new(|| Mutex::new(SizeActivity::default()));
+static ACTIVITY_CHANGED: Condvar = Condvar::new();
+
+pub fn set_foreground(foreground: bool) {
+    let mut activity = ACTIVITY.lock();
+    activity.set_foreground(foreground, Instant::now());
+    ENGINE.set_active(activity.allowed(Instant::now()));
+    ACTIVITY_CHANGED.notify_all();
+}
+
+#[tauri::command]
+pub fn set_size_view_active(app: AppHandle, active: bool) {
+    let foreground = crate::window_controls::is_main_window_foreground(&app);
+    let mut activity = ACTIVITY.lock();
+    activity.selected = active;
+    activity.set_foreground(foreground, Instant::now());
+    ENGINE.set_active(activity.allowed(Instant::now()));
+    ACTIVITY_CHANGED.notify_all();
+}
 
 static ENGINE: Lazy<Arc<SizeEngine>> = Lazy::new(|| {
     let home = std::env::var_os("HOME")
@@ -26,7 +49,6 @@ static SNAPSHOT_PATH: OnceCell<PathBuf> = OnceCell::new();
 const PROCESS_INTERVAL: Duration = Duration::from_millis(1_500);
 const SAVE_INTERVAL: Duration = Duration::from_secs(60);
 const SNAPSHOT_REFRESH_AGE: Duration = Duration::from_secs(10 * 60);
-const STARTUP_REFRESH_DELAY: Duration = Duration::from_secs(20);
 
 fn now_secs() -> u64 {
     std::time::SystemTime::now()
@@ -38,24 +60,29 @@ fn now_secs() -> u64 {
 /// Loads the previous snapshot (if any), refreshes it in the background and
 /// starts the worker that applies pending file-system changes.
 pub fn start(snapshot_path: PathBuf) {
+    ENGINE.set_active(false);
+    std::thread::Builder::new()
+        .name("size-activity-gate".into())
+        .spawn(|| {
+            let mut activity = ACTIVITY.lock();
+            loop {
+                let now = Instant::now();
+                ENGINE.set_active(activity.allowed(now));
+                if let Some(remaining) = activity.remaining(now) {
+                    ACTIVITY_CHANGED.wait_for(&mut activity, remaining);
+                } else {
+                    ACTIVITY_CHANGED.wait(&mut activity);
+                }
+            }
+        })
+        .expect("failed to start size activity gate");
     let _ = SNAPSHOT_PATH.set(snapshot_path.clone());
     let engine = Arc::clone(&ENGINE);
     std::thread::Builder::new()
         .name("folder-size-worker".into())
         .spawn(move || {
             match engine.load(&snapshot_path) {
-                Ok(true) => {
-                    // Changes made while the app was closed are not in the snapshot.
-                    // Refresh old snapshots, after Cardinal's own startup indexing.
-                    let age = now_secs().saturating_sub(engine.status().scanned_at.unwrap_or(0));
-                    if age >= SNAPSHOT_REFRESH_AGE.as_secs() {
-                        std::thread::sleep(STARTUP_REFRESH_DELAY);
-                        if let Some(root) = engine.root_path() {
-                            info!(root = %root.display(), age, "refreshing folder size snapshot");
-                            engine.start_scan(root);
-                        }
-                    }
-                }
+                Ok(true) => {}
                 Ok(false) => {}
                 Err(error) if snapshot_path.exists() => {
                     warn!(?error, "could not read folder size snapshot");
@@ -65,6 +92,23 @@ pub fn start(snapshot_path: PathBuf) {
             let mut last_save = Instant::now();
             loop {
                 std::thread::sleep(PROCESS_INTERVAL);
+                if !ACTIVITY.lock().allowed(Instant::now()) {
+                    continue;
+                }
+                let status = engine.status();
+                if status.phase == folder_size::Phase::Idle
+                    && let Some(home) = std::env::var_os("HOME")
+                {
+                    engine.start_scan(PathBuf::from(home));
+                }
+                if status.from_snapshot
+                    && now_secs().saturating_sub(status.scanned_at.unwrap_or(0))
+                        >= SNAPSHOT_REFRESH_AGE.as_secs()
+                    && let Some(root) = engine.root_path()
+                {
+                    info!(root = %root.display(), "refreshing visible folder size snapshot");
+                    engine.start_scan(root);
+                }
                 engine.process_pending();
                 if last_save.elapsed() >= SAVE_INTERVAL {
                     save_snapshot();
@@ -124,6 +168,10 @@ pub fn get_size_status() -> Status {
 /// any other folder becomes the new root. Returns false when a scan is running.
 #[tauri::command]
 pub fn start_size_scan(path: String) -> Result<bool, String> {
+    let activity = ACTIVITY.lock();
+    if !activity.allowed(Instant::now()) {
+        return Ok(false);
+    }
     let path = parse_dir(&path)?;
     Ok(ENGINE.start_scan(path))
 }

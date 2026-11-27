@@ -32,3 +32,42 @@ mod tests {
         assert!(!gate.allowed(now + Duration::from_secs(15)));
     }
 }
+use std::time::{Duration, Instant};
+
+pub(crate) const BACKGROUND_GRACE: Duration = Duration::from_secs(15);
+
+#[derive(Default)]
+pub(crate) struct SizeActivity {
+    pub selected: bool,
+    pub foreground: bool,
+    background_since: Option<Instant>,
+}
+
+impl SizeActivity {
+    pub fn set_foreground(&mut self, foreground: bool, now: Instant) {
+        if self.foreground && !foreground {
+            self.background_since = Some(now);
+        }
+        if foreground {
+            self.background_since = None;
+        }
+        self.foreground = foreground;
+    }
+
+    pub fn allowed(&self, now: Instant) -> bool {
+        self.selected
+            && (self.foreground
+                || self
+                    .background_since
+                    .is_some_and(|since| now.saturating_duration_since(since) < BACKGROUND_GRACE))
+    }
+
+    pub fn remaining(&self, now: Instant) -> Option<Duration> {
+        if !self.selected || self.foreground {
+            return None;
+        }
+        self.background_since
+            .and_then(|since| BACKGROUND_GRACE.checked_sub(now.saturating_duration_since(since)))
+            .filter(|left| !left.is_zero())
+    }
+}

@@ -10,6 +10,24 @@ use std::{
 const MB: usize = 1 << 20;
 
 #[test]
+fn inactive_event_backlog_is_bounded_and_replayed() {
+    let tmp = tempfile::tempdir().unwrap();
+    let root = fs::canonicalize(tmp.path()).unwrap();
+    write(&root, "existing", 1000);
+    let engine = scanned(&root);
+    engine.set_active(false);
+    for index in 0..6000 {
+        engine.note_change(&root.join(format!("dir-{index}/file")), false);
+    }
+    assert!(engine.status().pending_updates <= 5000);
+    let before = engine.status().total_size;
+    write(&root, "added", 2 * MB);
+    engine.set_active(true);
+    assert!(engine.process_pending() > 0);
+    assert!(engine.status().total_size > before);
+}
+
+#[test]
 fn inactive_engine_defers_scans_and_pending_changes_until_reactivated() {
     let tmp = tempfile::tempdir().unwrap();
     let root = fs::canonicalize(tmp.path()).unwrap();

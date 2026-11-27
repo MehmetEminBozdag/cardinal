@@ -11,13 +11,16 @@ Folder size analysis behind Cardinal's **Sizes** tab.
 - **Engine** (`engine.rs`): owns the tree. `note_change(path, deep)` records an FSEvent;
   `process_pending()` re-reads only the affected directories (new subfolders are scanned,
   vanished ones dropped, deep events rescan the subtree) and updates totals up to the root.
-  Cardinal's existing FSEvents stream drives it, so sizes stay current without full rescans.
+  Cardinal's existing FSEvents stream drives it. Disk scans run only while the Sizes tab
+  is selected and Cardinal is foreground, with a 15-second grace after focus loss.
+  Switching tabs suspends immediately. Suspension cancels full/incremental work;
+  changes are retained (and coalesced if the queue grows) for the next activation.
 - **Suggestions** (`suggest.rs`): well-known caches and temporary folders (app caches, Xcode
   DerivedData, package-manager caches, `node_modules`, Android emulators, installers, ...)
   above 50 MB, labelled `safe` or `review`. The crate never deletes anything.
 - **Snapshot** (`persist.rs`): postcard + zstd file next to `cardinal.db`
-  (`folder-sizes.db`), shown instantly on the next launch and refreshed when older than
-  10 minutes.
+  (`folder-sizes.db`), shown on the next launch. A snapshot older than 10 minutes is
+  refreshed only when the Sizes tab is eligible to scan, never merely on startup.
 
 Tauri glue lives in `cardinal/src-tauri/src/folder_sizes.rs`
 (`get_size_status`, `start_size_scan`, `cancel_size_scan`, `get_size_listing`,

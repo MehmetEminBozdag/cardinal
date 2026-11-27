@@ -1,6 +1,35 @@
 //! Thread-safe engine: owns the size tree, runs scans in the background and
 //! applies file-system change notifications incrementally.
 
+#[cfg(test)]
+mod activity_tests {
+    use super::*;
+
+    #[test]
+    fn suspension_cancels_current_work_and_keeps_interrupted_scan_for_resume() {
+        let tmp = tempfile::tempdir().unwrap();
+        let engine = SizeEngine::new(tmp.path().to_path_buf());
+        let incremental = engine.state.lock().work_cancel.clone();
+        let full = Arc::new(AtomicBool::new(false));
+        let ctx = Arc::new(ScanContext::new(tmp.path(), full.clone()));
+        engine.state.lock().running = Some(Running {
+            path: tmp.path().to_path_buf(),
+            ctx: ctx.clone(),
+            cancel: full,
+        });
+        engine.set_active(false);
+        assert!(incremental.load(Ordering::SeqCst));
+        assert!(ctx.is_cancelled());
+        engine.state.lock().running = None;
+        engine.set_active(true);
+        engine.set_active(false);
+        assert_eq!(
+            engine.state.lock().pending_scan.as_deref(),
+            Some(tmp.path())
+        );
+    }
+}
+
 use crate::{
     persist,
     scan::{self, ScanContext},
@@ -65,6 +94,9 @@ struct Running {
 
 #[derive(Default)]
 struct State {
+    paused: bool,
+    work_cancel: Arc<AtomicBool>,
+    pending_scan: Option<PathBuf>,
     tree: Option<SizeTree>,
     running: Option<Running>,
     from_snapshot: bool,
@@ -94,6 +126,27 @@ fn now_secs() -> u64 {
 }
 
 impl SizeEngine {
+    /// Suspends full and incremental scans, preserving pending changes.
+    pub fn set_active(&self, active: bool) {
+        let mut st = self.state.lock();
+        if st.paused == !active {
+            return;
+        }
+        st.paused = !active;
+        info!(active, "folder size scan activity changed");
+        if active {
+            st.work_cancel = Arc::new(AtomicBool::new(false));
+        } else {
+            st.work_cancel.store(true, Ordering::SeqCst);
+            if let Some(running) = &st.running {
+                st.pending_scan = Some(running.path.clone());
+            }
+            if let Some(running) = &st.running {
+                running.cancel.store(true, Ordering::SeqCst);
+            }
+        }
+    }
+
     pub fn new(home: PathBuf) -> Self {
         Self {
             state: Mutex::new(State::default()),
@@ -158,9 +211,10 @@ impl SizeEngine {
         let ctx = Arc::new(ScanContext::new(&path, cancel.clone()));
         {
             let mut st = self.state.lock();
-            if st.running.is_some() {
+            if st.paused || st.running.is_some() {
                 return false;
             }
+            st.pending_scan = None;
             st.running = Some(Running {
                 path: path.clone(),
                 ctx: ctx.clone(),
@@ -182,7 +236,7 @@ impl SizeEngine {
         let mut st = self.state.lock();
         st.running = None;
         st.last_scan_ms = Some(elapsed);
-        let Some(fresh) = result else {
+        let Some(fresh) = result.filter(|_| !ctx.is_cancelled()) else {
             drop(st);
             self.bump();
             return;
@@ -209,7 +263,9 @@ impl SizeEngine {
     }
 
     pub fn cancel_scan(&self) {
-        if let Some(running) = &self.state.lock().running {
+        let mut st = self.state.lock();
+        st.pending_scan = None;
+        if let Some(running) = &st.running {
             running.cancel.store(true, Ordering::SeqCst);
         }
     }
@@ -248,6 +304,15 @@ impl SizeEngine {
         if !path.starts_with(&tree.root_path) {
             return;
         }
+        if st.dirty.get(&tree.root_path).is_some_and(|deep| *deep) {
+            return;
+        }
+        if st.dirty.len() >= MAX_DIRTY {
+            let root = tree.root_path.clone();
+            st.dirty.clear();
+            st.dirty.insert(root, true);
+            return;
+        }
         let target = if deep || path == tree.root_path {
             path.to_path_buf()
         } else {
@@ -273,9 +338,19 @@ impl SizeEngine {
 
     /// Applies pending changes. Returns the number of directories refreshed.
     pub fn process_pending(self: &Arc<Self>) -> usize {
-        let (batch, generation, root) = {
+        let (batch, generation, root, cancel) = {
             let mut st = self.state.lock();
-            if st.running.is_some() || st.dirty.is_empty() {
+            if st.paused || st.running.is_some() {
+                return 0;
+            }
+            if let Some(path) = st.pending_scan.take() {
+                drop(st);
+                if !self.start_scan(path.clone()) {
+                    self.state.lock().pending_scan.get_or_insert(path);
+                }
+                return 0;
+            }
+            if st.dirty.is_empty() {
                 return 0;
             }
             let dirty = std::mem::take(&mut st.dirty);
@@ -286,7 +361,15 @@ impl SizeEngine {
             if dirty.len() > MAX_DIRTY {
                 drop(st);
                 warn!("too many pending folder-size changes; rescanning the whole tree");
-                self.start_scan(root);
+                if !self.start_scan(root) {
+                    let mut st = self.state.lock();
+                    for (path, deep) in dirty {
+                        st.dirty
+                            .entry(path)
+                            .and_modify(|old| *old |= deep)
+                            .or_insert(deep);
+                    }
+                }
                 return 0;
             }
             // Map each change to the deepest directory that exists in the tree,
@@ -309,16 +392,29 @@ impl SizeEngine {
                 .map(|(p, _)| p.clone())
                 .collect();
             batch.retain(|p, _| !deep_roots.iter().any(|r| p != r && p.starts_with(r)));
-            (batch, st.generation, root)
+            (batch, st.generation, root, st.work_cancel.clone())
         };
 
         let count = batch.len();
-        for (path, deep) in batch {
-            if deep {
-                self.refresh_subtree(&path, generation);
-            } else {
-                self.refresh_shallow(&path, generation, &root);
+        for (path, deep) in &batch {
+            if cancel.load(Ordering::SeqCst) {
+                break;
             }
+            if *deep {
+                self.refresh_subtree(path, generation, cancel.clone());
+            } else {
+                self.refresh_shallow(path, generation, &root, cancel.clone());
+            }
+        }
+        if cancel.load(Ordering::SeqCst) {
+            let mut st = self.state.lock();
+            for (path, deep) in batch {
+                st.dirty
+                    .entry(path)
+                    .and_modify(|old| *old |= deep)
+                    .or_insert(deep);
+            }
+            return 0;
         }
         if count > 0 {
             self.bump();
@@ -326,13 +422,13 @@ impl SizeEngine {
         count
     }
 
-    fn refresh_subtree(&self, path: &Path, generation: u64) {
-        let ctx = ScanContext::new(path, Arc::new(AtomicBool::new(false)));
+    fn refresh_subtree(&self, path: &Path, generation: u64, cancel: Arc<AtomicBool>) {
+        let ctx = ScanContext::new(path, cancel);
         let Some(fresh) = scan::scan_tree(path, &ctx) else {
             return;
         };
         let mut st = self.state.lock();
-        if st.generation != generation {
+        if st.generation != generation || st.paused || ctx.is_cancelled() {
             return;
         }
         if let Some(tree) = st.tree.as_mut() {
@@ -348,7 +444,7 @@ impl SizeEngine {
 
     /// Re-reads one directory's direct entries; new subdirectories are scanned
     /// fully, vanished ones are dropped, unchanged subtrees are kept.
-    fn refresh_shallow(&self, path: &Path, generation: u64, root: &Path) {
+    fn refresh_shallow(&self, path: &Path, generation: u64, root: &Path, cancel: Arc<AtomicBool>) {
         let known: Vec<Box<str>> = {
             let st = self.state.lock();
             match st.tree.as_ref().and_then(|t| t.get(path)) {
@@ -356,7 +452,7 @@ impl SizeEngine {
                 None => return,
             }
         };
-        let ctx = ScanContext::new(root, Arc::new(AtomicBool::new(false)));
+        let ctx = ScanContext::new(root, cancel);
         let entries = scan::read_entries(path, &ctx);
         let new_children: Vec<Dir> = entries
             .subdirs
@@ -365,7 +461,7 @@ impl SizeEngine {
             .map(|name| scan::scan_dir(&path.join(&**name), name.clone(), &ctx))
             .collect();
         let mut st = self.state.lock();
-        if st.generation != generation {
+        if st.generation != generation || st.paused || ctx.is_cancelled() {
             return;
         }
         if let Some(tree) = st.tree.as_mut()

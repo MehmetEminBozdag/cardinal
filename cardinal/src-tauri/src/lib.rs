@@ -10,8 +10,8 @@ mod quicklook;
 mod renderer_health;
 mod renderer_watchdog;
 mod search_activity;
-mod sort;
 mod size_activity;
+mod sort;
 mod window_controls;
 
 use anyhow::Result;
@@ -107,7 +107,8 @@ pub fn run() -> Result<()> {
             }
 
             match event {
-                WindowEvent::Focused(_) => {
+                WindowEvent::Focused(focused) => {
+                    folder_sizes::set_foreground(*focused);
                     let _ = update_window_state_tx_for_window.try_send(());
                 }
                 WindowEvent::CloseRequested { api, .. } => {
@@ -174,6 +175,7 @@ pub fn run() -> Result<()> {
             folder_sizes::get_size_status,
             folder_sizes::start_size_scan,
             folder_sizes::cancel_size_scan,
+            folder_sizes::set_size_view_active,
             folder_sizes::get_size_listing,
             folder_sizes::get_size_suggestions,
             folder_sizes::get_volume_space,
