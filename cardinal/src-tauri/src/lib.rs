@@ -11,6 +11,7 @@ mod renderer_health;
 mod renderer_watchdog;
 mod search_activity;
 mod sort;
+mod size_activity;
 mod window_controls;
 
 use anyhow::Result;

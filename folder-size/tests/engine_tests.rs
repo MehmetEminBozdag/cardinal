@@ -9,6 +9,25 @@ use std::{
 
 const MB: usize = 1 << 20;
 
+#[test]
+fn inactive_engine_defers_scans_and_pending_changes_until_reactivated() {
+    let tmp = tempfile::tempdir().unwrap();
+    let root = fs::canonicalize(tmp.path()).unwrap();
+    write(&root, "a/file", MB);
+    let engine = scanned(&root);
+    let before = engine.status().total_size;
+    engine.set_active(false);
+    write(&root, "a/added", 2 * MB);
+    engine.note_change(&root.join("a/added"), false);
+    assert!(!engine.start_scan(root.clone()));
+    assert_eq!(engine.process_pending(), 0);
+    assert_eq!(engine.status().total_size, before);
+    assert!(engine.status().pending_updates > 0);
+    engine.set_active(true);
+    assert!(engine.process_pending() > 0);
+    assert!(engine.status().total_size > before);
+}
+
 fn write(root: &Path, rel: &str, bytes: usize) {
     let path = root.join(rel);
     fs::create_dir_all(path.parent().unwrap()).unwrap();
