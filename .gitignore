@@ -18,3 +18,6 @@ target
 *.sqlite3
 *.dmg
 graphify-out/
+
+# Private installation backups and local packages
+.local-backups/
