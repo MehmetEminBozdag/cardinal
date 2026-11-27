@@ -1,4 +1,4 @@
-> **Community fork:** this repository is based on [cardisoft/cardinal](https://github.com/cardisoft/cardinal). The default branch **`public/cardinal-enhancements`** contains this fork's complete feature set; `master` retains the upstream baseline. [Türkçe: fork differences and integration guide](docs/FORK-INTEGRATION.tr-TR.md).
+> **Community fork:** this repository is based on [cardisoft/cardinal](https://github.com/cardisoft/cardinal). The default branch **`public/cardinal-enhancements`** contains this fork's complete feature set, including contributions from [EminSet/cardinal](https://github.com/EminSet/cardinal). [Türkçe: fork differences and integration guide](docs/FORK-INTEGRATION.tr-TR.md).
 
 ## Working with this fork
 
@@ -9,7 +9,16 @@ cd cardinal
 
 This branch adds visual type/date/size filters, newest-first sorting, saved searches, favorites, search-coverage controls, expanded native menus, in-app Move to Trash, APFS-aware duplicate analysis, and bounded recovery after a WebKit renderer failure. Added UI strings and the 0.1.24 release notes cover all 15 supported locales. Core query-matching speed is not changed; performance work concerns large-result metadata sorting, cancellation, and request backpressure.
 
-For integration, start with the complete branch rather than combining the three `contrib/*` review branches. The fork still uses the upstream bundle identifier `com.cardinal.one`; give a separate product its own identifier, storage paths, shortcuts, and signing configuration before distributing it alongside Cardinal. See the [integration guide](docs/FORK-INTEGRATION.tr-TR.md) for source mappings, IPC boundaries, limitations, branch history, validation, and the upstream status checked on **2026-11-20**.
+The latest package is [v0.1.24-fork.2](https://github.com/MehmetEminBozdag/cardinal/releases/tag/v0.1.24-fork.2) (2026-11-27), for Apple Silicon. In addition to the features above, it includes:
+
+- **Sizes:** folder totals, a treemap, free disk space, Trash usage, and cleanup suggestions. Allocated and logical sizes can differ; a folder total is not a guarantee of reclaimable APFS space.
+- **Applications:** uninstall workflows and suggestions for possible leftovers from apps no longer installed. Review suggested paths before approving a move to Trash.
+- **Operations:** a persistent, rotated history of Move to Trash operations; this is a log, not an undo system.
+- **Background CPU control:** size scanning runs while the Sizes tab is selected and Cardinal is in the foreground. Moving to another tab suspends it immediately. When Cardinal goes into the background with Sizes selected, scanning may continue for **15 seconds**, then full and incremental scans are cancelled. Pending changes are retained for resuming; ordinary filename indexing remains active independently.
+
+These additions incorporate EminSet's work through [`a4658a1`](https://github.com/EminSet/cardinal/commit/a4658a17ffabd708dda08508aee93789f3aeaa30), followed by this fork's size-scan activity controls and regression tests. See the [changelog](CHANGELOG.md) for the release scope and verification limits.
+
+For integration, start with the complete branch rather than combining the three `contrib/*` review branches. Those branches remain for existing PR reviews. The fork still uses the upstream bundle identifier `com.cardinal.one`; give a separate product its own identifier, storage paths, shortcuts, and signing configuration before distributing it alongside Cardinal. See the [integration guide](docs/FORK-INTEGRATION.tr-TR.md) for source mappings, IPC boundaries, limitations, branch history, validation, and the upstream status checked on **2026-11-27**.
 
 Upstream `master` is still at `4c50734f9a09d88110f96652b43634b412f79449`; [our PR #228](https://github.com/cardisoft/cardinal/pull/228) is open and unmerged. Open third-party PRs are proposals, not features shipped by this fork. The app's native version is `0.1.24`; that number alone does not identify this branch or prove an official upstream release.
 

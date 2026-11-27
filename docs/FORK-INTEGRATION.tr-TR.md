@@ -1,12 +1,27 @@
 # Cardinal fork farkları ve entegrasyon rehberi
 
-Kontrol tarihi: **20 Kasım 2026**. Karşılaştırma tabanı upstream `master`: `4c50734f9a09d88110f96652b43634b412f79449`. Belgelerin hazırlanmasından önce fork kodunun ucu `c062eec` idi. Bu kayıt kaynak incelemesi ve GitHub API kontrolüne dayanır; eski makine testleri ayrıca tarihleriyle işaretlenmiştir.
+Güncelleme tarihi: **27 Kasım 2026**. Upstream `master` ve PR #228 yeniden kontrol edildi: taban hâlâ `4c50734f9a09d88110f96652b43634b412f79449`, PR açık ve birleştirilmemiş. Aşağıdaki 20 Kasım kayıtları tarihseldir; güncel eklemeler bu bölümde açıklanır.
+
+## 27 Kasım eklemeleri ve yayın
+
+Güncel yayın [v0.1.24-fork.2](https://github.com/MehmetEminBozdag/cardinal/releases/tag/v0.1.24-fork.2), kaynak dalı `public/cardinal-enhancements`. Paket Apple Silicon içindir; uygulama içindeki sürüm numarası `0.1.24` olarak kalır. DMG daha önce derlenip kurulan pakettir; sonraki commitler test ve belge içerir, üretim kaynaklarını değiştirmez.
+
+EminSet'in `feature/app-uninstall` dalındaki [`a4658a1`](https://github.com/EminSet/cardinal/commit/a4658a17ffabd708dda08508aee93789f3aeaa30) commitine kadarki çalışma alınmıştır; bu dal klasör boyutu eklemelerini de içerir. 27 Kasım kontrolünde ilgili dalın ucu aynı committir.
+
+- `folder-size/`: klasör boyutu motoru, tam/artımlı tarama, snapshot; UI'da liste, treemap, boş disk/Çöp boyutu ve temizlik önerileri. Mantıksal boyut, ayrılmış alan ve kesin geri kazanılacak alan aynı kavram değildir.
+- Uygulama kaldırma ve olası sahipsiz kalıntılar: önerilen yollar kullanıcı tarafından incelenir; otomatik güvenli silme garantisi değildir. Editör/Chrome/pnpm/Codex önbelleği ve eski uzantı sürümü önerileri de gelir.
+- `file-operations.jsonl`: Çöp'e taşıma işlemleri oturumlar arasında tutulur, yaklaşık 2 MiB sınırında döndürülür. Eski rehberin oturum içi işlem geçmişi açıklamasının yerini alır; geri alma sistemi değildir.
+- `size_activity.rs`, `folder_sizes.rs`, `useFolderSizes.ts`: Boyut sekmesi + native pencere odağı birlikte tarama iznini belirler. Sekmeden çıkınca hemen; uygulama arka plana alındıktan **15 saniye** sonra devam eden tam/artımlı tarama iptal edilir. Tekrarlanan arka plan bildirimleri süreyi yenilemez. Bekleyen olaylar birleştirilir; 5.000 yol sınırı aşılırsa tek kök yenilemeye dönüştürülür. Uygun görünüm geri gelince yarım kalan tam tarama yeniden başlar. Arama indeksi ayrı çalışır.
+
+Bu geliştirme sırasında 66 native, 27 folder-size ve iki hook testi, TypeScript, Clippy, biçim kontrolleri ve paket derlemesi geçti. Genel frontend koşusunda dört yakalanmamış context-menu mock hatası kaydedildi; tüm frontend testleri temiz geçti denemez. Son süre-sınırı testi kurulumdan sonra eklendi; üretim kodunu değiştirmedi. Kontrollü tam indeks CPU karşılaştırması yapılmadı. Kullanıcı mevcut kurulu uygulamanın düzgün çalıştığını bildirdi; bu bildirim bağımsız bir uçtan uca test değildir.
+
+Yerel kaynak checkout'u `~/dev/cardinal`; kurulum/durum yedekleri Git'e dahil edilmeyen `.local-backups/` altında tutulur. Dağıtım DMG'si GitHub Release varlığıdır, Git kaynak ağacına eklenmez.
 
 ## Kullanılacak dal
 
 Depo: <https://github.com/MehmetEminBozdag/cardinal>.
 
-**Varsayılan ve tam entegrasyon dalı `public/cardinal-enhancements`.** Fork'un `master` dalı upstream tabanını korur. Yalnız `master` dalını veya başlı başına PR #228'i almak tüm geliştirmeleri getirmez. Yayımlanan sürüm [Latest release](https://github.com/MehmetEminBozdag/cardinal/releases/latest) bağlantısındadır; 20 Kasım 2026'da `v0.1.24-fork.1` ön sürüm işaretinden çıkarılıp Latest olarak seçilmiştir. Bu yayın durumu, aşağıdaki bilinen doğrulama eksiklerini ortadan kaldırmaz.
+**Varsayılan ve tam entegrasyon dalı `public/cardinal-enhancements`.** Başlı başına PR #228'i almak tüm geliştirmeleri getirmez. Yayımlanan sürüm [Latest release](https://github.com/MehmetEminBozdag/cardinal/releases/latest) bağlantısındadır. `master`, `events_include_patsh` ve `sort_preserve` dalları değişiklikleri zaten güncel dalda bulunduğu için temizlenir; uçları `archive/2026-11-27/` etiketleriyle korunur. Açık PR'ların kullandığı üç `contrib/*` dalı ve birleştirilmemiş kod taşıyan diğer dallar korunur.
 
 ```bash
 git clone --branch public/cardinal-enhancements https://github.com/MehmetEminBozdag/cardinal.git
@@ -17,8 +32,7 @@ git remote add upstream https://github.com/cardisoft/cardinal.git
 
 | Dal | İçerik ve kullanım |
 | --- | --- |
-| `master` | Orijinal taban; ek özellikler için kullanılmamalı. |
-| `public/cardinal-enhancements` | Tüm özellikler, Çöp onayı ve WebKit kurtarması; entegrasyon başlangıcı. |
+| `public/cardinal-enhancements` | Tüm özellikler, EminSet eklemeleri ve boyut taraması CPU düzeltmesi; entegrasyon başlangıcı. |
 | `contrib/1-search-performance-file-workflows` | Upstream PR #228: sıralama/iş akışı ve Çöp onayı düzeltmesi. |
 | `contrib/2-workspace-menus-coverage` | İnceleme için hazırlanmış çalışma alanı/menü/kapsam takip dalı. |
 | `contrib/3-apfs-duplicates-locales` | APFS kopya analizi ve dil eşitliği takip dalı. |
@@ -57,7 +71,7 @@ Kaynaklar: `cardinal/src-tauri/src/background.rs`, `commands.rs`, `sort.rs`, `li
 
 - Kayıtlı arama; ad, metin, filtre, klasör sorgusu, kapsam görünürlüğü ve harf duyarlılığını saklar. Aynı adla kayıt güncellenir.
 - Favoriler seçili dosya yollarını topluca saklar, yinelenen yolları ayıklar; favori listesi bir dosya yedeği değildir.
-- İşlemler paneli Çöp'e taşıma için çalışıyor/tamamlandı/başarısız durumlarını gösterir. İşlem listesi oturum içidir; kalıcı denetim günlüğü veya geri alma sistemi değildir.
+- İşlemler paneli Çöp'e taşıma için çalışıyor/tamamlandı/başarısız durumlarını gösterir. 27 Kasım sürümünde kalıcı, döndürülen günlük eklenmiştir; geri alma sistemi değildir.
 - Arama/Görünüm/İndeks menüleri panel geçişleri, en yeniler, dosya/olay sekmesi, yeniden tarama ve ayarlara erişim ekler. Çalışma alanı araç çubuğu gizlenebilir ve tercih saklanır.
 
 Kaynaklar: `WorkspacePanel.tsx`, `useWorkspaceCollections.ts`, `useFileOperationLog.ts`, `useWorkspaceToolbarVisibility.ts`, `menu.ts`, `appMenuActions.ts`.
@@ -168,7 +182,7 @@ cargo fmt --manifest-path cardinal/src-tauri/Cargo.toml --check
 
 `rust-toolchain.toml` mevcut kayıtta `nightly-2025-12-11` pinler. Kök AGENTS.md içindeki eski nightly örneği yerine bu dosyayı esas alın. `search-cache` gibi paylaşılan crate'leri değiştirirseniz ilgili crate testlerini ve workspace kontrollerini de çalıştırın.
 
-Paket üretimi için depo kökünden `cd cardinal && npm run tauri build`. Çıktılar `cardinal/src-tauri/target/release/bundle/macos/` ve `bundle/dmg/` altındadır. Kaynak Git dalı DMG'yi içermez; dağıtım paketi GitHub Release varlığı olarak yayımlanır. Yerel ad-hoc imza Apple notarization değildir; yeni paket kimliği/imzası Tam Disk Erişimi'nin yeniden verilmesini gerektirebilir.
+Paket üretimi için depo kökünden `cd cardinal && npm run tauri build`. Bu makinede release proc-macro yüklemesi `mis-aligned LINKEDIT string pool` hatası verirse doğrulanmış komut `CARGO_PROFILE_RELEASE_STRIP=none npm run tauri build` şeklindedir. Çıktılar `cardinal/src-tauri/target/release/bundle/macos/` ve `bundle/dmg/` altındadır. Kaynak Git dalı DMG'yi içermez; dağıtım paketi GitHub Release varlığı olarak yayımlanır. Yerel ad-hoc imza Apple notarization değildir; yeni paket kimliği/imzası Tam Disk Erişimi'nin yeniden verilmesini gerektirebilir.
 
 20 Kasım devir kontrolünde frontend 40 dosya/332 test, TypeScript kontrolü ve Vite üretim build'i geçti. Rust standart paralel koşusunda bir test `BudgetExceeded` yerine `Cancelled` gördü: duplicate testleri ortak generation sayacını etkiliyor. Aynı test tek başına geçti; yukarıdaki sıralı komutla 57/57 geçti. Bu bilinen test izolasyonu sorunu giderilmiş sayılmıyor; bu nedenle yalnızca “tüm Rust testleri paralel geçti” denmemelidir.
 

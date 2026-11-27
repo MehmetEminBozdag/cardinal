@@ -1,4 +1,4 @@
-> **Topluluk fork'u:** Bu depo [orijinal Cardinal](https://github.com/cardisoft/cardinal) üzerine geliştirilmiştir. Varsayılan dal **`public/cardinal-enhancements`**, tüm ek özellikleri içerir; `master` orijinal tabanı korur. [Ayrıntılı farklar ve entegrasyon rehberi](../../docs/FORK-INTEGRATION.tr-TR.md).
+> **Topluluk fork'u:** Bu depo [orijinal Cardinal](https://github.com/cardisoft/cardinal) üzerine geliştirilmiştir. Varsayılan dal **`public/cardinal-enhancements`**, [EminSet/cardinal](https://github.com/EminSet/cardinal) katkıları dahil tüm ek özellikleri içerir. [Ayrıntılı farklar ve entegrasyon rehberi](../../docs/FORK-INTEGRATION.tr-TR.md).
 
 ## Bu fork ile çalışma
 
@@ -9,7 +9,16 @@ cd cardinal
 
 Görsel tür/tarih/boyut filtreleri, en yeniler, kayıtlı aramalar, favoriler, arama kapsamı açıklamaları, genişletilmiş menüler, doğrudan Çöp'e taşıma, APFS farkındalıklı kopya analizi ve WebKit arayüz kurtarması eklenmiştir. Çekirdek sorgu eşleştirmesinin hızlandığı iddia edilmez; performans çalışması büyük sonuçların metadata sıralaması, iptal ve istek yığılmasını önleme üzerindedir.
 
-20 Kasım 2026 kontrolünde upstream `master` hâlâ `4c50734f` commitindedir; [PR #228](https://github.com/cardisoft/cardinal/pull/228) açıktır ve birleştirilmemiştir. `0.1.24` bu fork'un uygulama sürümüdür; resmi upstream sürümü anlamına gelmez. Birleştirme yapacak geliştirici için dal seçimi, kaynak haritası, veri/IPC sınırları ve test durumları [rehberde](../../docs/FORK-INTEGRATION.tr-TR.md) açıklanır.
+Güncel Apple Silicon paketi: [v0.1.24-fork.2 — 27 Kasım 2026](https://github.com/MehmetEminBozdag/cardinal/releases/tag/v0.1.24-fork.2).
+
+- **Boyut:** klasör toplamları, treemap, boş disk alanı, Çöp boyutu ve temizlik önerileri. Ayrılmış alan ve mantıksal dosya boyutu farklı olabilir; toplam boyut, APFS üzerinde kesin boşalacak alan değildir.
+- **Uygulamalar:** kaldırma iş akışı ve artık yüklü olmayan uygulamalara ait olabilecek kalıntı önerileri. Çöp'e taşımadan önce önerilen yolları kontrol edin.
+- **İşlemler:** Çöp'e taşıma geçmişi oturumlar arasında saklanır ve günlük boyutu sınırlıdır; geri alma özelliği değildir.
+- **Arka plan CPU kontrolü:** boyut taraması yalnız Boyut sekmesi seçiliyken ve Cardinal ön plandayken çalışır. Başka sekmeye geçince hemen duraklar. Boyut seçiliyken uygulama arka plana alınırsa **15 saniye** devam edebilir; süre sonunda tam ve artımlı taramalar iptal edilir. Bekleyen değişiklikler devam etmek için korunur. Normal dosya adı indekslemesi ayrı çalışır.
+
+EminSet'in [`a4658a1`](https://github.com/EminSet/cardinal/commit/a4658a17ffabd708dda08508aee93789f3aeaa30) commitine kadarki eklemeleri alınmıştır; boyut taramasının etkinlik kontrolü ve regresyon testleri bunun üzerine eklenmiştir. Ayrıntılar ve doğrulama sınırları [değişiklik günlüğündedir](../../CHANGELOG.md).
+
+27 Kasım 2026 kontrolünde upstream `master` hâlâ `4c50734f` commitindedir; [PR #228](https://github.com/cardisoft/cardinal/pull/228) açıktır ve birleştirilmemiştir. `0.1.24` uygulamanın kendi içindeki sürüm numarasıdır; yeni fork paketini `v0.1.24-fork.2` etiketi ayırt eder. Birleştirme yapacak geliştirici için dal seçimi, kaynak haritası, veri/IPC sınırları ve test durumları [rehberde](../../docs/FORK-INTEGRATION.tr-TR.md) açıklanır.
 
 ---
 

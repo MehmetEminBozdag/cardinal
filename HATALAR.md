@@ -1,3 +1,21 @@
+## [2026-11-27] Boyut motoru arka planda tekrarlayan yuksek CPU kullandi
+
+Sebep: Canli process sample `folder-size-worker -> process_pending -> scan_tree` ve getattrlistbulk okumalarini gosterdi. Motor 1,5 saniyelik dongude sekme/odak kontrolu olmadan calisiyordu; olculen kisa sureli CPU %555,9'a ulasti.
+
+Cozum: Boyut sekmesi secimi native tarafa aktarildi. Sekme degisince aninda, odak kaybindan 15 saniye sonra tam ve artimli taramalar iptal edilir. Bekleyen olaylar korunur/sinirli kuyruga birlestirilir; tarama sadece izinli durumda devam eder. Eski snapshot acilista otomatik tarama baslatmaz.
+
+Kural: Boyut motorunun calisma izni frontend gorunumunden ve native odaktan birlikte belirlenmeli; devam eden dosya okumalarinda da iptal kontrolu bulunmali. Dosya arama indeksinin ayri arka plan isi bu kuralla kapatilmaz.
+
+## [2026-11-20] EminSet kurulumunda release makro kitapliklari yuklenemedi
+
+Sebep: macOS linker/dyld, release proc-macro dylib dosyalarini `mis-aligned LINKEDIT string pool` nedeniyle reddetti; ardindan serde/phf/zerofrom icin crate bulunamadi hatalari goruldu. Paket bazli onbellek temizligi yeterli olmadi.
+
+Cozum: Release yeniden `CARGO_PROFILE_RELEASE_STRIP=none npm run tauri build` ile derlendi. Uygulamanin uretim kaynak kodu degistirilmedi.
+
+Kural: Bu makinede ayni linker hatasi tekrar ederse derleme profilindeki strip islemini kapatarak derle; eksik crate mesajini tek basina bagimlilik eksikligi sayma.
+
+Ek dogrulama: 60 native ve 16 folder-size testi gecti. Frontend 342 test assertion'i gecti fakat App context-menu mock'undan 4 yakalanmamis TypeError kaydedildi; frontend kosusu temiz basari degildir. TypeScript kontrolu ayrica gecti.
+
 ## [2026-11-20] Kopya analizi testleri paralel generation sayacinda cakisti
 
 Sebep: Paralel Rust testinde `full_hash_never_reads_past_the_remaining_budget`, baska bir testin ortak DUPLICATE_SCAN_GENERATION sayacini degistirmesi nedeniyle BudgetExceeded yerine Cancelled gordu.

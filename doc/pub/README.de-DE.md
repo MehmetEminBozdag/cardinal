@@ -1,4 +1,4 @@
-> **Community fork:** the default branch `public/cardinal-enhancements` contains all fork enhancements; `master` retains the upstream baseline. Homebrew and upstream downloads below install original Cardinal. See the [latest fork release](https://github.com/MehmetEminBozdag/cardinal/releases/latest), [fork README](../../README.md) and [integration guide (Turkish)](../../docs/FORK-INTEGRATION.tr-TR.md) for fork packages, differences, and source selection.
+> **Community fork:** the default branch `public/cardinal-enhancements` contains all fork enhancements, including EminSet contributions and the 15-second background size-scan grace in `v0.1.24-fork.2`. Homebrew and upstream downloads below install original Cardinal. See the [latest fork release](https://github.com/MehmetEminBozdag/cardinal/releases/latest), [fork README](../../README.md) and [integration guide (Turkish)](../../docs/FORK-INTEGRATION.tr-TR.md) for fork packages, differences, and source selection.
 
 <div align="center">
   <img src="../../cardinal/mac-icon_1024x1024.png" alt="Cardinal-Symbol" width="120" height="120">

@@ -1,5 +1,15 @@
 # Changelog
 
+## v0.1.24-fork.2 — 2026-11-27
+
+- Incorporate EminSet's folder-size and app-uninstall work through `a4658a1`: list/treemap views, disk and Trash usage, cleanup suggestions, app leftovers, and persistent Move to Trash history.
+- Suspend full and incremental size scans immediately when leaving Sizes; allow a single 15-second grace after Cardinal loses focus with Sizes selected. Repeated background notifications do not extend the deadline.
+- Check cancellation during file enumeration, retain/coalesce pending changes, and defer automatic snapshot refresh until the view is eligible. Ordinary filename indexing remains independent.
+- Update English/Turkish fork documentation and integration notes. The three `contrib/*` branches remain for existing PRs; use `public/cardinal-enhancements` for the complete source.
+- Package identity: the native app still reports `0.1.24`; `v0.1.24-fork.2` identifies this fork snapshot. The Apple Silicon DMG is the previously built and installed package, unchanged by subsequent test/documentation commits, with an ad-hoc signature and no Apple notarization.
+
+Verification recorded during implementation: 66 native tests, 27 folder-size tests, two folder-size hook tests, TypeScript, Clippy, formatting, and the DMG build passed. The wider frontend run recorded four unhandled context-menu mock errors and is not a clean full-suite pass. No controlled full-index CPU before/after benchmark or real-file deletion test is claimed. Release publication additionally checks the DMG checksum and installed-binary match.
+
 ## Fork follow-up — 2026-11-01
 
 - Probe the visible, non-minimized WebView every 15 seconds; reload after 60 seconds without a DOM/IPC response, with at most three attempts per ten minutes.
